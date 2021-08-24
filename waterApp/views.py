@@ -12,3 +12,6 @@ class Home(TemplateView):
 
 class MetaData(TemplateView):
     template_name = "frontend/pages/meta_data.html"
+
+class DigitalMonitoring(TemplateView):
+    template_name = "frontend/pages/digital_monitoring.html"

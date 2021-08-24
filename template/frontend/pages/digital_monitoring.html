@@ -1,0 +1,76 @@
+{% extends 'frontend/base/base.html' %}
+{% load static %}
+
+{% block page_content %}
+
+<div class="wrapper wrapper-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="ibox">
+          <div class="ibox-title">
+            <h1>Data Layers</h1>
+          </div>
+          <div class="ibox-content">
+
+            <p>
+              We will put data layers and other options for data visibility in this section.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-md-8">
+        <div class="ibox">
+          <div class="ibox-title">
+            <h1>Map And chart sections</h1>
+          </div>
+          <div class="ibox-content">
+
+            <div class="map" id="map">
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block js_block %}
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    L.marker([51.5, -0.09]).addTo(map)
+      .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+      .openPopup();
+
+  });
+</script>
+
+{% endblock %}
+
+{% block css_block %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<style media="screen">
+  #map { height: 180px; }
+</style>
+{% endblock %}

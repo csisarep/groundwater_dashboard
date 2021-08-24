@@ -20,6 +20,7 @@ from waterApp import views
 urlpatterns = [
     path('dashboard/', views.Dashboard.as_view(), name='dashboard'),
     path('', views.Home.as_view(), name='home'),
-    path('meta-data', views.MetaData.as_view(), name='meta-data')
+    path('meta-data', views.MetaData.as_view(), name='meta-data'),
+    path('digital-monitoring/', views.DigitalMonitoring.as_view(), name='digital-monitoring'),
 
 ]
