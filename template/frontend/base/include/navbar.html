@@ -23,7 +23,7 @@
                 </ul>
             </li>
             <li >
-                <a aria-expanded="false" role="button" href='#'> Historical database</a>
+                <a aria-expanded="false" role="button" href='{% url "historical-database" %}'> Historical database</a>
             </li>
             <li class="{% if request.path == 'meta-data' %} active {% endif %}" >
                 <a aria-expanded="false" role="button" href='{% url "meta-data" %}'> Meta data</a>
