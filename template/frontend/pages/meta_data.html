@@ -24,88 +24,29 @@
               <br><br>
               Specifically, Nepal's GWRDB has the following main objectives:
             </p>
-            <p>
+            <div class="success-element ui-sortable-handle">
               <ol>
-              <li>Identification of groundwater potential area in the Terai (shallow and deep aquifer) through geophysical survey and investigation tubewells.</li>
-              <li>Exploitation of shallow and deep aquifer in the Terai for irrigation and drinking purpose.</li>
-              <li>Develop technical manpower related to groundwater field.</li>
-              <li>Regular monitoring of existing investigation tubewells for water level fluctuation, groundwater reserves and water quality.</li>
-              <li>Study and investigation of mountain and Karst aquifer.</li>
-              <li>Groundwater Resources Development Board (GWRDB), located at Babarmahal, Kathmandu is responsible to carry out above mentioned activities through its 8 branch offices.</li>
+                <li>Identification of groundwater potential area in the Terai (shallow and deep aquifer) through geophysical survey and investigation tubewells.</li>
+                <li>Exploitation of shallow and deep aquifer in the Terai for irrigation and drinking purpose.</li>
+                <li>Develop technical manpower related to groundwater field.</li>
+                <li>Regular monitoring of existing investigation tubewells for water level fluctuation, groundwater reserves and water quality.</li>
+                <li>Study and investigation of mountain and Karst aquifer.</li>
+                <li>Groundwater Resources Development Board (GWRDB), located at Babarmahal, Kathmandu is responsible to carry out above mentioned activities through its 8 branch offices.</li>
               </ol>
-            </p>
+            </div>
             <p>
               Groundwater Field Offices are located at Biratnagar, Lahan, Mahottari, Birganj, Butwal, Dang, Nepalganj and Dhangadhi. As of now, each of the branch offices employs one data collector per overseen district who measures the groundwater level of ca. 20 wells per district on a monthly basis. These measurements are then transcribed from pen and paper into an excel worksheet that is stored with the GWRDB.
               <br><br>
               The current procedure has three major shortcomings:
             </p>
-            <p>
+            <div>
               <ol>
                 <li>The process introduces a time lag for data availability and potential errors in transcribing the data.</li>
                 <li>The data is not easily accessible to a wider audience of interested users, limiting the use of these data for research and development planning.</li>
                 <li>The data is not easily visualizes for mapping of groundwater levels in space and time and for processing into information for different use cases.</li>
               </ol>
-            </p>
-            <h1>Objective of this Dashboard</h1>
-            <p>
-            The goal of this project activity is to pilot an open data system for groundwater data in Banke district with the aim to develop a system that can be scaled to other districts of Nepal. The sub-objectives include:
-            </p>
-            <p>
-              <ol>
-                <li>Evaluate the efficacy of different approaches for automatizing data groundwater measurements and data collection (Manual, ODK-based, offline loggers, online loggers).</li>
-                <li>Develop a dashboard that displays the groundwater monitoring data catering to different use cases.</li>
-                <li>Provide access to groundwater level data and important auxiliary information for users of the dashboard.</li>
-              </ol>
-            </p>
-            <h1>Dashboard development and data collection</h1>
-            <p>
-              The dashboard is being developed on a continuous basis. This first version is aimed to provide rapid support and real-time visualization for the ongoing data collection efforts. In the background we are constantly developing the feature set of the dashboard based on experience and user feedback. We therefore kindly invite anybody to get in touch with us and provide any feedback or demands for additional features. The dashboard is divided into three different components:
-            </p>
-            <p>
-              <ol>
-                <li>The real-time monitoring data</li>
-                <li>A spreadsheet with more information about each measurement and the possibility for downloading the data.</li>
-                <li>An overview of the historical data for Banke district.</li>
-              </ol>
-            </p>
-            <h1>Digital monitoring</h1>
-            <p>
-              This section displays in real-time the data that is being collected for this specific project during the year 2021. To evaluate different data collection approaches, this section categorizes data points into three different categories:
-            </p>
-            <p>
-              <ol>
-                <li>ODK-based data collection.<br>
-                  <ul><li>This method replaces the manual data entry with ODK-supported data entry on a tablet. After measuring the water level, the data collector immediately enters the data in a survey form on his tablet which is immediately send to the cloud and processed. Data collection takes place on a monthly basis.</li></ul></li>
-                  <li>Offline data loggers.<ul><li>This method uses 10 low-cost offline data loggers to record daily water levels. The data loggers need to be read out and uploaded to the data base manually, which takes place on a 2-weekly basis.</li></ul></li>
-                  <li>Online data loggers (currently being integrated into the dashboard). <ul><li>Online data loggers transmit information to the cloud in real-time by using the cellular network. Powered through a small solar panel, the system ready the water level and immediately transmits the information to the online survey from where it is further processed and visualized.</li></ul></li>
-              </ol>
-              <h1>Download monitoring data</h1>
-              <p>This section shows the uploaded data. It includes all the variables that are submitted to the server including location, well number, name of data collector, date, measurement details and the final groundwater level for the ODK based data, and groundwater level for the offline loggers. By clicking the "export" button the whole dataset can be downloaded. Note, that this dataset has not been screened for errors so use with caution.
-              </p>
-              <h1>Historical dataset</h1>
-              <p>
-                These data have been manually collected and curated since the year 2000. However, some years and data points are missing and typos have not been fixed yet. You can click both on the wells in the map or on the graph in the bottom to select and de-select wells of interest. Below the graphs you can select the year of interest.
-              </p>
-              <h1>Monitoring well selection procedure</h1>
-              <p>
-                The GWRDB oversees ~20 shallow and ~5 deep tubewells for monitoring purposes per district. This pilot did not establish additional wells but uses the existing ones. The offline wells were selected in order to capture the North-South and East-West gradient. However, some wells were not practical to install and had to be exchanged for more feasible alternatives.
-              </p>
-              <h1>Geographical setting and hydro-geological Characteristics</h1>
-              <p>
-                Nepal's Terai belongs to the Northernmost section of the Indo-Gangetic Plains that stretch from the foothills of the Himalayas to the Ganges Rivers in the South at around 100 masl. The aquifers thus belong to the Indo-Gangetic Basin alluvial aquifer. General characteristics of the aquifers can, for example, be found in <a href="https://doi.org/10.1007/s10040-017-1550-z">Bonsor et al. (2017)</a>. A typical cross section of the Terai aquifer looks like the following (with yellow being coarser sand layers of good aquifer material, Bonsor et al. 2017):
-                <br><br>
-                <img src="../static/img/terai_aquifer.jpg" alt="Aquifer type">
-                <br><br>
-                Nepal's Terai aquifers are comprised of alluvial and poorly sorted aquifer material. Several layers of aquifer material are intersected by several layers semi-confining clay layers. Water levels for aquifers range from 0 to 10 mbgl with an average of 4.5 mbgl. The following map has been produced by the GWRDB based on the water level measurements of the GWRDB/UNDP tubewells of 1993:
-                <br><br>
-                <img src='../static/img/banke_hydrogeo2.jpg' onclick='this.src="../static/img/banke_hydrogeo.png"' />
-                <br><br>
-                
+            </div>
 
-
-
-              </p>
-            </p>
           </div>
 
         </div>
@@ -113,7 +54,165 @@
       </div>
 
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="ibox">
+          <div class="ibox-title">
+            <h1>Objective of this Dashboard</h1>
+          </div>
+          <div class="ibox-content">
+            <p>
+              The goal of this project activity is to pilot an open data system for groundwater data in Banke district with the aim to develop a system that can be scaled to other districts of Nepal. The sub-objectives include:
+            </p>
+            <div>
+              <ol>
+                <li>Evaluate the efficacy of different approaches for automatizing data groundwater measurements and data collection (Manual, ODK-based, offline loggers, online loggers).</li>
+                <li>Develop a dashboard that displays the groundwater monitoring data catering to different use cases.</li>
+                <li>Provide access to groundwater level data and important auxiliary information for users of the dashboard.</li>
+              </ol>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="ibox">
+          <div class="ibox-title">
+            <h1>Dashboard development and data collection</h1>
+          </div>
+          <div class="ibox-content">
+            <p>
+              The dashboard is being developed on a continuous basis. This first version is aimed to provide rapid support and real-time visualization for the ongoing data collection efforts. In the background we are constantly developing the feature set of the dashboard based on experience and user feedback. We therefore kindly invite anybody to get in touch with us and provide any feedback or demands for additional features. The dashboard is divided into three different components:
+            </p>
+            <div>
+              <ol>
+                <li>The real-time monitoring data</li>
+                <li>A spreadsheet with more information about each measurement and the possibility for downloading the data.</li>
+                <li>An overview of the historical data for Banke district.</li>
+              </ol>
+            </div>
+
+          </div>
+      </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="ibox">
+          <div class="ibox-title">
+            <h1>Digital monitoring</h1>
+          </div>
+          <div class="ibox-content">
+
+            <p>
+              This section displays in real-time the data that is being collected for this specific project during the year 2021. To evaluate different data collection approaches, this section categorizes data points into three different categories:
+            </p>
+            <p>
+            <ol>
+              <li>ODK-based data collection.<br>
+                <ul>
+                  <li>This method replaces the manual data entry with ODK-supported data entry on a tablet. After measuring the water level, the data collector immediately enters the data in a survey form on his tablet which is immediately send to the cloud and processed. Data collection takes place on a monthly basis.</li>
+                </ul>
+              </li>
+              <li>Offline data loggers.<ul>
+                  <li>This method uses 10 low-cost offline data loggers to record daily water levels. The data loggers need to be read out and uploaded to the data base manually, which takes place on a 2-weekly basis.</li>
+                </ul>
+              </li>
+              <li>Online data loggers (currently being integrated into the dashboard). <ul>
+                  <li>Online data loggers transmit information to the cloud in real-time by using the cellular network. Powered through a small solar panel, the system ready the water level and immediately transmits the information to the online survey from where it is further processed and visualized.</li>
+                </ul>
+              </li>
+            </ol>
+
+          </div>
+      </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="ibox">
+            <div class="ibox-title">
+              <<h1>Download monitoring data</h1>
+            </div>
+            <div class="ibox-content">
+              <p>This section shows the uploaded data. It includes all the variables that are submitted to the server including location, well number, name of data collector, date, measurement details and the final groundwater level for the ODK based data, and groundwater level for the offline loggers. By clicking the "export" button the whole dataset can be downloaded. Note, that this dataset has not been screened for errors so use with caution.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="ibox">
+            <div class="ibox-title">
+              <h1>Historical dataset</h1>
+            </div>
+            <div class="ibox-content">
+
+              <p>
+                These data have been manually collected and curated since the year 2000. However, some years and data points are missing and typos have not been fixed yet. You can click both on the wells in the map or on the graph in the bottom to select and de-select wells of interest. Below the graphs you can select the year of interest.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="ibox">
+            <div class="ibox-title">
+              <h1>Monitoring well selection procedure</h1>
+            </div>
+            <div class="ibox-content">
+              <p>
+                The GWRDB oversees ~20 shallow and ~5 deep tubewells for monitoring purposes per district. This pilot did not establish additional wells but uses the existing ones. The offline wells were selected in order to capture the North-South and East-West gradient. However, some wells were not practical to install and had to be exchanged for more feasible alternatives.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="ibox">
+            <div class="ibox-title">
+              <h1>Geographical setting and hydro-geological Characteristics</h1>
+            </div>
+            <div class="ibox-content">
+              <p>
+                Nepal's Terai belongs to the Northernmost section of the Indo-Gangetic Plains that stretch from the foothills of the Himalayas to the Ganges Rivers in the South at around 100 masl. The aquifers thus belong to the Indo-Gangetic Basin alluvial aquifer. General characteristics of the aquifers can, for example, be found in <a href="https://doi.org/10.1007/s10040-017-1550-z">Bonsor et al. (2017)</a>. A typical cross section of the Terai aquifer looks like the following (with yellow being coarser sand layers of good aquifer material, Bonsor et al. 2017):
+                <br><br>
+                <img src="{% static 'img/terai_aquifer.jpg' %}" alt="Aquifer type">
+                <br><br>
+                Nepal's Terai aquifers are comprised of alluvial and poorly sorted aquifer material. Several layers of aquifer material are intersected by several layers semi-confining clay layers. Water levels for aquifers range from 0 to 10 mbgl with an average of 4.5 mbgl. The following map has been produced by the GWRDB based on the water level measurements of the GWRDB/UNDP tubewells of 1993:
+                <br><br>
+                <img src='{% static "img/banke_hydrogeo2.jpg" %}' alt="banke_hydrogeo2" />
+                <br><br>
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      </div>
+
+    </div>
 
   </div>
+
+</div>
 </div>
 {% endblock %}
