@@ -45,12 +45,20 @@ class GwMonitoring(models.Model):
         managed = True
         db_table = 'gw_monitoring'
 
+class WellType(models.Model):
+    name=models.CharField(max_length=100)
+
+    class Meta:
+        managed = True
+        db_table = 'type_of_well'
+
 class GwLocations(models.Model):
     well_number = models.CharField(max_length=100, blank=True, null=True)
     identifier = models.CharField(max_length=100, blank=True, null=True)
     place = models.CharField(max_length=100, blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
+    type = models.ForeignKey(WellType, on_delete=models.CASCADE, default=1)
 
     class Meta:
         managed = True
