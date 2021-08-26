@@ -1,0 +1,87 @@
+{% extends 'frontend/base/base.html' %}
+{% load static %}
+
+{% block page_content %}
+
+<div class="wrapper wrapper-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="ibox">
+          <div class="ibox-title">
+            <h1>Groundwater well selection</h1>
+          </div>
+          <div class="ibox-content">
+
+            <div class="">
+              <p>Districts</p>
+              <div class="i-checks"><label> <input type="checkbox" value=""> <i></i> Banke</label></div>
+              <div class="i-checks"><label> <input type="checkbox" value=""> <i></i> Bardiya </label></div>
+
+            </div>
+            <div class="">
+              <p>Type of Well</p>
+
+              <div class="i-checks"><label> <input type="checkbox" value=""> <i></i> Deep Tubewell</label></div>
+              <div class="i-checks"><label> <input type="checkbox" value=""> <i></i> Shallow Tubewell </label></div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-md-8">
+        <div class="ibox">
+          <div class="ibox-title">
+            <h1>Map And chart sections: {{ users }}</h1>
+          </div>
+          <div class="ibox-content">
+
+            {% include 'hist_banke_line_graph.html' %}
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block js_block %}
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    L.marker([51.5, -0.09]).addTo(map)
+      .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+      .openPopup();
+
+  });
+</script>
+
+{% endblock %}
+
+
+
+
+
+{% block css_block %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<style media="screen">
+  #map { height: 380px; }
+</style>
+{% endblock %}
