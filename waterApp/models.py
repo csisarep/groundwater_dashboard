@@ -44,3 +44,14 @@ class GwMonitoring(models.Model):
     class Meta:
         managed = True
         db_table = 'gw_monitoring'
+
+class GwLocations(models.Model):
+    well_number = models.CharField(max_length=100, blank=True, null=True)
+    identifier = models.CharField(max_length=100, blank=True, null=True)
+    place = models.CharField(max_length=100, blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'graound_water_locations'
