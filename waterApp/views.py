@@ -3,6 +3,7 @@ from waterApp.utils.update_odk_csv import update_odkData
 from waterApp.utils.historical_lineGraph import create_histBankeGraph
 # Create your views here.
 from django.views.generic import TemplateView
+from waterApp.models import GwLocations
 
 
 class Dashboard(TemplateView):
@@ -20,6 +21,7 @@ class DigitalMonitoring(TemplateView):
         context = super(DigitalMonitoring, self).get_context_data(*args,**kwargs)
         df = update_odkData()
         context['users'] = df['gw_level'][1]
+        context['gw_locations'] = GwLocations.objects.all().exclude(longitude__isnull=True)
         return context
 
 class HistoricalDatabase(TemplateView):
@@ -28,4 +30,3 @@ class HistoricalDatabase(TemplateView):
         context = super(HistoricalDatabase, self).get_context_data(*args,**kwargs)
         create_histBankeGraph()
         return context
-
