@@ -17,8 +17,8 @@
         let data_new = [];
         for (i=0;i<data_new_format.length;i=i+1){
           let time_ = new Date(data_new_format[i][0]).getTime();
-          var formatted = Highcharts.dateFormat('%H:%M:%S.%L', time_);
-          data_new.push([formatted, data_new_format[i][1]])
+          // var formatted = Highcharts.dateFormat('%H:%M:%S.%L', time_);
+          data_new.push([time_, data_new_format[i][1]])
         }
         console.log(data_new);
         let temp = {

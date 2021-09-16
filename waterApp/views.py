@@ -43,7 +43,7 @@ class AjaxGroundMeasurementRequest(View):
         well_num = [well.well_num for well in wells]
         chart_data = {}
         for wn in well_num:
-            water_level = GwMonitoringKobo.objects.filter(well_num=wn)
+            water_level = GwMonitoringKobo.objects.filter(well_num=wn).order_by('date')
             chart_data[wn]={
                 'data':[[str(wl.date),wl.gw_level] for wl in water_level]
             }

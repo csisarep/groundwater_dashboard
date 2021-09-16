@@ -38,14 +38,30 @@ const drawStockChart = (data) => {
       borderWidth: 2,
       type: 'line'
     },
-    rangeSelector: {
-      selected: 1
-    },
+    // rangeSelector: {
+    //   selected: 1
+    // },
 
     title: {
       text: 'Water Flow chart- sample'
     },
-
+    xAxis: {
+      type: 'datetime',
+      // tickInterval: 10 * 30 * 24 * 3600 * 1000,
+    },
+    yAxis:{
+      reversed:true
+    },
+    legend: {
+            enabled: true,
+            // layout: 'horizontal',
+            // verticalAlign: 'bottom',
+            // floating: true,
+            // y: -65
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
     series: data,
     credits: {
       enabled: false
