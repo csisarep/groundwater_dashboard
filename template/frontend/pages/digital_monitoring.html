@@ -15,43 +15,18 @@
 
             <div class="">
               <p>Districts</p>
-              <div class="i-checks p-w-sm"><label> <input type="checkbox" value=""> <i></i> Banke</label></div>
-              <div class="i-checks p-w-sm"><label> <input type="checkbox" value=""> <i></i> Bardiya </label></div>
+              <div class="i-checks p-w-sm"><label> <input type="checkbox" value="Banke" class="district" checked> <i></i> Banke</label></div>
+              <div class="i-checks p-w-sm"><label> <input type="checkbox" value="Bardiya" class="district"> <i></i> Bardiya </label></div>
 
             </div>
             <div class="">
               <p>Type of Well</p>
 
-              <div class="i-checks p-w-sm"><label> <input type="checkbox" value=""> <i></i> Deep Tubewell</label></div>
-              <div class="i-checks p-w-sm"><label> <input type="checkbox" value=""> <i></i> Shallow Tubewell </label></div>
+              <div class="i-checks p-w-sm"><label> <input type="checkbox" value="2"class="well_type"> <i></i> Deep Tubewell</label></div>
+              <div class="i-checks p-w-sm"><label> <input type="checkbox" value="1" class="well_type" checked> <i></i> Shallow Tubewell </label></div>
             </div>
 
-            <div class="form-group">
-              <label class="font-normal">Please select the multiple locations for the filter</label>
-              <div class="p-w-sm">
-                <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4">
-                  <option value="">Select</option>
-                  <option value="United States">United States</option>
-                  <option value="United Kingdom">United Kingdom</option>
-                  <option value="Afghanistan">Afghanistan</option>
-                  <option value="Aland Islands">Aland Islands</option>
-                  <option value="Albania">Albania</option>
-                  <option value="Algeria">Algeria</option>
-                  <option value="American Samoa">American Samoa</option>
-                  <option value="Andorra">Andorra</option>
-                  <option value="Angola">Angola</option>
-                  <option value="Anguilla">Anguilla</option>
-                  <option value="Antarctica">Antarctica</option>
-                  <option value="Antigua and Barbuda">Antigua and Barbuda</option>
-                  <option value="Argentina">Argentina</option>
-                  <option value="Armenia">Armenia</option>
-                  <option value="Aruba">Aruba</option>
-                  <option value="Australia">Australia</option>
-                  <option value="Austria">Austria</option>
-                  <option value="Azerbaijan">Azerbaijan</option>
-                </select>
-              </div>
-            </div>
+
 
           </div>
 
@@ -91,6 +66,14 @@
 
           </div>
           <div class="ibox-content">
+            <div class="form-group">
+              <label class="font-normal">Manually measured wells</label>
+              <div class="p-w-sm">
+                <select data-placeholder="Choose a Well..." class="select2_wells form-control" multiple="multiple">
+
+                </select>
+              </div>
+            </div>
             <div id="container" style="height: 400px; min-width: 310px">
             </div>
 
@@ -104,6 +87,14 @@
 
           </div>
           <div class="ibox-content">
+            <div class="form-group">
+              <label class="font-normal">Sensor based measurement of water level. Please select particular river</label>
+              <div class="p-w-sm">
+                <select data-placeholder="Choose a Well..." class="select2_wells_offline form-control" multiple="multiple">
+
+                </select>
+              </div>
+            </div>
             <div id="containerLogger" style="height: 400px; min-width: 310px">
             </div>
 
@@ -127,6 +118,12 @@
 <!-- Chosen -->
 <script src="{% static 'js/plugins/chosen/chosen.jquery.js' %}"></script>
 
+<!-- Select2 -->
+<script src="{% static 'js/plugins/select2/select2.full.min.js' %}"></script>
+
+<!-- iCheck -->
+<script src="{% static 'js/plugins/iCheck/icheck.min.js' %}"></script>
+
 <!-- highcharts load -->
 <script src="{% static 'js/plugins/highcharts/highstock.js' %}"></script>
 <script src="{% static 'js/plugins/highcharts/modules/data.js' %}"></script>
@@ -134,33 +131,13 @@
 <script src="{% static 'js/plugins/highcharts/modules/export-data.js' %}"></script>
 
 <script type="text/javascript">
-  $(document).ready(function() {
-
-    $('.chosen-select').chosen({
-      width: "100%"
-    });
-
-    // var map = L.map('map').setView([27.9993613, 81.71946941], 9);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    })
-    var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-		mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
-
-    var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr});
-    var streets  = L.tileLayer(mbUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr});
-    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
-
-
-    var gj = {
+  var gj = {
       "name": "MyFeatureType",
       "type": "FeatureCollection",
       "features": []
     };
+    var select2_options = [];
+    var location_check = [];
     // create geojson with points
     {% if gw_locations %}
       {% for gw in gw_locations %}
@@ -172,295 +149,90 @@
           },
           "properties": {
             'well_number': '{{gw.well_number}}',
-            'place': '{{gw.place}}',
+            'district':'{{gw.district}}',
+            'place': '{{gw.location}}',
             'type': '{{gw.type.name}}',
             'id':{{gw.id}}
           }
         });
 
+      if (location_check.indexOf('{{gw.location}}') == -1) {
+        select2_options.push({
+          id:'{{gw.location}}', text:'{{gw.location}}', district:'{{gw.district}}', type:{{gw.type.id}}
+        });
+      };
+      location_check.push('{{gw.location}}');
+
+      var select2_options_offline = [
+        {id:'Rohini Khola', text:'Rohini Khola'},
+        {id:'Channawa', text:'Channawa'},
+        {id:'Piprahawa', text:'Piprahawa'},
+        {id:'Jaispur', text:'Jaispur'},
+        {id:'Banjare Gau', text:'Banjare Gau'},
+        {id:'Kalhanshangau', text:'Kalhanshangau'},
+        {id:'D-gaon', text:'D-gaon'},
+        {id:'Khadaicha', text:'Khadaicha'},
+        {id:'Shikanpurwa', text:'Shikanpurwa'},
+        // {id:'', text:''},
+      ]
       {% endfor %}
-
-      function onEachFeature(feature, layer) {
-        var content ="<p>Place:  "+feature.properties.place+"</p>";
-        content+="<p>Well Number: "+feature.properties.well_number+"</p>";
-        content+="<p>Well Type: "+feature.properties.type+"</p>";
-        if (feature.properties) {
-            layer.bindPopup(content);
-        }
-    }
-    var myLayer = L.geoJSON(gj, {
-        onEachFeature: onEachFeature
-    })
-    // myLayer.addData();
-
     {% endif %}
 
-    var map = L.map('map', {
-      center: [27.9993613, 81.71946941],
-      zoom: 9,
-      layers: [osm, myLayer]
-    });
-    var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
-        maxZoom: 20,
-        subdomains:['mt0','mt1','mt2','mt3']
-    });
-    var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
-      maxZoom: 20,
-      subdomains:['mt0','mt1','mt2','mt3']
-  });
-
-    var baseLayers = {
-      "Grayscale": grayscale,
-      "Streets": streets,
-      "OSM Map":osm,
-      "Google Map":googleStreets,
-      "Google Satellite":googleHybrid
-    };
-
-    var overlays = {
-      "Wells": myLayer
-    };
-
-    L.control.layers(baseLayers, overlays).addTo(map);
-
-    // chlorepeth map
-    var mapNew = L.map('mapNew').setView([27.9993613, 81.71946941], 9);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(mapNew);
-
-    var colors_circle = ['#80CDBD', '#DEDEDE', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'];
-    function geojsonMarkerOptions(color){
-      return {
-          radius: 8,
-          fillColor: color,
-          color: "#000",
-          weight: 1,
-          opacity: 1,
-          fillOpacity: 0.8
-      }
-    }
-
-    L.geoJSON(gj, {
-        pointToLayer: function (feature, latlng) {
-          var circleColor;
-          if(feature.properties.id<5){
-            circleColor = colors_circle[0]
-          } else if (feature.properties.id>5 && feature.properties.id<15) {
-            circleColor = colors_circle[1]
-          } else {
-            circleColor = colors_circle[2]
-          }
-            return L.circleMarker(latlng, geojsonMarkerOptions(circleColor));
-        }
-    }).addTo(mapNew);
-    var legend = L.control({position: 'bottomleft'});
-
-    legend.onAdd = function (mapNew) {
-
-      var div = L.DomUtil.create('div', 'info legend');
-
-
-
-
-
-        for (var i = 0; i < 3; i++) {
-            div.innerHTML +=
-                '<div><span class="dot" style="background:' + colors_circle[i] + '"></span>' +
-                 'sample-'+ String(i) + '</div>';
-        }
-
-        return div;
-      }
-    legend.addTo(mapNew);
-
-    // HIghcharts sample code
-
-    //HIGHCHARTS EXPORT MENU
-    var exportContextMenu = {
-      buttons: {
-        contextButton: {
-          menuItems: [{
-            textKey: 'downloadPNG',
-            onclick: function() {
-              this.exportChart();
-            }
-          }, {
-            textKey: 'downloadJPEG',
-            onclick: function() {
-              this.exportChart({
-                type: 'image/jpeg'
-              });
-            }
-          }, {
-            textKey: 'downloadPDF',
-            onclick: function() {
-              this.exportChart({
-                type: 'image/pdf'
-              });
-            }
-          }, {
-            textKey: 'downloadCSV',
-            onclick: function() {
-              this.downloadCSV();
-            }
-          }]
-        }
-      }
-    }
-    Highcharts.getJSON('https://demo-live-data.highcharts.com/aapl-c.json', function(data) {
-      // Create the chart
-      Highcharts.stockChart('container', {
-        chart: {
-          borderColor: '#83D0C0',
-          backgroundColor: '#F3F3F4',
-          borderWidth: 2,
-          type: 'line'
-        },
-
-
-        rangeSelector: {
-          selected: 1
-        },
-
-        title: {
-          text: 'Water Flow chart- sample'
-        },
-
-        series: [{
-          name: 'flow',
-          data: data,
-          tooltip: {
-            valueDecimals: 2
-          }
-        }],
-        credits: {
-          enabled: false
-        },
-        colors: ['#80CDBD', '#EDEDED', '#DEDEDE', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
-        exporting: exportContextMenu
-      });
-    });
-
-    Highcharts.chart('containerLogger', {
-      chart: {
-        borderColor: '#83D0C0',
-        backgroundColor: '#F3F3F4',
-        borderWidth: 2,
-        type: 'line'
-      },
-
-    title: {
-        text: 'Solar Employment Growth by Sector, 2010-2016'
-    },
-
-    subtitle: {
-        text: 'Source: thesolarfoundation.com'
-    },
-
-    yAxis: {
-        title: {
-            text: 'Number of Employees'
-        }
-    },
-
-    xAxis: {
-        accessibility: {
-            rangeDescription: 'Range: 2010 to 2017'
-        }
-    },
-
-    legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'middle'
-    },
-
-    plotOptions: {
-        series: {
-            label: {
-                connectorAllowed: false
-            },
-            pointStart: 2010
-        }
-    },
-
-    series: [{
-        name: 'Installation',
-        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-    }, {
-        name: 'Manufacturing',
-        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-    }, {
-        name: 'Sales & Distribution',
-        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-    }, {
-        name: 'Project Development',
-        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-    }, {
-        name: 'Other',
-        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
-    }],
-
-    responsive: {
-        rules: [{
-            condition: {
-                maxWidth: 500
-            },
-            chartOptions: {
-                legend: {
-                    layout: 'horizontal',
-                    align: 'center',
-                    verticalAlign: 'bottom'
-                }
-            }
-        }]
-    },
-    credits: {
-      enabled: false
-    },
-    colors: ['#80CDBD', '#DEDEDE', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
-    exporting: exportContextMenu
-
-});
-
-  });
 </script>
 
+<script src="{% static 'js/waterApp/layers.js' %}"></script>
+<script src="{% static 'js/waterApp/chartData.js' %}"></script>
+<script src="{% static 'js/waterApp/chart.js' %}"></script>
+<script src="{% static 'js/waterApp/functions.js' %}"></script>
+<script src="{% static 'js/waterApp/monitoring.js' %}"></script>
+
 {% endblock %}
-
-
-
-
-
 
 
 {% block css_block %}
 <link rel="stylesheet" href="{% static 'css/plugins/leaflet/leaflet.css' %}" />
 
-<link href="{% static 'css/plugins/chosen/bootstrap-chosen.css' %}" rel="stylesheet">
+
+<link href="{% static 'css/plugins/iCheck/custom.css' %}" rel="stylesheet">
+<link href="{% static 'css/plugins/select2/select2.min.css' %}" rel="stylesheet">
 
 <style media="screen">
   .map {
     height: 380px;
   }
+
   .legend .circle {
     border-radius: 50%;
     width: 10px;
     height: 10px;
     margin-top: 8px;
   }
-  .leaflet-bottom .legend{
+
+  .leaflet-bottom .legend {
     background: white;
     padding: 16px;
     margin: 10px;
   }
+
   .dot {
     height: 15px;
     width: 15px;
     border-radius: 50%;
     display: inline-block;
+  }
+
+  .select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #1ab394;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #1AB394;
+    color: white;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    /* background-color: white; */
+    color: white;
   }
 </style>
 {% endblock %}

@@ -23,5 +23,6 @@ urlpatterns = [
     path('meta-data', views.MetaData.as_view(), name='meta-data'),
     path('digital-monitoring/', views.DigitalMonitoring.as_view(), name='digital-monitoring'),
     path('historical-database/', views.HistoricalDatabase.as_view(), name='historical-database'),
+    path('call-waterflow-chart-data/', views.AjaxGroundMeasurementRequest.as_view(), name='call-waterflow-chart-data')
 
 ]

@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class GwMonitoring(models.Model):
-    fid = models.BigIntegerField(blank=True, null=True)
+    id = models.BigAutoField(primary_key=True)
     start = models.CharField(max_length=200, blank=True, null=True)
     end = models.CharField(max_length=200, blank=True, null=True)
     today = models.CharField(max_length=200, blank=True, null=True)
@@ -63,3 +63,33 @@ class GwLocations(models.Model):
     class Meta:
         managed = True
         db_table = 'graound_water_locations'
+
+class GwMonitoringKobo(models.Model):
+    date = models.DateField(default='2000-01-01')
+    district = models.CharField(max_length=150, blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    altitude = models.FloatField(blank=True, null=True)
+    precision = models.FloatField(blank=True, null=True)
+    well_type = models.CharField(max_length=150, blank=True, null=True)
+    measurement_point_cm = models.IntegerField(blank=True, null=True)
+    measurement_of_wet_point_on_tape_in_m_field = models.CharField(db_column='measurement_of_wet_point_on_tape__in_m_', max_length=150, blank=True, null=True)  # Field renamed because it contained more than one '_' in a row. Field renamed because it ended with '_'.
+    gw_level_from_mp = models.FloatField(blank=True, null=True)
+    mp_in_m = models.FloatField(blank=True, null=True)
+    gw_level = models.FloatField(blank=True, null=True)
+    fid = models.IntegerField(primary_key=True, default=0)
+    well_num = models.CharField(max_length=150, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'gw_monitoring_kobo'
+
+class GwLocationsData(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    well_number = models.CharField(max_length=100, blank=True, null=True)
+    well_num = models.CharField(max_length=100, blank=True, null=True)
+    district = models.CharField(max_length=100, blank=True, null=True)
+    location = models.CharField(max_length=100, blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    type = models.ForeignKey(WellType, on_delete=models.CASCADE, default=1)
