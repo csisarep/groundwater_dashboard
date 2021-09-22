@@ -1,38 +1,7 @@
   $(document).ready(function() {
     // normal JS component
     // normal DOM manipulation will be here
-    const multilineData = (data) => {
-      let kk = [{
-        name: 'flow',
-        data: data,
-        tooltip: {
-          valueDecimals: 2
-        }
-      }];
-      let stock_data=[];
 
-      for (let key of Object.keys(data)){
-        console.log(key);
-        let data_new_format =data[key]['data']
-        let data_new = [];
-        for (i=0;i<data_new_format.length;i=i+1){
-          let time_ = new Date(data_new_format[i][0]).getTime();
-          // var formatted = Highcharts.dateFormat('%H:%M:%S.%L', time_);
-          data_new.push([time_, data_new_format[i][1]])
-        }
-        console.log(data_new);
-        let temp = {
-          name: key,
-          data: data_new,
-          tooltip: {
-            valueDecimals: 2
-          }
-        }
-        stock_data.push(temp)
-      }
-      console.log(stock_data);
-      return stock_data
-    }
 
     $('.chosen-select').chosen({
       width: "100%"
@@ -44,40 +13,31 @@
     $('.select2_wells').val('Rohini Khola'); // Select the option with a value of '1'
     $('.select2_wells').trigger('change');
 
-    $('.select2_wells').on('select2:select', function (e) {
-        var data = e.params.data;
-        console.log(data);
-        console.log($('.select2_wells').val());
-        var selected_wells =
-        $.ajax({
-          url:'/waterapp/call-waterflow-chart-data',
-          data:{
-            wells: JSON.stringify($('.select2_wells').val())
-          },
-          success: function(data, status){
-              console.log('krishna');
-              console.log(data);
-              // multilineData(data);
-              $("#container").empty();
-              Highcharts.stockChart('container', drawStockChart(multilineData(data)));
-          },
-          error: function(XMLHttpRequest, textStatus, errorThrown) {
-            console.log(errorThrown);
-              console.log('kafle');
-          }
-        })
+    $('.select2_wells').on('select2:select', function(e) {
+      // var selected_wells =
+        ajaxODKdata();
     });
-    $('.select2_wells').on('select2:unselect', function (e) {
-        var data = e.params.data;
-        console.log(data);
-        console.log($('.select2_wells').val());
+    $('.select2_wells').on('select2:unselect', function(e) {
+      ajaxODKdata();
     });
-
+    ajaxODKdata();
 
 
     $(".select2_wells_offline").select2({
       data: select2_options_offline
     });
+    // Select all
+    $('.select2_wells_offline').select2('destroy').find('option').prop('selected', 'selected').end().select2();
+
+    $('.select2_wells_offline').on('select2:select', function(e) {
+      // var selected_wells =
+        ajaxOfflineLoggerdata();
+    });
+    $('.select2_wells_offline').on('select2:unselect', function(e) {
+      ajaxOfflineLoggerdata();
+    });
+    ajaxOfflineLoggerdata();
+
     // $('.select2_wells').val(null).trigger('change');
 
     $('.i-checks').iCheck({
@@ -86,18 +46,18 @@
     });
 
 
-    $('.district').on('ifChanged', function(event){
+    $('.district').on('ifChanged', function(event) {
       var checked_box = []
-      $('.district:checkbox:checked').each(function(){
+      $('.district:checkbox:checked').each(function() {
         checked_box.push($(this).val())
       });
 
-      if (checked_box.length>1) {
+      if (checked_box.length > 1) {
         $('.select2_wells').empty().trigger('change');
         $(".select2_wells").select2({
           data: select2_options
         });
-      } else{
+      } else {
         let options = filterwellsByDistrict(checked_box[0], select2_options)
         $('.select2_wells').empty().trigger('change');
         $(".select2_wells").select2({
@@ -107,9 +67,9 @@
       }
       console.log(checked_box);
     });
-    $('.well_type').on('ifChanged', function(){
+    $('.well_type').on('ifChanged', function() {
       var checked_box = []
-      $('.well_type:checkbox:checked').each(function(){
+      $('.well_type:checkbox:checked').each(function() {
         checked_box.push($(this).val())
       })
       console.log(checked_box);
@@ -194,21 +154,8 @@
     legend.addTo(mapNew);
 
 
-    // Chart creation steps
-    Highcharts.getJSON('https://demo-live-data.highcharts.com/aapl-c.json', function(data) {
-      // Create the chart
-      var data_send = [{
-        name: 'flow',
-        data: data,
-        tooltip: {
-          valueDecimals: 2
-        }
-      }]
-      Highcharts.stockChart('container', drawStockChart(data_send));
-
-    });
-    let loggerChartContent = drawLineChart('data');
-    Highcharts.chart('containerLogger', loggerChartContent);
+    // let loggerChartContent = drawLineChart('data');
+    // Highcharts.chart('containerLogger', loggerChartContent);
 
 
   });

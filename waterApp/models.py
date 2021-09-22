@@ -48,6 +48,9 @@ class GwMonitoring(models.Model):
 class WellType(models.Model):
     name=models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         managed = True
         db_table = 'type_of_well'
@@ -93,3 +96,24 @@ class GwLocationsData(models.Model):
     longitude = models.FloatField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
     type = models.ForeignKey(WellType, on_delete=models.CASCADE, default=1)
+
+
+class OfflineLoggerData(models.Model):
+    id = models.AutoField(primary_key=True)
+    date = models.DateField()
+    pressure = models.FloatField()
+    temperature = models.FloatField()
+    water_level = models.FloatField()
+    location = models.CharField(max_length=200)
+
+class HistoricalData(models.Model):
+    id = models.AutoField(primary_key=True)
+    well_number = models.CharField(max_length=100, blank=True, null=True)
+    well_num = models.CharField(max_length=100, blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    location = models.CharField(max_length=100, blank=True, null=True)
+    type = models.ForeignKey(WellType, on_delete=models.CASCADE, default=1)
+    remarks = models.TextField(blank=True, null=True)
+    date = models.DateField()
+    water_level = models.FloatField(blank=True, null=True)

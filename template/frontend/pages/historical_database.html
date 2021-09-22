@@ -6,7 +6,7 @@
 <div class="wrapper wrapper-content">
   <div class="container">
     <div class="row">
-      <div class="col-md-4">
+      <!-- <div class="col-md-4">
         <div class="ibox">
           <div class="ibox-title">
             <h1>Groundwater well selection</h1>
@@ -31,11 +31,33 @@
 
         </div>
 
-      </div>
-      <div class="col-md-8">
+      </div> -->
+      <div class="col-md-12">
         <div class="ibox">
           <div class="ibox-title">
-            <h1>Map And chart sections: {{ users }}</h1>
+            <h1>Historical Well Water level Information </h1>
+          </div>
+          <div class="ibox-content">
+            <div class="form-group">
+              <label class="font-normal">Select location of measured wells</label>
+              <div class="p-w-sm">
+                <select data-placeholder="Choose a Well..." class="select2_wells form-control" multiple="multiple">
+                </select>
+
+              </div>
+            </div>
+            <div id="container" style="height: 500px; min-width: 310px">
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-md-12">
+        <div class="ibox">
+          <div class="ibox-title">
+            <h1>Historical Well Water level Information </h1>
           </div>
           <div class="ibox-content">
 
@@ -56,23 +78,48 @@
 
 
 {% block js_block %}
+<!-- Select2 -->
+<script src="{% static 'js/plugins/select2/select2.full.min.js' %}"></script>
 
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<!-- highcharts load -->
+<script src="{% static 'js/plugins/highcharts/highstock.js' %}"></script>
+<script src="{% static 'js/plugins/highcharts/modules/data.js' %}"></script>
+<script src="{% static 'js/plugins/highcharts/modules/exporting.js' %}"></script>
+<script src="{% static 'js/plugins/highcharts/modules/export-data.js' %}"></script>
+
+
+<script src="{% static 'js/waterApp/chartData.js' %}"></script>
+<script src="{% static 'js/waterApp/chart.js' %}"></script>
+<script src="{% static 'js/waterApp/functions.js' %}"></script>
+
 
 <script type="text/javascript">
   $(document).ready(function() {
-    var map = L.map('map').setView([51.505, -0.09], 13);
+    var select2_options = [
+      {% for well in wells_dropdown %}
+        {id:"{{well.0}}", text:"{{well.0}}"},
+      {% endfor %}
+    ];
+    $(".select2_wells").select2({
+      data: select2_options
+    });
+    var ids = ['Bahartha', 'Balapur'];
+    $(".select2_wells").val(ids);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    $(".select2_wells").trigger('change');
 
-    L.marker([51.5, -0.09]).addTo(map)
-      .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-      .openPopup();
+    $('.select2_wells').on('select2:select', function(e) {
+      // var selected_wells =
+        ajaxHistoricaldata();
+    });
+    $('.select2_wells').on('select2:unselect', function(e) {
+      ajaxHistoricaldata();
+    });
+    ajaxHistoricaldata();
 
   });
-</script>
+
+  </script>
 
 {% endblock %}
 
@@ -81,8 +128,22 @@
 
 
 {% block css_block %}
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+<link href="{% static 'css/plugins/select2/select2.min.css' %}" rel="stylesheet">
 <style media="screen">
-  #map { height: 380px; }
+  .select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #1ab394;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #1AB394;
+    color: white;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    /* background-color: white; */
+    color: white;
+  }
+
 </style>
 {% endblock %}

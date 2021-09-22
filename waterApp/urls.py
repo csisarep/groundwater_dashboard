@@ -21,8 +21,13 @@ urlpatterns = [
     path('dashboard/', views.Dashboard.as_view(), name='dashboard'),
     path('', views.Home.as_view(), name='home'),
     path('meta-data', views.MetaData.as_view(), name='meta-data'),
+    path('download-table-data', views.DownloadTableData.as_view(), name='download-table-data'),
+    path('download-table-ajax-data', views.wellDatatable.as_view(), name='download-table-ajax-data'),
+
     path('digital-monitoring/', views.DigitalMonitoring.as_view(), name='digital-monitoring'),
     path('historical-database/', views.HistoricalDatabase.as_view(), name='historical-database'),
-    path('call-waterflow-chart-data/', views.AjaxGroundMeasurementRequest.as_view(), name='call-waterflow-chart-data')
+    path('call-waterflow-chart-data/', views.AjaxGroundMeasurementRequest.as_view(), name='call-waterflow-chart-data'),
+    path('call-waterflow-offline-logger-chart-data/', views.AjaxOfflineLoggerRequest.as_view(), name='call-waterflow-offline-logger-chart-data'),
+    path('call-waterflow-historical-chart-data/', views.AjaxHistoricalDataRequest.as_view(), name='call-waterflow-historical-chart-data')
 
 ]
