@@ -43,7 +43,7 @@ const drawStockChart = (data) => {
     },
 
     title: {
-      text: 'Water Flow chart- sample'
+      text: 'Water table measurements in m below ground level'
     },
     xAxis: {
       type: 'datetime',

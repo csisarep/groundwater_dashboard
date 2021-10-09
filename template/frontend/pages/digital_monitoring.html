@@ -49,7 +49,7 @@
         </div>
         <div class="ibox">
           <div class="ibox-title">
-            <h1>Last recorded ODK measurement of groundwater Level:</h1>
+            <h1> Lastest manual groundwater levels measurement:</h1>
           </div>
           <div class="ibox-content">
 
@@ -62,16 +62,20 @@
         </div>
         <div class="ibox">
           <div class="ibox-title">
-            <h2>ODK based groundwater measurements:</h2>
+            <h2> Overview of manual groundwater level measurements:</h2>
 
           </div>
           <div class="ibox-content">
             <div class="form-group">
-              <label class="font-normal">Manually measured wells</label>
+              <label class="font-normal">Please select wells of interest:</label>
               <div class="p-w-sm">
-                <select data-placeholder="Choose a Well..." class="select2_wells form-control" multiple="multiple">
+                <input type="checkbox" id="checkbox" name="checkbox"> Select All
+                <br />
+                <select data-placeholder="Choose a Well..." class="select2_wells form-control" multiple="multiple" >
 
                 </select>
+              
+
               </div>
             </div>
             <div id="container" style="height: 500px; min-width: 310px">
@@ -88,8 +92,10 @@
           </div>
           <div class="ibox-content">
             <div class="form-group">
-              <label class="font-normal">Sensor based measurement of water level. Please select particular river</label>
+              <label class="font-normal">Sensor based measurement of water level. Measurements are taken 2 times per day. Data are updated sporadically as manual reading of the sensors is required. Please select wells of interest: </label>
               <div class="p-w-sm">
+                <input type="checkbox" id="checkbox1" name="checkbox1"> Select All
+                <br />
                 <select data-placeholder="Choose a Well..." class="select2_wells_offline form-control" multiple="multiple">
 
                 </select>

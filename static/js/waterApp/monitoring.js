@@ -3,13 +3,18 @@
     // normal DOM manipulation will be here
 
 
+
     $('.chosen-select').chosen({
       width: "100%"
     });
 
-    $(".select2_wells").select2({
+
+// Using jquery select2 for enabling search of selections and better graphics
+// Modifying selection form of ODK measurements 
+    $('.select2_wells').select2({
       data: select2_options
     });
+
     $('.select2_wells').val('Rohini Khola'); // Select the option with a value of '1'
     $('.select2_wells').trigger('change');
 
@@ -22,7 +27,23 @@
     });
     ajaxODKdata();
 
+// Link to checkbox positioned above the selection form for selecting and deselecting all options
+    $("#checkbox1").click(function(){
+    if($("#checkbox").is(':checked') ){ // define what happens when box is being checked
+        $(".select2_wells > option").prop("selected","selected");// Select All Options
+        $(".select2_wells").trigger("change");
+        ajaxODKdata();// Trigger changes to ensure selection is displayed in graph
+    }else{ //define what happens when box is being unchecked
+        $('.select2_wells').val(null).trigger('change');// Trigger change to select 2
+        $(".select2_wells").trigger("change");
+        ajaxODKdata(); // Trigger changes to ensure selection is displayed in graph
+     }
+});
 
+
+
+// Modifying selection form for offline data loggers
+// 
     $(".select2_wells_offline").select2({
       data: select2_options_offline
     });
@@ -37,6 +58,21 @@
       ajaxOfflineLoggerdata();
     });
     ajaxOfflineLoggerdata();
+
+
+// Link to checkbox positioned above the selection form for selecting and deselecting all options
+    $("#checkbox1").click(function(){
+    if($("#checkbox1").is(':checked') ){ // define what happens when box is being checked
+        $(".select2_wells_offline > option").prop("selected","selected");// Select All Options
+        $(".select2_wells_offline").trigger("change");
+        ajaxODKdata();// Trigger changes to ensure selection is displayed in graph
+    }else{ //define what happens when box is being unchecked
+        $('.select2_wells_offline').val(null).trigger('change');// Trigger change to select 2
+        $(".select2_wells_offline").trigger("change");
+        ajaxODKdata(); // Trigger changes to ensure selection is displayed in graph
+     }
+});
+
 
     // $('.select2_wells').val(null).trigger('change');
 
@@ -63,8 +99,11 @@
         $(".select2_wells").select2({
           data: options
         });
+
+
         // $('.select2_wells').trigger('change');
       }
+
       console.log(checked_box);
     });
     $('.well_type').on('ifChanged', function() {
