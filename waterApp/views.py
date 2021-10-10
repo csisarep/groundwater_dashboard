@@ -31,7 +31,6 @@ class DownloadTableData(TemplateView):
         context['columHeader']=[f.name for f in GwMonitoringKobo._meta.get_fields()]
         return context
 
-
 class DigitalMonitoring(TemplateView):
     template_name = "frontend/pages/digital_monitoring.html"
     def get_context_data(self,*args, **kwargs):
@@ -39,6 +38,7 @@ class DigitalMonitoring(TemplateView):
         # df = update_odkData()
         # context['users'] = df['gw_level'][1]
         context['gw_locations'] = GwLocationsData.objects.all().exclude(latitude__isnull=True)
+        context['gw_locations1'] = GwLocationsData.objects.all().exclude(latitude__isnull=True)
         return context
 
 class HistoricalDatabase(TemplateView):
@@ -67,7 +67,6 @@ class AjaxGroundMeasurementRequest(View):
         return HttpResponse(json.dumps(chart_data), content_type="application/json")
 
 class AjaxOfflineLoggerRequest(View):
-
     def get(self, request):
         well_location = json.loads(self.request.GET.get("wells"))
         chart_data = {}

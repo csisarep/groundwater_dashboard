@@ -39,8 +39,7 @@
             <h1>Locations of monitoring wells:</h1>
           </div>
           <div class="ibox-content">
-
-            <div class="map" id="map">
+            <div class="map" id="map">  <!--  Try to use more descriptive IDs.-->
 
             </div>
 
@@ -136,6 +135,18 @@
 <script src="{% static 'js/plugins/highcharts/modules/exporting.js' %}"></script>
 <script src="{% static 'js/plugins/highcharts/modules/export-data.js' %}"></script>
 
+
+<!-- This seems to be where you load the data into gj used for layers
+     Some more explanation on why you do it this way and what's the logic
+     would be helpful. 
+
+     Also for the historical page, the js components seem to be fully in the
+     html file. Recommend to keep a strict seperations with clear guidance in each file.
+
+     Consistency is critical.
+
+   -->
+
 <script type="text/javascript">
   var gj = {
       "name": "MyFeatureType",
@@ -158,7 +169,7 @@
             'district':'{{gw.district}}',
             'place': '{{gw.location}}',
             'type': '{{gw.type.name}}',
-            'id':{{gw.id}}
+            'id':'{{gw.id}}'
           }
         });
 
@@ -181,6 +192,36 @@
         {id:'Shikanpurwa', text:'Shikanpurwa'},
         // {id:'', text:''},
       ]
+      {% endfor %}
+    {% endif %}
+
+  var gj1 = {
+      "name": "MyFeatureType",
+      "type": "FeatureCollection",
+      "features": []
+    };
+
+    // create geojson with points
+    {% if gw_locations1 %}
+      {% for gw in gw_locations1 %}
+        gj1.features.push({
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [{{gw.longitude}}, {{gw.latitude}}]
+          },
+          "properties": {
+            'well_number': '{{gw.well_number}}',
+            'district':'{{gw.district}}',
+            'place': '{{gw.location}}',
+            'type': '{{gw.type.name}}',
+            'id':'{{gw.id}}'
+          }
+        });
+
+
+
+ 
       {% endfor %}
     {% endif %}
 

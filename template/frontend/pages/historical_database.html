@@ -35,12 +35,19 @@
       <div class="col-md-12">
         <div class="ibox">
           <div class="ibox-title">
-            <h1>Historical Well Water level Information </h1>
+            <h1>Historical groundwater levels in Banke district </h1>
+            <p> 
+              This graph provides and overview of historical patterns of groundwater levels in Banke district.
+              Note that the data is not quality checked and shall provide an overview of historical patterns.
+              To download the data you can click on "Select all" with all wells selected, click on the three lines in the upper right corner of the graph and click "Download CSV".
+            </p>
           </div>
           <div class="ibox-content">
             <div class="form-group">
               <label class="font-normal">Select location of measured wells</label>
               <div class="p-w-sm">
+                <input type="checkbox" id="checkbox_hist" name="checkbox"> Select All
+                <br />
                 <select data-placeholder="Choose a Well..." class="select2_wells form-control" multiple="multiple">
                 </select>
 
@@ -54,20 +61,7 @@
         </div>
 
       </div>
-      <div class="col-md-12">
-        <div class="ibox">
-          <div class="ibox-title">
-            <h1>Historical Well Water level Information </h1>
-          </div>
-          <div class="ibox-content">
 
-            {% include 'hist_banke_line_graph.html' %}
-
-          </div>
-
-        </div>
-
-      </div>
 
     </div>
 
@@ -117,7 +111,20 @@
     });
     ajaxHistoricaldata();
 
+        $("#checkbox_hist").click(function(){
+    if($("#checkbox_hist").is(':checked') ){ // define what happens when box is being checked
+        $(".select2_wells > option").prop("selected","selected");// Select All Options
+        $(".select2_wells").trigger("change");
+        ajaxHistoricaldata();// Trigger changes to ensure selection is displayed in graph
+    }else{ //define what happens when box is being unchecked
+        $('.select2_wells').val(null).trigger('change');// Trigger change to select 2
+        $(".select2_wells").trigger("change");
+        ajaxHistoricaldata(); // Trigger changes to ensure selection is displayed in graph
+     }
+});
+
   });
+
 
   </script>
 

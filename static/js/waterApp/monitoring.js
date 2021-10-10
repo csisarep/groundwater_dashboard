@@ -28,7 +28,7 @@
     ajaxODKdata();
 
 // Link to checkbox positioned above the selection form for selecting and deselecting all options
-    $("#checkbox1").click(function(){
+    $("#checkbox").click(function(){
     if($("#checkbox").is(':checked') ){ // define what happens when box is being checked
         $(".select2_wells > option").prop("selected","selected");// Select All Options
         $(".select2_wells").trigger("change");
@@ -65,13 +65,18 @@
     if($("#checkbox1").is(':checked') ){ // define what happens when box is being checked
         $(".select2_wells_offline > option").prop("selected","selected");// Select All Options
         $(".select2_wells_offline").trigger("change");
-        ajaxODKdata();// Trigger changes to ensure selection is displayed in graph
+        ajaxOfflineLoggerdata();// Trigger changes to ensure selection is displayed in graph
     }else{ //define what happens when box is being unchecked
         $('.select2_wells_offline').val(null).trigger('change');// Trigger change to select 2
         $(".select2_wells_offline").trigger("change");
-        ajaxODKdata(); // Trigger changes to ensure selection is displayed in graph
+        ajaxOfflineLoggerdata(); // Trigger changes to ensure selection is displayed in graph
      }
 });
+
+
+// Checkbox for historical well graph select all
+// Link to checkbox positioned above the selection form for selecting and deselecting all options
+
 
 
     // $('.select2_wells').val(null).trigger('change');
@@ -124,7 +129,7 @@
     var map = L.map('map', {
       center: [27.9993613, 81.71946941],
       zoom: 9,
-      layers: [osm, wellsLayer]
+      layers: [osm, SW, DW]
     });
     var baseLayers = {
       "Grayscale": grayscale,
@@ -135,10 +140,14 @@
     };
 
     var overlays = {
-      "Wells": wellsLayer
+      "DW Wells": DW,
+      "SW Wells": SW
     };
 
     L.control.layers(baseLayers, overlays).addTo(map);
+
+
+
 
 
     // map classification component

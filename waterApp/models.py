@@ -1,5 +1,9 @@
 from django.db import models
 
+
+# Please do explain also the data and model workflow here or in the README.
+# Keeping track of how the data is connected and udpated is critical.
+
 # Create your models here.
 class GwMonitoring(models.Model):
     id = models.BigAutoField(primary_key=True)
