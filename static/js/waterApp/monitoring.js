@@ -120,9 +120,25 @@
     });
 
 
+    // different icon definitions for SW and DW
+    //downloaded from https://github.com/pointhi/leaflet-color-markers
+    var brownIcon = new L.Icon({
+          iconUrl: '../../static/img/marker-icon-orange.png',
+          shadowUrl: '../../static/img/marker-shadow.png',
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34],
+          shadowSize: [41, 41]
+        });
 
 
+    // Add brown icons to DW layers.
 
+    DW.eachLayer(function(layer) {
+         if( layer instanceof L.Marker ) {
+           layer.setIcon(brownIcon);
+          }
+      });
     // map location component
     // map location with other content will be here
 
