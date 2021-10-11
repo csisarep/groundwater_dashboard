@@ -33,6 +33,9 @@ function onEachFeature(feature, layer) {
 var wellsLayer = L.geoJSON(gj, {
   onEachFeature: onEachFeature
 })
+
+
+
 // Due to shared state referencin we use a seperate invocation from the db for shallow and deep wells
 var wellsLayer1 = L.geoJSON(gj1, {
   onEachFeature: onEachFeature

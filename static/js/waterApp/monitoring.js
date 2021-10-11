@@ -109,14 +109,14 @@
         // $('.select2_wells').trigger('change');
       }
 
-      console.log(checked_box);
+ 
     });
     $('.well_type').on('ifChanged', function() {
       var checked_box = []
       $('.well_type:checkbox:checked').each(function() {
         checked_box.push($(this).val())
       })
-      console.log(checked_box);
+
     });
 
 
@@ -170,13 +170,67 @@
     // map classification component of water level will be here
 
     // chlorepeth map
-    var mapNew = L.map('mapNew').setView([27.9993613, 81.71946941], 9);
+
+
+
+//sort wells, then delete all older than 30 days, then delete all duplicates. For now 60 days as Kobo updates are not implemented yet.
+
+var date = new Date();
+date.setDate(date.getDate() - 90);
+var cutOffDate = date.toISOString().split('T')[0];
+odk.features = Object.entries(odk.features);
+
+
+odk.features = odk.features.filter(recent => recent[1].properties.date > cutOffDate);
+console.log(odk);
+
+//assume that entries are ordered chronologically. Only take first occurence of a well number and add number of duplicated 
+//for removal later. Then go backwards through index for splicing to not mess up indexes.
+var nums = [];
+var index = [];
+for (x in odk.features) {
+  console.log(x);
+  if (!nums.includes(odk.features[x][1].properties.well_number)) {
+  nums.push(odk.features[x][1].properties.well_number);
+  } else {
+
+  index.push(x);
+}
+}
+
+for (var i = index.length -1; i >= 0; i--){
+   odk.features.splice(index[i],1);
+}
+
+
+for (x of odk.features) {
+  x[1].properties.gw_level = parseFloat(x[1].properties.gw_level);
+}
+
+//some issue with nested array occured in copying, remove unnecesarrt layer and flatten for proper recoginition as FeatureCollection
+for (const x of odk.features) {
+  x.splice(0,1);
+}
+
+odk.features = odk.features.flat(Infinity);
+
+
+//start creating latest ODK map. TODO Better ID naming 
+    var mapNew = L.map('mapNew', {
+      center: [27.9993613, 81.71946941],
+      zoom: 9,
+      layers: [osm] 
+    });
+
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mapNew);
 
-    var colors_circle = ['#ff9ff3', '#ff6b6b', '#feca57', '#48dbfb', '#1dd1a1', '#FF9655', '#FFF263', '#6AF9C4'];
+
+// Defining colors for categories of water levels
+// TODO automatic update of thehsolds in legend and color coding
+   var colors_circle = [ '#1dd1a1',  '#feca57','#ff6b6b', '#FF9655', '#FFF263', '#6AF9C4'];
 
     function geojsonMarkerOptions(color) {
       return {
@@ -189,16 +243,20 @@
       }
     }
 
-    L.geoJSON(gj, {
-      pointToLayer: function(feature, latlng) {
-        var circleColor;
-        if (feature.properties.water_level < 5) {
-          circleColor = colors_circle[0]
-        } else if (feature.properties.water_level > 5 && feature.properties.water_level < 15) {
-          circleColor = colors_circle[1]
-        } else {
-          circleColor = colors_circle[2]
-        }
+// add popup to points/circles
+console.log(odk);
+
+
+
+    L.geoJSON(odk, {pointToLayer: function(feature, latlng) {
+          var circleColor;
+          if (feature.properties.gw_level < 2) {
+            circleColor = colors_circle[0]
+          } else if (feature.properties.gw_level < 5 && feature.properties.gw_level > 5) {
+            circleColor = colors_circle[1]
+          } else {
+            circleColor = colors_circle[2]
+          }
         return L.circleMarker(latlng, geojsonMarkerOptions(circleColor));
       }
     }).addTo(mapNew);
@@ -206,17 +264,19 @@
       position: 'bottomleft'
     });
 
+var thresh = [' < 2 mbgl',' < 5 mbgl',' > 5 mbgl']
+
+// define legend content and add legend to map
     legend.onAdd = function(mapNew) {
       var div = L.DomUtil.create('div', 'info legend');
       for (var i = 0; i < 3; i++) {
         div.innerHTML +=
           '<div><span class="dot" style="background:' + colors_circle[i] + '"></span>' +
-          'sample-' + String(i) + '</div>';
+          thresh[i] + '</div>';
       }
       return div;
     }
     legend.addTo(mapNew);
-
 
     // let loggerChartContent = drawLineChart('data');
     // Highcharts.chart('containerLogger', loggerChartContent);

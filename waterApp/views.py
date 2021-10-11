@@ -39,6 +39,7 @@ class DigitalMonitoring(TemplateView):
         # context['users'] = df['gw_level'][1]
         context['gw_locations'] = GwLocationsData.objects.all().exclude(latitude__isnull=True)
         context['gw_locations1'] = GwLocationsData.objects.all().exclude(latitude__isnull=True)
+        context['tablet_monitoring'] = GwMonitoringKobo.objects.all()
         return context
 
 class HistoricalDatabase(TemplateView):

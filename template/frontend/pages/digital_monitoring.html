@@ -43,9 +43,6 @@
               <img src="../../static/img/marker-icon-orange.png" alt="Marker Type" width="12" > Deep tubewell &nbsp;&nbsp;
               <img src="../../static/img/marker-icon-blue.png" alt="Marker Type" width="12" > Shallow tubewell
               
-
-
-
             </p>
           </div>
           <div class="ibox-content">
@@ -58,7 +55,12 @@
         </div>
         <div class="ibox">
           <div class="ibox-title">
-            <h1> Lastest manual groundwater levels measurement:</h1>
+            <h1> Lastest manual groundwater measurement:</h1>
+            <p>
+              In this map you can see the latest manually measured groundwater measurements. If the latest measurement for a well is older than 60 days we do not display it here, but you can see all measurement in the line graph below. Measurements are in m below ground level (mbgl).
+
+
+            </p>
           </div>
           <div class="ibox-content">
 
@@ -234,6 +236,37 @@
  
       {% endfor %}
     {% endif %}   
+
+  var odk = {
+      "name": "MyFeatureType",
+      "type": "FeatureCollection",
+      "features": []
+    };
+
+    // create geojson with points
+    {% if tablet_monitoring %}
+      {% for gw in tablet_monitoring %}
+odk.features.push({
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [{{gw.longitude}}, {{gw.latitude}}]
+          },
+          "properties": {
+            'well_number': '{{gw.well_num}}',
+            'district':'{{gw.district}}',
+            'type': '{{gw.type.name}}',
+            'date':'{{gw.date.isoformat}}',
+            'gw_level':'{{gw.gw_level}}'
+          }
+        });
+
+
+
+ 
+      {% endfor %}
+    {% endif %}   
+
 
 </script>
 
