@@ -181,16 +181,19 @@
       };
       location_check.push('{{gw.location}}');
 
+
+// Need to adjust here based on location names in SQL database
+// ensure that these are mathcing for proper display of chart
       var select2_options_offline = [
-        {id:'Rohini Khola', text:'Rohini Khola'},
-        {id:'Channawa', text:'Channawa'},
-        {id:'Piprahawa', text:'Piprahawa'},
-        {id:'Jaispur', text:'Jaispur'},
-        {id:'Banjare Gau', text:'Banjare Gau'},
-        {id:'Kalhanshangau', text:'Kalhanshangau'},
-        {id:'D-gaon', text:'D-gaon'},
-        {id:'Khadaicha', text:'Khadaicha'},
-        {id:'Shikanpurwa', text:'Shikanpurwa'},
+        {id:'rohini_khola', text:'rohini_khola'},
+        {id:'channawa', text:'channawa'},
+        {id:'piprahawa', text:'piprahawa'},
+        {id:'jaispur', text:'jaispur'},
+        {id:'banjare_gau', text:'banjare_gau'},
+        {id:'kalhanshangau', text:'kalhanshangau'},
+        {id:'d_gau', text:'d_gau'},
+        {id:'khadaicha', text:'khadaicha'},
+        {id:'shikanpurwa', text:'shikanpurwa'},
         // {id:'', text:''},
       ]
       {% endfor %}

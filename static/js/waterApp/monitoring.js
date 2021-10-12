@@ -47,6 +47,7 @@
     $(".select2_wells_offline").select2({
       data: select2_options_offline
     });
+    console.log(select2_options_offline);
     // Select all
     $('.select2_wells_offline').select2('destroy').find('option').prop('selected', 'selected').end().select2();
 
@@ -182,11 +183,12 @@ odk.features = Object.entries(odk.features);
 
 
 odk.features = odk.features.filter(recent => recent[1].properties.date > cutOffDate);
-console.log(odk);
+
 
 //assume that entries are ordered chronologically. Only take first occurence of a well number and add number of duplicated 
 //for removal later. Then go backwards through index for splicing to not mess up indexes.
 
+//Bardiya does not have well numbers. Some issue in the update csv routine. Removing the well filtering for now.
 /*
 var nums = [];
 var index = [];
@@ -246,7 +248,7 @@ odk.features = odk.features.flat(Infinity);
     }
 
 // add popup to points/circles
-console.log(odk);
+
 
 
 

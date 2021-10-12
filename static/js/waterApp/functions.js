@@ -37,7 +37,6 @@ const ajaxOfflineLoggerdata = () => {
       Highcharts.stockChart('containerLogger', drawStockChart(multilineData(data)));
     },
     error: function(XMLHttpRequest, textStatus, errorThrown) {
-
     }
   })
 

@@ -2,7 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.db import connection,transaction
 
-from waterApp.utils.update_odk_csv import update_odkData
+from waterApp.utils.update_odk_csv import update_odkData 
+from waterApp.utils.update_offline_csv import update_offline_csv
+
 from waterApp.utils.historical_lineGraph import create_histBankeGraph
 
 # Create your views here.
@@ -36,11 +38,19 @@ class DigitalMonitoring(TemplateView):
     template_name = "frontend/pages/digital_monitoring.html"
     def get_context_data(self,*args, **kwargs):
         context = super(DigitalMonitoring, self).get_context_data(*args,**kwargs)
+        update_odkData() #update ODK database from KOBO if older than 24h
+        update_offline_csv()
         with connection.cursor() as cursor:
             cursor.execute('DELETE FROM gw_monitoring_kobo', [])
             cursor.execute("COPY gw_monitoring_kobo(date,district,latitude,longitude,altitude,precision,well_type,measurement_point_cm,measurement_of_wet_point_on_tape__in_m_,gw_level_from_mp,mp_in_m,gw_level,fid,well_num) FROM '/home/au/work/groundWater/data/gw_level.csv' DELIMITER ',' CSV HEADER",[])
         
-        update_odkData() #update ODK database from KOBO if older than 24h
+        #Still requires scheduling and adding only new columns
+        with connection.cursor() as cursor:    
+            # mixed case naming sub-optimal. Requires quoting table names when doing direct SQL.
+           cursor.execute('DELETE FROM "waterApp_offlineloggerdata"', [])
+            # Using triple quotes to allow for double quotes on table name and single quotes on file name and delimiter.
+           cursor.execute("""COPY "waterApp_offlineloggerdata"(id,date,pressure,temperature,water_level,location) FROM '/home/au/work/groundWater/data/offline_logger_full.csv' DELIMITER ',' CSV HEADER""",[]) 
+
         # context['users'] = df['gw_level'][1]
         #passing one locatio set for deep and one for shallow tubewells to be managed in JS 
         context['gw_locations'] = GwLocationsData.objects.all().exclude(latitude__isnull=True) 
