@@ -176,7 +176,7 @@
 //sort wells, then delete all older than 30 days, then delete all duplicates. For now 60 days as Kobo updates are not implemented yet.
 
 var date = new Date();
-date.setDate(date.getDate() - 90);
+date.setDate(date.getDate() - 30);
 var cutOffDate = date.toISOString().split('T')[0];
 odk.features = Object.entries(odk.features);
 
@@ -186,6 +186,8 @@ console.log(odk);
 
 //assume that entries are ordered chronologically. Only take first occurence of a well number and add number of duplicated 
 //for removal later. Then go backwards through index for splicing to not mess up indexes.
+
+/*
 var nums = [];
 var index = [];
 for (x in odk.features) {
@@ -201,7 +203,7 @@ for (x in odk.features) {
 for (var i = index.length -1; i >= 0; i--){
    odk.features.splice(index[i],1);
 }
-
+*/
 
 for (x of odk.features) {
   x[1].properties.gw_level = parseFloat(x[1].properties.gw_level);

@@ -57,7 +57,7 @@
           <div class="ibox-title">
             <h1> Lastest manual groundwater measurement:</h1>
             <p>
-              In this map you can see the latest manually measured groundwater measurements. If the latest measurement for a well is older than 60 days we do not display it here, but you can see all measurement in the line graph below. Measurements are in m below ground level (mbgl).
+              In this map you can see the latest manually measured groundwater measurements that are not older than 30 days. You can see all measurement in the line graph below or in the download page. Measurements are in m below ground level (mbgl).
 
 
             </p>
@@ -83,23 +83,16 @@
                 <input type="checkbox" id="checkbox" name="checkbox"> Select All
                 <br />
                 <select data-placeholder="Choose a Well..." class="select2_wells form-control" multiple="multiple" >
-
                 </select>
-              
-
               </div>
             </div>
             <div id="container" style="height: 500px; min-width: 310px">
             </div>
-
           </div>
-
         </div>
-
         <div class="ibox">
           <div class="ibox-title">
             <h2>Offline logger based groundwater measurements:</h2>
-
           </div>
           <div class="ibox-content">
             <div class="form-group">
@@ -114,15 +107,10 @@
             </div>
             <div id="containerLogger" style="height: 500px; min-width: 310px">
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
-
   </div>
 </div>
 
@@ -159,6 +147,7 @@
 
    -->
 
+<!-- be consistent about using html and js in same / sperate fiels -->
 <script type="text/javascript">
   var gj = {
       "name": "MyFeatureType",
