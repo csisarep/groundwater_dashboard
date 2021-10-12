@@ -92,7 +92,7 @@
       var checked_box = []
       $('.district:checkbox:checked').each(function() {
         checked_box.push($(this).val())
-      });
+      });1
 
       if (checked_box.length > 1) {
         $('.select2_wells').empty().trigger('change');

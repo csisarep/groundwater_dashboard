@@ -44,7 +44,7 @@ class DigitalMonitoring(TemplateView):
             cursor.execute('DELETE FROM gw_monitoring_kobo', [])
             cursor.execute("COPY gw_monitoring_kobo(date,district,latitude,longitude,altitude,precision,well_type,measurement_point_cm,measurement_of_wet_point_on_tape__in_m_,gw_level_from_mp,mp_in_m,gw_level,fid,well_num) FROM '/home/au/work/groundWater/data/gw_level.csv' DELIMITER ',' CSV HEADER",[])
         
-        #Still requires scheduling and adding only new columns
+        #Still requires scheduling and adding only new columns - now it's loading all and rewriting database with every call
         with connection.cursor() as cursor:    
             # mixed case naming sub-optimal. Requires quoting table names when doing direct SQL.
            cursor.execute('DELETE FROM "waterApp_offlineloggerdata"', [])

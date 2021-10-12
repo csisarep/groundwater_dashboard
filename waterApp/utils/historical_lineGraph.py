@@ -24,7 +24,7 @@ def create_histBankeGraph():
                 #     d['line']['color']='grey'
                 # fig = go.Figure(data=go.Scatter(x=data["month"], y=data['value'], color = data['year']), 
                 # layout = go.Layout(margin = {'l':0, 't': 25, 'r' : 0, 'l' : 0}))
-    fig.update_layout(title=f'Ground Water level of Banke (2001-2015)',
+    fig.update_layout(title=f'Groundwater level of Banke (2001-2015)',
     xaxis_title='Months',
     yaxis_title='Groundwater in mbgl',
     yaxis_range=[-1,10]),
