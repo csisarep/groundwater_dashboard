@@ -9,7 +9,7 @@ The Cereal Systems Initiative in South Asia (CSISA; www.csisa.org) is supported 
 well as Nepal’s longer-term building of processes and structures that can enhance resilience to shocks, with emphasis empowering youth and overcoming challenges faced by women headed farm households. The views expressed on this website do not necessarily reflect the views of the donors.## We be listing the procedure for setup of project later on.
 
 
-
+## Smaller details for reference (delete later):
 Documentation for higher level issues and decision taken:
 https://docs.google.com/document/d/1iPiLmMDzfiNsVfwgOoOnJweTDDF2DTpf43fIuvbWxaw/edit?usp=sharing
 
