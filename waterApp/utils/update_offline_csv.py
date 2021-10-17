@@ -4,7 +4,6 @@
 
 
 import pandas as pd
-import plotly.express as px
 import os
 import time
 from datetime import datetime

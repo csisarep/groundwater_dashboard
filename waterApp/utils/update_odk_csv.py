@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import requests
 import pandas as pd
-import plotly.express as px
 import os
 import time
 from datetime import datetime

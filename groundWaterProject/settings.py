@@ -29,7 +29,7 @@ SECRET_KEY = '$@#&nut@#%9e1uz)i_cv=_g&-dlwe#_okyb^@8gknlp!a*1+4m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 
 # Application definition
@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': 'groundwater',
         'USER': 'postgres',
         'PASSWORD': 'krishna',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
