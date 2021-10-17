@@ -88,13 +88,13 @@ def update_odkData():
                 df = df.sort_values(by=['date'])
 
 
-                df.to_csv("data/gw_level.csv",index=False)
+                df.to_csv("/opt/gw_level.csv",index=False)
 
                 return(df)
                 #else:
                 #    df = pd.read_csv("data/gw_level.csv")
     else:
-                df = pd.read_csv("data/gw_level.csv")
+                df = pd.read_csv("/opt/gw_level.csv")
                 return(df)
     
         

@@ -31,4 +31,4 @@ def update_offline_csv():
   offlineData['date'] = pd.to_datetime(offlineData['date']).dt.strftime('%Y-%m-%dT%H:%M:%S')
   offlineData.sort_values('date')
   offlineData['id'] = pd.RangeIndex(0, len(offlineData)).to_series()
-  offlineData.to_csv("data/offline_logger_full.csv",index=False) #index here used as PK
+  offlineData.to_csv("/opt/offline_logger_full.csv",index=False) #index here used as PK
