@@ -39,7 +39,7 @@ const drawStockChart = (data) => {
       type: 'line'
     },
     rangeSelector: {
-      selected: 1
+      // selected: 1
     },
 
     title: {
@@ -51,23 +51,29 @@ const drawStockChart = (data) => {
       // tickInterval: 10 * 30 * 24 * 3600 * 1000,
     },
     yAxis: {
+      title: {
+        text: 'Ground Water Level (m)'
+      },
       reversed: true
     },
     legend: {
       enabled: true,
-      // layout: 'horizontal',
-      // verticalAlign: 'bottom',
-      // floating: true,
-      // y: -65
-      layout: 'vertical',
-      align: 'right',
-      verticalAlign: 'middle'
+      layout: 'horizontal',
+      verticalAlign: 'bottom',
+      floating: true,
+      y: -65
+      // layout: 'vertical',
+      // align: 'right',
+      // verticalAlign: 'middle'
+    },
+    navigator: {
+      margin: 60
     },
     series: data,
     credits: {
       enabled: false
     },
-    // colors: ['#80CDBD', '#EDEDED', '#DEDEDE', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+    colors: ['#80CDBD', '#00cec9', '#6c5ce7', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
     exporting: exportContextMenu
   };
   return variable_return

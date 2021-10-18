@@ -115,6 +115,7 @@
 {% block js_block %}
 
 <script src="{% static 'js/plugins/leaflet/leaflet.js' %}"></script>
+<script src="{% static 'js/plugins/leaflet/chlorepeth.js' %}"></script>
 <!-- Chosen -->
 <script src="{% static 'js/plugins/chosen/chosen.jquery.js' %}"></script>
 
@@ -136,6 +137,11 @@
       "type": "FeatureCollection",
       "features": []
     };
+  var gj_latest_water_level = {
+        "name": "MyFeatureType",
+        "type": "FeatureCollection",
+        "features": []
+      };
     var select2_options = [];
     var location_check = [];
     // create geojson with points
@@ -175,6 +181,24 @@
         {id:'Shikanpurwa', text:'Shikanpurwa'},
         // {id:'', text:''},
       ]
+      {% endfor %}
+    {% endif %}
+
+    {% if latest_water_level %}
+      {% for gw in latest_water_level %}
+        gj_latest_water_level.features.push({
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [{{gw.longitude}}, {{gw.latitude}}]
+          },
+          "properties": {
+            'well_number': '{{gw.well_num}}',
+            'district':'{{gw.district}}',
+            'type': '{{gw.well_type}}',
+            'water_level':'{{gw.gw_level}}'
+          }
+        });
       {% endfor %}
     {% endif %}
 
@@ -234,5 +258,33 @@
     /* background-color: white; */
     color: white;
   }
+  .legend {
+			color: #555;
+			padding: 6px 8px;
+			font: 12px Arial, Helvetica, sans-serif;
+			font-weight: bold;
+			background: white;
+			background: rgba(255,255,255,0.8);
+			box-shadow: 0 0 15px rgba(0,0,0,0.2);
+			border-radius: 5px;
+		}
+		.legend ul {
+			list-style-type: none;
+			padding: 0;
+			margin: 0;
+			clear: both;
+		}
+		.legend li {
+			display: inline-block;
+			width: 30px;
+			height: 22px;
+		}
+		.legend .min {
+			float: left;
+			padding-bottom: 5px;
+		}
+		.legend .max {
+			float: right;
+		}
 </style>
 {% endblock %}

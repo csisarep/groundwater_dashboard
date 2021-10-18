@@ -1,5 +1,5 @@
 const filterwellsByDistrict = (district, data) => {
-  console.log(data, district);
+  // console.log(data, district);
   let result = data.filter((item) => {
     return item.district === district;
   });

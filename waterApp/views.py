@@ -38,6 +38,9 @@ class DigitalMonitoring(TemplateView):
         context = super(DigitalMonitoring, self).get_context_data(*args,**kwargs)
         # df = update_odkData()
         # context['users'] = df['gw_level'][1]
+        # get the latest water levvel value for each wells
+        latest_updates = GwMonitoringKobo.objects.order_by('well_num', '-date').exclude(latitude__isnull=True).distinct('well_num')
+        context['latest_water_level'] = latest_updates
         context['gw_locations'] = GwLocationsData.objects.all().exclude(latitude__isnull=True)
         return context
 
