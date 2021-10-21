@@ -31,6 +31,7 @@ function onEachFeature(feature, layer) {
 var wellsLayer = L.geoJSON(gj, {
   onEachFeature: onEachFeature
 })
+var wellsLayer_classify;
 
 var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
     maxZoom: 20,
