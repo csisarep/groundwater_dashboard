@@ -29,10 +29,28 @@ function onEachFeature(feature, layer) {
   }
 }
 
+var brownIcon = new L.Icon({
+      iconUrl: '../../static/img/marker-icon-orange.png',
+      shadowUrl: '../../static/img/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
 
-var wellsLayer = L.geoJSON(gj, {
-  onEachFeature: onEachFeature
-})
+function classifyMarker(feature, latlng){
+  if (feature.properties.type == 'Shallow Tubewells') {
+    return L.marker(latlng)
+  } else {
+    return L.marker(latlng, {icon: brownIcon})
+  }
+}
+
+var wellsLayer = L.geoJSON(gj1, {
+  onEachFeature: onEachFeature,
+  pointToLayer: classifyMarker
+});
+var wellsLayer_classify;
 
 
 
@@ -40,18 +58,6 @@ var wellsLayer = L.geoJSON(gj, {
 var wellsLayer1 = L.geoJSON(gj1, {
   onEachFeature: onEachFeature
 })
-
-var SW = wellsLayer;
-var DW = wellsLayer1;
-
-SW._layers = Object.entries(SW._layers)
-SW._layers = SW._layers.filter(wells => wells[1].feature.properties.type === "Shallow Tubewells")
-SW._layers = Object.fromEntries(SW._layers)
-
-DW._layers = Object.entries(DW._layers)
-DW._layers = DW._layers.filter(wells => wells[1].feature.properties.type !== "Shallow Tubewells")
-DW._layers = Object.fromEntries(DW._layers)
-
 
 var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
     maxZoom: 20,

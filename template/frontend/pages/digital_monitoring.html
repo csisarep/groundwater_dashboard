@@ -7,8 +7,6 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3">
-        
-        <!-- Disabling floating box for now as not yet fully working.
         <div class="ibox">
           <div class="ibox-title">
             <h1>Groundwater well selection</h1>
@@ -17,15 +15,15 @@
 
             <div class="">
               <p>Districts</p>
-              <div class="i-checks p-w-sm"><label> <input type="checkbox" value="Banke" class="district" checked> <i></i> Banke</label></div>
-              <div class="i-checks p-w-sm"><label> <input type="checkbox" value="Bardiya" class="district"> <i></i> Bardiya </label></div>
+              <div class="i-checks p-w-sm"><label> <input type="checkbox" value="Banke" class="district dst_wt" checked> <i></i> Banke</label></div>
+              <div class="i-checks p-w-sm"><label> <input type="checkbox" value="Bardiya" class="district dst_wt"> <i></i> Bardiya </label></div>
 
             </div>
             <div class="">
               <p>Type of Well</p>
 
-              <div class="i-checks p-w-sm"><label> <input type="checkbox" value="2"class="well_type"> <i></i> Deep Tubewell</label></div>
-              <div class="i-checks p-w-sm"><label> <input type="checkbox" value="1" class="well_type" checked> <i></i> Shallow Tubewell </label></div>
+              <div class="i-checks p-w-sm"><label> <input type="checkbox" value="2"class="well_type dst_wt"> <i></i> Deep Tubewell</label></div>
+              <div class="i-checks p-w-sm"><label> <input type="checkbox" value="1" class="well_type dst_wt" checked> <i></i> Shallow Tubewell </label></div>
             </div>
 
 
@@ -33,7 +31,6 @@
           </div>
 
         </div>
-        --->
       </div>
       <div class="col-md-9">
         <div class="ibox">
@@ -44,7 +41,7 @@
               <br><br>
               <img src="../../static/img/marker-icon-orange.png" alt="Marker Type" width="12" > Deep tubewell &nbsp;&nbsp;
               <img src="../../static/img/marker-icon-blue.png" alt="Marker Type" width="12" > Shallow tubewell
-              
+
             </p>
           </div>
           <div class="ibox-content">
@@ -140,7 +137,7 @@
 
 <!-- This seems to be where you load the data into gj used for layers
      Some more explanation on why you do it this way and what's the logic
-     would be helpful. 
+     would be helpful.
 
      Also for the historical page, the js components seem to be fully in the
      html file. Recommend to keep a strict seperations with clear guidance in each file.
@@ -221,15 +218,16 @@
             'district':'{{gw.district}}',
             'place': '{{gw.location}}',
             'type': '{{gw.type.name}}',
+            'type_id': '{{gw.type.id}}',
             'id':'{{gw.id}}'
           }
         });
 
 
 
- 
+
       {% endfor %}
-    {% endif %}   
+    {% endif %}
 
   var odk = {
       "name": "MyFeatureType",
@@ -250,6 +248,7 @@ odk.features.push({
             'well_number': '{{gw.well_num}}',
             'district':'{{gw.district}}',
             'type': '{{gw.type.name}}',
+            'type_id': '{{gw.well_type}}',
             'date':'{{gw.date.isoformat}}',
             'gw_level':'{{gw.gw_level}}'
           }
@@ -257,9 +256,9 @@ odk.features.push({
 
 
 
- 
+
       {% endfor %}
-    {% endif %}   
+    {% endif %}
 
 
 </script>
@@ -268,6 +267,7 @@ odk.features.push({
 <script src="{% static 'js/waterApp/chartData.js' %}"></script>
 <script src="{% static 'js/waterApp/chart.js' %}"></script>
 <script src="{% static 'js/waterApp/functions.js' %}"></script>
+<script src="{% static 'js/waterApp/filter.js' %}"></script>
 <script src="{% static 'js/waterApp/monitoring.js' %}"></script>
 
 {% endblock %}

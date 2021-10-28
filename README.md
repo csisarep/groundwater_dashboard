@@ -8,3 +8,14 @@ I addedd the schema to a Google Sheet:
 https://docs.google.com/spreadsheets/d/1MfJqkCz7o-e7jgZG_KTTIiDoeIAfE5WgPWRdj4R6swQ/edit?usp=sharing
 
 Will still be expanded, but can get started from here.
+
+
+# restore database in postgres
+# location of groundwater.sql must be inside /var/lib/postgresql
+
+psql groundwater < groundwater.sql
+
+#this command restore backed up database to the existing database named "groundwater"
+
+
+docker cp ./database/well_type_update.sql groundwater_db_1:/opt/

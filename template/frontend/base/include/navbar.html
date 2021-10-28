@@ -1,27 +1,27 @@
 <div class="row border-bottom white-bg">
 <nav class="navbar navbar-expand-lg navbar-static-top" role="navigation">
 
-        <a href="#" class="navbar-brand">Groundwater Dashboard<br>Nepal</a>
+        <a href="#" class="navbar-brand">Groundwater Dashboard <br> Nepal</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fa fa-reorder"></i>
         </button>
 
     <div class="navbar-collapse collapse" id="navbar">
         <ul class="nav navbar-nav mr-auto">
-            <li class="{% if request.path == 'home' %}active{% endif %}">
-                <a aria-expanded="false" role="button" href="{% url 'home' %}"> Home</a>
+            <li class="{% if request.path == '/' or request.path == '/waterapp/' %}active {% endif %}" >
+                <a aria-expanded="false" role="button" href="{% url 'home' %}"> Home </a>
             </li>
-            <li >
+            <li class="{% if 'digital-monitoring' in request.path %}active {% endif %}" >
                 <a aria-expanded="false" role="button" href='{% url "digital-monitoring" %}'> Digital Monitoring</a>
             </li>
-            <li class="dropdown">
+            <li class="{% if 'download-table-data' in request.path %}active {% endif %}">
                 <a aria-expanded="false" role="button" href='{% url "download-table-data" %}'> Download Monitoring Data</a>
             </li>
-            <li >
+            <li class="{% if 'historical-database' in request.path %}active {% endif %}" >
                 <a aria-expanded="false" role="button" href='{% url "historical-database" %}'> Historical database</a>
             </li>
-            <li class="{% if request.path == 'meta-data' %} active {% endif %}" >
-                <a aria-expanded="false" role="button" href='{% url "meta-data" %}'> Meta data</a>
+            <li class="{% if 'meta-data' in request.path %}active {% endif %}" >
+                <a aria-expanded="false" role="button" href='{% url "meta-data" %}'> Meta data </a>
             </li>
 
         </ul>

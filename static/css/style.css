@@ -1418,7 +1418,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
   color: #1ab394;
 }
 .top-navigation .navbar .nav > li.active {
-  background: #fff;
+  background: #f3f3f4;
   border: none;
 }
 .top-navigation .nav > li.active > a {
