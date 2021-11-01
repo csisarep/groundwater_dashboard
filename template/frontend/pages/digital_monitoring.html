@@ -31,16 +31,21 @@
           </div>
 
         </div>
-
       </div>
       <div class="col-md-9">
         <div class="ibox">
           <div class="ibox-title">
             <h1>Locations of monitoring wells:</h1>
+            <p>
+              This map provides an overview of the currently installed and monitored groundwater monitoring wells in Banke and Baridya district. Click on any well to see more details regarding the location, well number, and type of well.
+              <br><br>
+              <img src="../../static/img/marker-icon-orange.png" alt="Marker Type" width="12" > Deep tubewell &nbsp;&nbsp;
+              <img src="../../static/img/marker-icon-blue.png" alt="Marker Type" width="12" > Shallow tubewell
+
+            </p>
           </div>
           <div class="ibox-content">
-
-            <div class="map" id="map">
+            <div class="map" id="map">  <!--  Try to use more descriptive IDs.-->
 
             </div>
 
@@ -49,7 +54,12 @@
         </div>
         <div class="ibox">
           <div class="ibox-title">
-            <h1>Last recorded ODK measurement of groundwater Level:</h1>
+            <h1> Last month's groundwater measurements:</h1>
+            <p>
+              In this map you can see the latest manually measured groundwater measurements that are not older than 30 days. You can see all measurement in the line graph below or in the download page. Measurements are in m below ground level (mbgl).
+
+
+            </p>
           </div>
           <div class="ibox-content">
 
@@ -62,34 +72,33 @@
         </div>
         <div class="ibox">
           <div class="ibox-title">
-            <h2>ODK based groundwater measurements:</h2>
+            <h2> Overview of manual groundwater level measurements:</h2>
 
           </div>
           <div class="ibox-content">
             <div class="form-group">
-              <label class="font-normal">Manually measured wells</label>
+              <label class="font-normal">Please select wells of interest:</label>
               <div class="p-w-sm">
-                <select data-placeholder="Choose a Well..." class="select2_wells form-control" multiple="multiple">
-
+                <input type="checkbox" id="checkbox" name="checkbox"> Select All
+                <br />
+                <select data-placeholder="Choose a Well..." class="select2_wells form-control" multiple="multiple" >
                 </select>
               </div>
             </div>
             <div id="container" style="height: 500px; min-width: 310px">
             </div>
-
           </div>
-
         </div>
-
         <div class="ibox">
           <div class="ibox-title">
             <h2>Offline logger based groundwater measurements:</h2>
-
           </div>
           <div class="ibox-content">
             <div class="form-group">
-              <label class="font-normal">Sensor based measurement of water level. Please select particular river</label>
+              <label class="font-normal">Sensor based measurement of water level. Measurements are taken 2 times per day. Data are updated sporadically as manual reading of the sensors is required. Please select wells of interest: </label>
               <div class="p-w-sm">
+                <input type="checkbox" id="checkbox1" name="checkbox1"> Select All
+                <br />
                 <select data-placeholder="Choose a Well..." class="select2_wells_offline form-control" multiple="multiple">
 
                 </select>
@@ -97,15 +106,10 @@
             </div>
             <div id="containerLogger" style="height: 500px; min-width: 310px">
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
-
   </div>
 </div>
 
@@ -131,6 +135,19 @@
 <script src="{% static 'js/plugins/highcharts/modules/exporting.js' %}"></script>
 <script src="{% static 'js/plugins/highcharts/modules/export-data.js' %}"></script>
 
+
+<!-- This seems to be where you load the data into gj used for layers
+     Some more explanation on why you do it this way and what's the logic
+     would be helpful.
+
+     Also for the historical page, the js components seem to be fully in the
+     html file. Recommend to keep a strict seperations with clear guidance in each file.
+
+     Consistency is critical.
+
+   -->
+
+<!-- be consistent about using html and js in same / sperate fiels -->
 <script type="text/javascript">
   var gj = {
       "name": "MyFeatureType",
@@ -170,24 +187,34 @@
       };
       location_check.push('{{gw.location}}');
 
-      var select2_options_offline = [
-        {id:'Rohini Khola', text:'Rohini Khola'},
-        {id:'Channawa', text:'Channawa'},
-        // {id:'Piprahawa', text:'Piprahawa'},
-        // {id:'Jaispur', text:'Jaispur'},
-        {id:'Banjare Gau', text:'Banjare Gau'},
-        {id:'Kalhanshangau', text:'Kalhanshangau'},
-        {id:'D-gaon', text:'D-gaon'},
-        {id:'Khadaicha', text:'Khadaicha'},
-        {id:'Shikanpurwa', text:'Shikanpurwa'},
-        // {id:'', text:''},
-      ]
+
+// Need to adjust here based on location names in SQL database
+// ensure that these are mathcing for proper display of chart
+        var select2_options_offline = [
+          {id:'Rohini Khola', text:'Rohini Khola'},
+          {id:'Channawa', text:'Channawa'},
+          // {id:'Piprahawa', text:'Piprahawa'},
+          // {id:'Jaispur', text:'Jaispur'},
+          {id:'Banjare Gau', text:'Banjare Gau'},
+          {id:'Kalhanshangau', text:'Kalhanshangau'},
+          {id:'D-gaon', text:'D-gaon'},
+          {id:'Khadaicha', text:'Khadaicha'},
+          {id:'Shikanpurwa', text:'Shikanpurwa'},
+          // {id:'', text:''},
+        ]
       {% endfor %}
     {% endif %}
 
-    {% if latest_water_level %}
-      {% for gw in latest_water_level %}
-        gj_latest_water_level.features.push({
+  var gj1 = {
+      "name": "MyFeatureType",
+      "type": "FeatureCollection",
+      "features": []
+    };
+
+    // create geojson with points
+    {% if gw_locations1 %}
+      {% for gw in gw_locations1 %}
+        gj1.features.push({
           "type": "Feature",
           "geometry": {
             "type": "Point",

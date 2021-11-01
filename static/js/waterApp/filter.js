@@ -1,5 +1,4 @@
 const filterGeojson = (featuresList, district, wells) => {
-  // console.log(data, district);
   let filtredResults = [];
   district.forEach(function(item) {
     let filterValue = featuresList.filter(v => v.properties.district === item);

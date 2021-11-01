@@ -3,13 +3,18 @@
     // normal DOM manipulation will be here
 
 
+
     $('.chosen-select').chosen({
       width: "100%"
     });
 
-    $(".select2_wells").select2({
+
+    // Using jquery select2 for enabling search of selections and better graphics
+    // Modifying selection form of ODK measurements
+    $('.select2_wells').select2({
       data: select2_options
     });
+
     $('.select2_wells').val('Rohini Khola'); // Select the option with a value of '1'
     $('.select2_wells').trigger('change');
 
@@ -22,7 +27,23 @@
     });
     ajaxODKdata();
 
+    // Link to checkbox positioned above the selection form for selecting and deselecting all options
+    $("#checkbox").click(function() {
+      if ($("#checkbox").is(':checked')) { // define what happens when box is being checked
+        $(".select2_wells > option").prop("selected", "selected"); // Select All Options
+        $(".select2_wells").trigger("change");
+        ajaxODKdata(); // Trigger changes to ensure selection is displayed in graph
+      } else { //define what happens when box is being unchecked
+        $('.select2_wells').val(null).trigger('change'); // Trigger change to select 2
+        $(".select2_wells").trigger("change");
+        ajaxODKdata(); // Trigger changes to ensure selection is displayed in graph
+      }
+    });
 
+
+
+    // Modifying selection form for offline data loggers
+    //
     $(".select2_wells_offline").select2({
       data: select2_options_offline
     });
@@ -37,6 +58,26 @@
       ajaxOfflineLoggerdata();
     });
     ajaxOfflineLoggerdata();
+
+
+    // Link to checkbox positioned above the selection form for selecting and deselecting all options
+    $("#checkbox1").click(function() {
+      if ($("#checkbox1").is(':checked')) { // define what happens when box is being checked
+        $(".select2_wells_offline > option").prop("selected", "selected"); // Select All Options
+        $(".select2_wells_offline").trigger("change");
+        ajaxOfflineLoggerdata(); // Trigger changes to ensure selection is displayed in graph
+      } else { //define what happens when box is being unchecked
+        $('.select2_wells_offline').val(null).trigger('change'); // Trigger change to select 2
+        $(".select2_wells_offline").trigger("change");
+        ajaxOfflineLoggerdata(); // Trigger changes to ensure selection is displayed in graph
+      }
+    });
+
+
+    // Checkbox for historical well graph select all
+    // Link to checkbox positioned above the selection form for selecting and deselecting all options
+
+
 
     // $('.select2_wells').val(null).trigger('change');
 
@@ -91,6 +132,39 @@
       }).addTo(mapNew);
     };
 
+      // dropdown selectbox
+      let options = filterwellsByDistrict(checked_dst_box, select2_options)
+      $('.select2_wells').empty().trigger('change');
+      $(".select2_wells").select2({
+        data: options
+      });
+      // filter ge0json and map
+      var featureData = filterGeojson(gj1.features, checked_dst_box, checked_wt_box);
+      var filtered_locations = {
+        "name": "MyFeatureType",
+        "type": "FeatureCollection",
+        "features": featureData
+      };
+      map.removeLayer(wellsLayer);
+      mapNew.removeLayer(wellsLayer_classify);
+
+      wellsLayer = L.geoJSON(filtered_locations, {
+        onEachFeature: onEachFeature,
+        pointToLayer: classifyMarker
+      }).addTo(map);
+
+      var featureDataClassify = filterGeojson(odk.features, checked_dst_box, checked_wt_box);
+      // console.log(featureDataClassify);
+      var filtered_locations_classify = {
+        "name": "MyFeatureType",
+        "type": "FeatureCollection",
+        "features": featureDataClassify
+      };
+      wellsLayer_classify = L.geoJSON(filtered_locations_classify, {
+        onEachFeature: onEachFeaturePopUp,
+        pointToLayer: classifyFeature
+      }).addTo(mapNew);
+    };
 
 
 
@@ -111,7 +185,8 @@
     };
 
     // var overlays = {
-    //   "Wells": wellsLayer
+    //   "DW Wells": DW,
+    //   "SW Wells": SW
     // };
 
     L.control.layers(baseLayers).addTo(map);
@@ -160,7 +235,62 @@
     // map classification component of water level will be here
 
     // chlorepeth map
-    var mapNew = L.map('mapNew').setView([27.9993613, 81.71946941], 9);
+
+
+
+    //sort wells, then delete all older than 30 days, then delete all duplicates. For now 60 days as Kobo updates are not implemented yet.
+
+    var date = new Date();
+    date.setDate(date.getDate() - 60);
+    var cutOffDate = date.toISOString().split('T')[0];
+
+    odk.features = Object.entries(odk.features);
+
+
+    // odk.features = odk.features.filter(recent => recent[1].properties.date > cutOffDate);
+
+
+    //assume that entries are ordered chronologically. Only take first occurence of a well number and add number of duplicated
+    //for removal later. Then go backwards through index for splicing to not mess up indexes.
+
+    //Bardiya does not have well numbers. Some issue in the update csv routine. Removing the well filtering for now.
+    /*
+    var nums = [];
+    var index = [];
+    for (x in odk.features) {
+      console.log(x);
+      if (!nums.includes(odk.features[x][1].properties.well_number)) {
+      nums.push(odk.features[x][1].properties.well_number);
+      } else {
+
+      index.push(x);
+    }
+    }
+
+    for (var i = index.length -1; i >= 0; i--){
+       odk.features.splice(index[i],1);
+    }
+    */
+
+    for (x of odk.features) {
+      x[1].properties.gw_level = parseFloat(x[1].properties.gw_level);
+    }
+
+    //some issue with nested array occured in copying, remove unnecesarrt layer and flatten for proper recoginition as FeatureCollection
+    for (const x of odk.features) {
+      x.splice(0, 1);
+    }
+
+    odk.features = odk.features.flat(Infinity);
+
+
+    //start creating latest ODK map. TODO Better ID naming
+    var mapNew = L.map('mapNew', {
+      center: [27.9993613, 81.71946941],
+      zoom: 9,
+      layers: [osm]
+    });
+
 
     googleHybrid.addTo(mapNew);
 
@@ -178,6 +308,8 @@
       }
     }
 
+    // add popup to points/circles
+
     function onEachFeaturePopUp(feature, layer) {
       // popup enabled
       var content = "<p>District:  " + feature.properties.district + "</p>";
@@ -191,20 +323,18 @@
     }
 
     function classifyFeature(feature, latlng) {
-
       // clasification of points based upon water level
       var circleColor;
-      if (feature.properties.water_level < 3) {
+      if (feature.properties.gw_level < 2) {
         circleColor = colors_circle[0]
-      } else if (feature.properties.water_level > 3 && feature.properties.water_level < 6) {
+      } else if (feature.properties.gw_level > 2 && feature.properties.gw_level < 5) {
         circleColor = colors_circle[1]
       } else {
         circleColor = colors_circle[2]
       }
       return L.circleMarker(latlng, geojsonMarkerOptions(circleColor));
     }
-
-    wellsLayer_classify = L.geoJSON(gj_latest_water_level, {
+    wellsLayer_classify = L.geoJSON(odk, {
       onEachFeature: onEachFeaturePopUp,
       pointToLayer: classifyFeature
     }).addTo(mapNew);
@@ -212,21 +342,22 @@
       position: 'bottomleft'
     });
 
+    var thresh = [' < 2 mbgl', ' < 5 mbgl', ' > 5 mbgl']
+
+    // define legend content and add legend to map
     legend.onAdd = function(mapNew) {
       var div = L.DomUtil.create('div', 'info legend');
       for (var i = 0; i < 3; i++) {
         div.innerHTML +=
           '<div><span class="dot" style="background:' + colors_circle[i] + '"></span>' +
-          ' Water Level: ' + legend_label[i] + '</div>';
+          thresh[i] + '</div>';
       }
       return div;
     }
     legend.addTo(mapNew);
 
-
     // let loggerChartContent = drawLineChart('data');
     // Highcharts.chart('containerLogger', loggerChartContent);
-
 
     layersSwitcher();
   });

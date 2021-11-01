@@ -25,12 +25,12 @@ const ajaxOfflineLoggerdata = () => {
       wells: JSON.stringify($('.select2_wells_offline').val())
     },
     success: function(data, status) {
+      console.log(data);
       // multilineData(data);
       $("#containerLogger").empty();
       Highcharts.stockChart('containerLogger', drawStockChart(multilineData(data)));
     },
     error: function(XMLHttpRequest, textStatus, errorThrown) {
-
     }
   })
 

@@ -43,7 +43,7 @@ const drawStockChart = (data) => {
     },
 
     title: {
-      text: 'Water Flow chart- sample'
+      text: 'Water table measurements in m below ground level'
     },
     xAxis: {
       type: 'datetime',
@@ -79,6 +79,12 @@ const drawStockChart = (data) => {
   return variable_return
 };
 
+
+
+
+// I suppose these are examples from templateS? Please comment these to clarify what's being used.
+
+/*
 const drawLineChart = (data) => {
   let variable_return = {
     chart: {
@@ -162,3 +168,4 @@ const drawLineChart = (data) => {
   }
   return variable_return
 };
+*/
