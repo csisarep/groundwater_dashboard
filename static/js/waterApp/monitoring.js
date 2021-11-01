@@ -106,6 +106,38 @@
       $(".select2_wells").select2({
         data: options
       });
+      // filter gejson and map
+      var featureData = filterGeojson(gj.features, checked_dst_box, checked_wt_box);
+      var filtered_locations = {
+        "name": "MyFeatureType",
+        "type": "FeatureCollection",
+        "features": featureData
+      };
+      map.removeLayer(wellsLayer);
+      mapNew.removeLayer(wellsLayer_classify);
+
+      wellsLayer = L.geoJSON(filtered_locations, {
+        onEachFeature: onEachFeature
+      }).addTo(map);
+
+      var featureDataClassify = filterGeojson(gj_latest_water_level.features, checked_dst_box, checked_wt_box);
+      var filtered_locations_classify = {
+        "name": "MyFeatureType",
+        "type": "FeatureCollection",
+        "features": featureDataClassify
+      };
+      wellsLayer_classify = L.geoJSON(filtered_locations_classify, {
+        onEachFeature: onEachFeaturePopUp,
+        pointToLayer: classifyFeature
+      }).addTo(mapNew);
+    };
+
+      // dropdown selectbox
+      let options = filterwellsByDistrict(checked_dst_box, select2_options)
+      $('.select2_wells').empty().trigger('change');
+      $(".select2_wells").select2({
+        data: options
+      });
       // filter ge0json and map
       var featureData = filterGeojson(gj1.features, checked_dst_box, checked_wt_box);
       var filtered_locations = {
@@ -159,7 +191,43 @@
 
     L.control.layers(baseLayers).addTo(map);
 
-
+    // const layerAddToMap = () => {
+    //   map.removeLayer(wellsLayer);
+    //   var districtSelected = $('.district:checkbox:checked');
+    //   var temp_gj =gj
+    //   // var wellTypeSelected = $('.well_type').val();
+    //   if (districtSelected.length>1) {
+    //     wellsLayer = L.geoJSON(temp_gj, {
+    //       onEachFeature: onEachFeature
+    //     }).addTo(map);
+    //   } else if (districtSelected.length<1) {
+    //
+    //   } else {
+    //     wellsLayer = L.geoJSON(temp_gj, {
+    //       onEachFeature: onEachFeature,
+    //       filter: districtFilter
+    //     }).addTo(map);
+    //   }
+    //
+    //   function districtFilter(feature, layer) {
+    //     var return_value = false;
+    //
+    //     districtSelected.each(function(item) {
+    //       return_value=false;
+    //       var dist = $(this).val();
+    //
+    //         if (feature.properties.district === dist) {
+    //           return_value=true;
+    //           return true
+    //         }
+    //         return return_value
+    //       });
+    //       return return_value
+    //     }
+    //
+    //
+    //   // wellsLayer.addTo(map);
+    // }
 
 
 
@@ -224,20 +292,16 @@
     });
 
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(mapNew);
+    googleHybrid.addTo(mapNew);
 
-
-    // Defining colors for categories of water levels
-    // TODO automatic update of thehsolds in legend and color coding
-    var colors_circle = ['#1dd1a1', '#feca57', '#ff6b6b', '#FF9655', '#FFF263', '#6AF9C4'];
+    var colors_circle = ['#ff9ff3', '#ff6b6b', '#feca57', '#48dbfb', '#1dd1a1', '#FF9655', '#FFF263', '#6AF9C4'];
+    var legend_label = [' <3m', ' 3m-6m', ' >6m']
 
     function geojsonMarkerOptions(color) {
       return {
-        radius: 8,
+        radius: 5,
         fillColor: color,
-        color: "#000",
+        color: "#fff",
         weight: 1,
         opacity: 1,
         fillOpacity: 0.8
