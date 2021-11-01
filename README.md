@@ -19,3 +19,12 @@ psql groundwater < groundwater.sql
 
 
 docker cp ./database/well_type_update.sql groundwater_db_1:/opt/
+
+
+# docker commands
+
+docker exec -it groundwater_1_db /bin/bash
+groundwater_1_db is the container name
+you can use docker ps -a    to list all containers and names
+su postgres
+psql

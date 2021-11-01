@@ -122,13 +122,13 @@
       }).addTo(map);
 
       var featureDataClassify = filterGeojson(odk.features, checked_dst_box, checked_wt_box);
-      console.log(featureDataClassify);
+      // console.log(featureDataClassify);
       var filtered_locations_classify = {
         "name": "MyFeatureType",
         "type": "FeatureCollection",
         "features": featureDataClassify
       };
-      wellsLayer_classify = L.geoJSON(odk, {
+      wellsLayer_classify = L.geoJSON(filtered_locations_classify, {
         onEachFeature: onEachFeaturePopUp,
         pointToLayer: classifyFeature
       }).addTo(mapNew);
@@ -173,12 +173,13 @@
     //sort wells, then delete all older than 30 days, then delete all duplicates. For now 60 days as Kobo updates are not implemented yet.
 
     var date = new Date();
-    date.setDate(date.getDate() - 30);
+    date.setDate(date.getDate() - 60);
     var cutOffDate = date.toISOString().split('T')[0];
+
     odk.features = Object.entries(odk.features);
 
 
-    odk.features = odk.features.filter(recent => recent[1].properties.date > cutOffDate);
+    // odk.features = odk.features.filter(recent => recent[1].properties.date > cutOffDate);
 
 
     //assume that entries are ordered chronologically. Only take first occurence of a well number and add number of duplicated
