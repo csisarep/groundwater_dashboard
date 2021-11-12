@@ -170,3 +170,5 @@ class wellDatatable(BaseDatatableView):
                     '{0}__{1}'.format(column, filter_method): col['search.value']})
         qs = qs.filter(q)
         return qs
+
+
