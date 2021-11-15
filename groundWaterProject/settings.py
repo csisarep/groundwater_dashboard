@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'waterApp'
+    'waterApp',
+
+    
 ]
 
 MIDDLEWARE = [
@@ -84,8 +86,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'groundwater',
-        'USER': 'postgres',
-        'PASSWORD': 'krishna',
+        'USER': config('USER'),
+        'PASSWORD': config('PASSWORD'),
         'HOST': 'db',
         'PORT': '5432',
     }
