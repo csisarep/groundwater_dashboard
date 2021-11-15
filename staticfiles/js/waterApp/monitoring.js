@@ -173,7 +173,7 @@ $(document).ready(function() {
   //sort wells, then delete all older than 30 days, then delete all duplicates. For now 60 days as Kobo updates are not implemented yet.
 
   var date = new Date();
-  date.setDate(date.getDate() - 60);
+  date.setDate(date.getDate() - 30);
   var cutOffDate = date.toISOString().split('T')[0];
   odk.features = Object.entries(odk.features);
 
@@ -214,7 +214,7 @@ $(document).ready(function() {
 
   odk.features = odk.features.flat(Infinity);
 
-
+console.log(odk.features);
   //start creating latest ODK map. TODO Better ID naming
   var mapNew = L.map('mapNew', {
     center: [27.9993613, 81.71946941],
@@ -254,7 +254,6 @@ $(document).ready(function() {
     if (feature.properties) {
       layer.bindPopup(content);
     }
-
   }
 
   function classifyFeature(feature, latlng) {
@@ -269,10 +268,12 @@ $(document).ready(function() {
     }
     return L.circleMarker(latlng, geojsonMarkerOptions(circleColor));
   }
+
   wellsLayer_classify = L.geoJSON(odk, {
     onEachFeature: onEachFeaturePopUp,
     pointToLayer: classifyFeature
   }).addTo(mapNew);
+
   var legend = L.control({
     position: 'bottomleft'
   });

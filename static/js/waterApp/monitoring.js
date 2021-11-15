@@ -214,7 +214,7 @@ $(document).ready(function() {
 
   odk.features = odk.features.flat(Infinity);
 
-console.log(odk.features);
+
   //start creating latest ODK map. TODO Better ID naming
   var mapNew = L.map('mapNew', {
     center: [27.9993613, 81.71946941],
@@ -269,18 +269,10 @@ console.log(odk.features);
     return L.circleMarker(latlng, geojsonMarkerOptions(circleColor));
   }
 
-    L.geoJSON(odk, {pointToLayer: function(feature, latlng) {
-          var circleColor;
-          if (feature.properties.gw_level < 2) {
-            circleColor = colors_circle[0]
-          } else if (feature.properties.gw_level < 5 && feature.properties.gw_level > 5) {
-            circleColor = colors_circle[1]
-          } else {
-            circleColor = colors_circle[2]
-          }
-        return L.circleMarker(latlng, geojsonMarkerOptions(circleColor));
-      }
-    }).addTo(mapNew);
+  wellsLayer_classify = L.geoJSON(odk, {
+    onEachFeature: onEachFeaturePopUp,
+    pointToLayer: classifyFeature
+  }).addTo(mapNew);
 
   var legend = L.control({
     position: 'bottomleft'
