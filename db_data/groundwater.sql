@@ -24,7 +24,7 @@ DROP DATABASE groundwater;
 -- Name: groundwater; Type: DATABASE; Schema: -; Owner: postgres
 --
 
-CREATE DATABASE groundwater WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'English_United States.1252' LC_CTYPE = 'English_United States.1252';
+CREATE DATABASE groundwater WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';
 
 
 ALTER DATABASE groundwater OWNER TO postgres;
