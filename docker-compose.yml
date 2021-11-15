@@ -43,5 +43,5 @@ services:
       - /var/lib/letsencrypt:/var/lib/letsencrypt
     depends_on:
       - web
-    command: certonly --standalone -d gw-nepal.com
+
 
