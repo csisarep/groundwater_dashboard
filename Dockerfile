@@ -6,3 +6,4 @@ COPY requirements.txt /code/
 RUN apt-get update && apt-get -y install python3-pip
 RUN pip install -r requirements.txt
 COPY . /code/
+RUN pip install gunicorn

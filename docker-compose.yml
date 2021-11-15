@@ -2,23 +2,29 @@ version: "3.9"
    
 services:
   db:
-    image: postgres
-    environment:
-      - POSTGRES_DB=groundwater
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=krishna
+    build: 
+      context: db_docker
+      dockerfile: Dockerfile
     ports:
       - "5432:5432"
     volumes:
       - ./db_data:/opt
   web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: gunicorn --bind 0.0.0.0:8000 groundWaterProject.wsgi
     volumes:
       - .:/code
       - ./db_data:/opt
-    ports:
-      - "8000:8000"
+    expose:
+      - 8000
     depends_on:
       - db
+  nginx:
+    build: ./nginx_docker
+    ports:
+      - 1337:80
+    depends_on:
+      - web
 
