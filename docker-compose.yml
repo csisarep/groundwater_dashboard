@@ -6,7 +6,7 @@ services:
       context: db_docker
       dockerfile: Dockerfile
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
       - ./db_data:/opt
   web:
@@ -25,7 +25,6 @@ services:
   nginx:
     build: ./nginx_docker
     ports:
-      - 1337:80
       - 80:80
       - 443:443
     depends_on:
@@ -36,9 +35,13 @@ services:
       - ./certbot/www:/var/www/certbot
   certbot:
     image: certbot/certbot
+    ports:
+      - 80:80
     volumes:
       - ./etc/letsencrypt:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
+      - /var/lib/letsencrypt:/var/lib/letsencrypt
     depends_on:
       - web
+    command: certonly --standalone -d gw-nepal.com
 
