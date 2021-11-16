@@ -5,8 +5,8 @@ WORKDIR /code
 COPY . /code/
 RUN apt-get update && apt-get -y install python3-pip && apt install cron -y
 RUN pip install -r requirements.txt
-RUN pip install gunicorn
-
+RUN pip install gunicorn 
+RUN pip uninstall decouple
 ### RUN CRON JOB TO DONWLOAD THE DATA from Crontab
 # RUN apt install cron -y
 RUN service cron start

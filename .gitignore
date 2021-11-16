@@ -1,5 +1,5 @@
 *.pyc
-.env
+
 __pycache__
 __pycache__/*.pyc
 groundWaterProject/__pycache__/*

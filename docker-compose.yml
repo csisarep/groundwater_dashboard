@@ -18,6 +18,7 @@ services:
     volumes:
       - .:/code
       - ./db_data:/opt
+      - ./staticfiles:/static
     expose:
       - 8000
     depends_on:
@@ -41,8 +42,7 @@ services:
       - /var/lib/letsencrypt:/var/lib/letsencrypt
     depends_on:
       - web
-  cron:
-    build: .
+
 
   
 

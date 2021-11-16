@@ -114,7 +114,7 @@ $(document).ready(function() {
       "features": featureData
     };
     map.removeLayer(wellsLayer);
-    mapNew.removeLayer(wellsLayer_classify);
+//    mapNew.removeLayer(wellsLayer_classify);
 
     wellsLayer = L.geoJSON(filtered_locations, {
       onEachFeature: onEachFeature,
@@ -180,7 +180,7 @@ $(document).ready(function() {
 
   odk.features = odk.features.filter(recent => recent[1].properties.date > cutOffDate);
 
-
+console.log(odk)
   //assume that entries are ordered chronologically. Only take first occurence of a well number and add number of duplicated
   //for removal later. Then go backwards through index for splicing to not mess up indexes.
 
@@ -249,8 +249,9 @@ $(document).ready(function() {
     // popup enabled
     var content = "<p>District:  " + feature.properties.district + "</p>";
     content += "<p>Well Number: " + feature.properties.well_number + "</p>";
-    content += "<p>Well Type: " + feature.properties.type + "</p>";
-    content += "<p>Water Level: " + feature.properties.water_level + "</p>";
+    content += "<p>Date: " + feature.properties.date + "</p>";
+    content += "<p>Water Level: " + feature.properties.gw_level + " m below ground level" + "</p>";
+    content += "<p>Well type: " + feature.properties.type_id +  "</p>";
     if (feature.properties) {
       layer.bindPopup(content);
     }
