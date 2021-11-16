@@ -15,6 +15,9 @@ import json
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from django.utils.html import escape
 
+## cronjob
+from data_import import df
+
 
 class Dashboard(TemplateView):
     template_name = "index.html"
