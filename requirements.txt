@@ -7,3 +7,4 @@ requests==2.25.1
 pandas
 json5==0.9.5
 python-decouple
+

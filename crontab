@@ -1,0 +1,3 @@
+
+* * * * * root /usr/local/bin/python /code/data-import.py > /proc/1/fd/1 2>/proc/1/fd/2
+## Keep this line for cronjob to run
