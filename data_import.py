@@ -38,3 +38,6 @@ print(type(df))
 df_1 = pd.read_csv(file_to_save)
 df_1.to_csv('/code/data/kobo_data.csv')
 print(df_1.shape)
+
+# File is downloading every minute (df)
+## df >> chanbge the database
