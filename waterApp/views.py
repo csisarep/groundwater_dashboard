@@ -15,6 +15,7 @@ import json
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from django.utils.html import escape
 
+
 class Dashboard(TemplateView):
     template_name = "index.html"
 
@@ -170,3 +171,5 @@ class wellDatatable(BaseDatatableView):
                     '{0}__{1}'.format(column, filter_method): col['search.value']})
         qs = qs.filter(q)
         return qs
+
+
