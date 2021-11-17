@@ -1,12 +1,18 @@
 
 from datetime import datetime
-
+import os
+import sys
+import django
+from django.db import IntegrityError
+sys.path.append("../")
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'groundWaterProject.settings')
 
 
 import requests
 from requests.auth import HTTPBasicAuth
 import pandas as pd
 from decouple import config
+
 
 
 import os
@@ -71,4 +77,14 @@ print(df_1.shape)
 ## Please Transform df_1 accordingly and update the database here
 
 # Currently for testing purpose the file is being downloaded every minute
-
+# with connection.cursor() as cursor:
+#     cursor.execute('DELETE FROM gw_monitoring_kobo', [])
+#     cursor.execute("COPY gw_monitoring_kobo(date,district,latitude,longitude,altitude,precision,well_type,measurement_point_cm,measurement_of_wet_point_on_tape__in_m_,gw_level_from_mp,mp_in_m,gw_level,fid,well_num) FROM '/opt/gw_level.csv' DELIMITER ',' CSV HEADER",[])
+#     cursor.execute("""UPDATE gw_monitoring_kobo
+#         SET well_type='1'
+#         WHERE well_type='sw'
+#         """)
+#     cursor.execute("""UPDATE gw_monitoring_kobo
+#         SET well_type='2'
+#         WHERE well_type='dt'
+#         """)
