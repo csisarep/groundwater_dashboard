@@ -249,8 +249,7 @@ $(document).ready(function() {
     // popup enabled
     var content = "<p>District:  " + feature.properties.district + "</p>";
     content += "<p>Well Number: " + feature.properties.well_number + "</p>";
-    content += "<p>Well Type: " + feature.properties.type + "</p>";
-    content += "<p>Water Level: " + feature.properties.water_level + "</p>";
+    content += "<p>Water Level: " + feature.properties.gw_level + "</p>";
     if (feature.properties) {
       layer.bindPopup(content);
     }
