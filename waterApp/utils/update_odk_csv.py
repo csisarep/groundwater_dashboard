@@ -10,7 +10,6 @@ import calendar
 from django.db import connection,transaction
 
 
-
 def update_odkData():
     diff = timedelta(hours=24)
     if os.path.exists("data/gw_level.csv"):
@@ -29,7 +28,7 @@ def update_odkData():
                        'district',
                        'geo_location',
                        'well_type',
-                       'well_no_sw_bardiya',
+                       'sw_bk_well_no',
                        'measurement_point_cm',
                        'Well_photo_Use_the_ed_measurement_point',
                        'Measurement_of_tape_ent_point_MP_in_m',
@@ -39,11 +38,11 @@ def update_odkData():
                        'version1', 'version2', 'meta/instanceID', '_xform_id_string',
                        '_uuid', '_attachments', '_status', '_geolocation', '_submission_time',
                        '_tags', '_notes', '_submitted_by',
-                       'well_no_dw_bardiya',
-                       'bk_dw_no',
-                       'sw_bk_well_no',
-                       'Audio_Notes',
-                       'Notes']
+                       'bk_dw_no', 'Audio_Notes',
+                       'Notes',
+                       'well_no_sw_bardiya',
+                       'well_no_dw_bardiya'
+                       ]
                 gw_df
 
                 #selection of columns here
