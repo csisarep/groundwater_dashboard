@@ -40,8 +40,16 @@ class DigitalMonitoring(TemplateView):
         update_odkData() #update ODK database from KOBO if older than 24h
         #update_offline_csv()
         with connection.cursor() as cursor:
-            cursor.execute('DELETE FROM gw_monitoring_kobo', [])
-            cursor.execute("COPY gw_monitoring_kobo(date,district,latitude,longitude,altitude,precision,well_type,measurement_point_cm,measurement_of_wet_point_on_tape__in_m_,gw_level_from_mp,mp_in_m,gw_level,fid,well_num) FROM '/opt/gw_level.csv' DELIMITER ',' CSV HEADER",[])
+                cursor.execute('DELETE FROM gw_monitoring_kobo', [])
+                cursor.execute("COPY gw_monitoring_kobo(date,district,latitude,longitude,altitude,precision,well_type,measurement_point_cm,measurement_of_wet_point_on_tape__in_m_,gw_level_from_mp,mp_in_m,gw_level,fid,well_num) FROM '/opt/gw_level.csv' DELIMITER ',' CSV HEADER",[])
+                cursor.execute("""UPDATE gw_monitoring_kobo
+                    SET well_type='1'
+                    WHERE well_type='sw'
+                    """)
+                cursor.execute("""UPDATE gw_monitoring_kobo
+                    SET well_type='2'
+                    WHERE well_type='dt'
+                    """)        
         #
         # #Still requires scheduling and adding only new columns - now it's loading all and rewriting database with every call
         # with connection.cursor() as cursor:

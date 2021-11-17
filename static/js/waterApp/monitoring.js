@@ -114,7 +114,7 @@ $(document).ready(function() {
       "features": featureData
     };
     map.removeLayer(wellsLayer);
-//    mapNew.removeLayer(wellsLayer_classify);
+    mapNew.removeLayer(wellsLayer_classify);
 
     wellsLayer = L.geoJSON(filtered_locations, {
       onEachFeature: onEachFeature,
@@ -173,14 +173,14 @@ $(document).ready(function() {
   //sort wells, then delete all older than 30 days, then delete all duplicates. For now 60 days as Kobo updates are not implemented yet.
 
   var date = new Date();
-  date.setDate(date.getDate() - 30);
+  date.setDate(date.getDate() - 60);
   var cutOffDate = date.toISOString().split('T')[0];
   odk.features = Object.entries(odk.features);
 
 
   odk.features = odk.features.filter(recent => recent[1].properties.date > cutOffDate);
 
-console.log(odk)
+
   //assume that entries are ordered chronologically. Only take first occurence of a well number and add number of duplicated
   //for removal later. Then go backwards through index for splicing to not mess up indexes.
 
@@ -249,12 +249,12 @@ console.log(odk)
     // popup enabled
     var content = "<p>District:  " + feature.properties.district + "</p>";
     content += "<p>Well Number: " + feature.properties.well_number + "</p>";
-    content += "<p>Date: " + feature.properties.date + "</p>";
-    content += "<p>Water Level: " + feature.properties.gw_level + " m below ground level" + "</p>";
-    content += "<p>Well type: " + feature.properties.type_id +  "</p>";
+    content += "<p>Well Type: " + feature.properties.type + "</p>";
+    content += "<p>Water Level: " + feature.properties.water_level + "</p>";
     if (feature.properties) {
       layer.bindPopup(content);
     }
+
   }
 
   function classifyFeature(feature, latlng) {
@@ -269,12 +269,10 @@ console.log(odk)
     }
     return L.circleMarker(latlng, geojsonMarkerOptions(circleColor));
   }
-
   wellsLayer_classify = L.geoJSON(odk, {
     onEachFeature: onEachFeaturePopUp,
     pointToLayer: classifyFeature
   }).addTo(mapNew);
-
   var legend = L.control({
     position: 'bottomleft'
   });
