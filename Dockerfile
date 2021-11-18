@@ -15,4 +15,5 @@ COPY crontab /etc/cron.d/cjob
 RUN chmod 0644 /etc/cron.d/cjob
 ENV PYTHONUNBUFFERED 1
 CMD cron -f
+
 # CMD ["cron","-f"]
