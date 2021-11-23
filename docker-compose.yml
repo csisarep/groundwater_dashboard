@@ -42,4 +42,7 @@ services:
       - /var/lib/letsencrypt:/var/lib/letsencrypt
     depends_on:
       - web
-    
+  cron:
+    build: ./
+    depends_on:
+      - db
