@@ -219,7 +219,7 @@ $(document).ready(function() {
   var mapNew = L.map('mapNew', {
     center: [27.9993613, 81.71946941],
     zoom: 9,
-    layers: [osm]
+    // layers: [osm, wellsLayer]
   });
 
 
@@ -292,6 +292,8 @@ $(document).ready(function() {
 
   // let loggerChartContent = drawLineChart('data');
   // Highcharts.chart('containerLogger', loggerChartContent);
-
+map.on('zoomend', function() {
+  layersSwitcher();
+})
   layersSwitcher();
 });

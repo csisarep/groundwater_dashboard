@@ -49,7 +49,7 @@ class DigitalMonitoring(TemplateView):
                 cursor.execute("""UPDATE gw_monitoring_kobo
                     SET well_type='2'
                     WHERE well_type='dt'
-                    """)        
+                    """)
         #
         # #Still requires scheduling and adding only new columns - now it's loading all and rewriting database with every call
         # with connection.cursor() as cursor:
@@ -179,5 +179,3 @@ class wellDatatable(BaseDatatableView):
                     '{0}__{1}'.format(column, filter_method): col['search.value']})
         qs = qs.filter(q)
         return qs
-
-

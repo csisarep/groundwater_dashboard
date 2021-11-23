@@ -1,8 +1,8 @@
 version: "3.3"
-   
+
 services:
   db:
-    build: 
+    build:
       context: db_docker
       dockerfile: Dockerfile
     ports:
@@ -14,7 +14,7 @@ services:
       context: .
       dockerfile: Dockerfile
     command: gunicorn --bind 0.0.0.0:8000 groundWaterProject.wsgi
-    
+
     volumes:
       - .:/code
       - ./db_data:/opt
@@ -42,11 +42,4 @@ services:
       - /var/lib/letsencrypt:/var/lib/letsencrypt
     depends_on:
       - web
-
-
-  
-
-
-  
-
-
+    

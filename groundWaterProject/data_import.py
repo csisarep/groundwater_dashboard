@@ -1,12 +1,19 @@
 
 from datetime import datetime
+import os
+import sys
+# import django
+# from django.db import IntegrityError
+# sys.path.append("../")
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'groundWaterProject.settings')
 
-
+from django.core.management.base import BaseCommand
 
 import requests
 from requests.auth import HTTPBasicAuth
 import pandas as pd
 from decouple import config
+
 
 
 import os
@@ -21,20 +28,20 @@ auth = HTTPBasicAuth(kobo_username, kobo_password)
 def download_data():
     download = requests.get(url, auth=auth )
     # col_names = ['Enumerator Name','Geo_location','Municipality','village_name','ward','well_type','well_no_stw','well_no_dtw','gw_level','Height_of_measurement','measurement_unit',"Notes"]
-    # df = pd.read_csv('updated_data.csv')  
+    # df = pd.read_csv('updated_data.csv')
     j = requests.get(url, auth=auth )
     df_json = j.json()
     gw_df = pd.DataFrame.from_dict(df_json)
     print('Script has been started at {}: Data Downloaded'.format(datetime.now()))
     return gw_df
-    
+
 
 df = download_data()
 
 # Used this to get the precise location to save the file so that I could find it, but still was not able to locate the save file
 file_to_save = os.path.join(os.path.dirname(os.path.realpath("data_import.py")), "Kobo_data_latest.csv")
 
-## Change the column heading for readbility 
+## Change the column heading for readbility
 
 df.columns = ['_id', 'formhub/uuid', 'start', 'end',
        'today', 'deviceid', 'name_enum',
@@ -56,7 +63,7 @@ df.columns = ['_id', 'formhub/uuid', 'start', 'end',
        'Notes',
        'well_no_sw_bardiya',
        'well_no_dw_bardiya']
-# Saving the downloaded Kobo database 
+# Saving the downloaded Kobo database
 df.to_csv(file_to_save)
 print(type(df))
 
@@ -71,4 +78,31 @@ print(df_1.shape)
 ## Please Transform df_1 accordingly and update the database here
 
 # Currently for testing purpose the file is being downloaded every minute
+# with connection.cursor() as cursor:
+#     cursor.execute('DELETE FROM gw_monitoring_kobo', [])
+#     cursor.execute("COPY gw_monitoring_kobo(date,district,latitude,longitude,altitude,precision,well_type,measurement_point_cm,measurement_of_wet_point_on_tape__in_m_,gw_level_from_mp,mp_in_m,gw_level,fid,well_num) FROM '/opt/gw_level.csv' DELIMITER ',' CSV HEADER",[])
+#     cursor.execute("""UPDATE gw_monitoring_kobo
+#         SET well_type='1'
+#         WHERE well_type='sw'
+#         """)
+#     cursor.execute("""UPDATE gw_monitoring_kobo
+#         SET well_type='2'
+#         WHERE well_type='dt'
+#         """)
 
+class Command(BaseCommand):
+    # help = 'Prints the titles of all Posts'
+    print('Hello')
+
+    def handle(self, *args, **options):
+        with connection.cursor() as cursor:
+            cursor.execute('DELETE FROM gw_monitoring_kobo', [])
+            cursor.execute("COPY gw_monitoring_kobo(date,district,latitude,longitude,altitude,precision,well_type,measurement_point_cm,measurement_of_wet_point_on_tape__in_m_,gw_level_from_mp,mp_in_m,gw_level,fid,well_num) FROM '/opt/gw_level.csv' DELIMITER ',' CSV HEADER",[])
+            cursor.execute("""UPDATE gw_monitoring_kobo
+                SET well_type='1'
+                WHERE well_type='sw'
+                """)
+            cursor.execute("""UPDATE gw_monitoring_kobo
+                SET well_type='2'
+                WHERE well_type='dt'
+                """)
