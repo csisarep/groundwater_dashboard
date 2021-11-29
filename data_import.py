@@ -2,6 +2,7 @@
 from datetime import datetime
 import os
 import sys
+import psycopg2
 # import django
 # from django.db import IntegrityError
 # sys.path.append("../")
@@ -90,19 +91,40 @@ print(df_1.shape)
 #         WHERE well_type='dt'
 #         """)
 
-class Command(BaseCommand):
-    # help = 'Prints the titles of all Posts'
-    print('Hello')
+# class Command(BaseCommand):
+#     # help = 'Prints the titles of all Posts'
+#     print('Hello')
+#
+#     def handle(self, *args, **options):
+#         with connection.cursor() as cursor:
+#             cursor.execute('DELETE FROM gw_monitoring_kobo', [])
+#             cursor.execute("COPY gw_monitoring_kobo(date,district,latitude,longitude,altitude,precision,well_type,measurement_point_cm,measurement_of_wet_point_on_tape__in_m_,gw_level_from_mp,mp_in_m,gw_level,fid,well_num) FROM '/opt/gw_level.csv' DELIMITER ',' CSV HEADER",[])
+#             cursor.execute("""UPDATE gw_monitoring_kobo
+#                 SET well_type='1'
+#                 WHERE well_type='sw'
+#                 """)
+#             cursor.execute("""UPDATE gw_monitoring_kobo
+#                 SET well_type='2'
+#                 WHERE well_type='dt'
+#                 """)
 
-    def handle(self, *args, **options):
-        with connection.cursor() as cursor:
-            cursor.execute('DELETE FROM gw_monitoring_kobo', [])
-            cursor.execute("COPY gw_monitoring_kobo(date,district,latitude,longitude,altitude,precision,well_type,measurement_point_cm,measurement_of_wet_point_on_tape__in_m_,gw_level_from_mp,mp_in_m,gw_level,fid,well_num) FROM '/opt/gw_level.csv' DELIMITER ',' CSV HEADER",[])
-            cursor.execute("""UPDATE gw_monitoring_kobo
-                SET well_type='1'
-                WHERE well_type='sw'
-                """)
-            cursor.execute("""UPDATE gw_monitoring_kobo
-                SET well_type='2'
-                WHERE well_type='dt'
-                """)
+connection = psycopg2.connect(user=config('USER'),
+                                  password=config('PASSWORD'),
+                                  host="db",
+                                  port="5432",
+                                  database="groundwater")
+cursor = connection.cursor()
+cursor.execute('DELETE FROM gw_monitoring_kobo', [])
+cursor.execute("COPY gw_monitoring_kobo(date,district,latitude,longitude,altitude,precision,well_type,measurement_point_cm,measurement_of_wet_point_on_tape__in_m_,gw_level_from_mp,mp_in_m,gw_level,fid,well_num) FROM '/opt/gw_level.csv' DELIMITER ',' CSV HEADER",[])
+cursor.execute("""UPDATE gw_monitoring_kobo
+    SET well_type='1'
+    WHERE well_type='sw'
+    """)
+cursor.execute("""UPDATE gw_monitoring_kobo
+    SET well_type='2'
+    WHERE well_type='dt'
+    """)
+print('works now')
+if connection:
+    cursor.close()
+    connection.close()

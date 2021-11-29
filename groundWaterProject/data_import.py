@@ -1,130 +1,151 @@
+#!/usr/bin/env python
+# coding: utf-8
 
-from datetime import datetime
-import os
-import sys
-import psycopg2
-# import django
-# from django.db import IntegrityError
-# sys.path.append("../")
-# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'groundWaterProject.settings')
+# In[1]:
 
-from django.core.management.base import BaseCommand
 
 import requests
-from requests.auth import HTTPBasicAuth
 import pandas as pd
-from decouple import config
-
-
-
 import os
+
+
+# In[2]:
+
+
+import numpy as np
+
+
+# In[3]:
+
+
+import psycopg2 as pg
+import psycopg2.extras
+
+
+# In[4]:
+from decouple import config
 
 url= config('kobo_url')
 kobo_username = config('kobo_username')
 kobo_password = config('kobo_password')
-auth = HTTPBasicAuth(kobo_username, kobo_password)
 
 
-# files = {'filename': open('filename.txt','rb')}
-def download_data():
-    download = requests.get(url, auth=auth )
-    # col_names = ['Enumerator Name','Geo_location','Municipality','village_name','ward','well_type','well_no_stw','well_no_dtw','gw_level','Height_of_measurement','measurement_unit',"Notes"]
-    # df = pd.read_csv('updated_data.csv')
-    j = requests.get(url, auth=auth )
-    df_json = j.json()
-    gw_df = pd.DataFrame.from_dict(df_json)
-    print('Script has been started at {}: Data Downloaded'.format(datetime.now()))
-    return gw_df
+response = requests.get("https://kobo.humanitarianresponse.info/api/v2/assets/ajbNkrfgsftG7FsDVqc5h9/data.json", headers = {"Authorization" : "Token 818c144f9d063d35f99e024b2686963be3249308"})
+j = response.json()
+df = pd.json_normalize(j['results'])
+gw_df = df
 
 
-df = download_data()
+# In[5]:
 
-# Used this to get the precise location to save the file so that I could find it, but still was not able to locate the save file
-file_to_save = os.path.join(os.path.dirname(os.path.realpath("data_import.py")), "Kobo_data_latest.csv")
 
-## Change the column heading for readbility
+gw_df.columns = ['_id',
+        'uuid',
+        'start',
+        'end',
+        'today',
+        'deviceid',
+        'enumerator',
+        'district',
+        'geo_location',
+        'well_type',
+        'sw_bk_well_no',
+        'measurement_point_cm',
+        'Well_photo_Use_the_ed_measurement_point',
+        'measurement_of_wet_point_on_tape__in_m_',
+        'wet_point_measruement_on_tape',
+        'gw_level_from_mp',
+        'mp_in_m', 'gw_level',
+        'version1', 'version2', 'meta/instanceID', '_xform_id_string',
+        '_uuid', '_attachments', '_status', '_geolocation', '_submission_time',
+        '_tags', '_notes', '_submitted_by',
+        'bk_dw_no', 'Audio_Notes',
+        'Notes',
+        'well_no_sw_bardiya',
+        'well_no_dw_bardiya'
+       ]
 
-df.columns = ['_id', 'formhub/uuid', 'start', 'end',
-       'today', 'deviceid', 'name_enum',
-       'Select_District',
-       'geo_location',
-       'well_type',
-       'sw_bk_well_no',
-       'measurement_point_cm',
-       'Well_photo_Use_the_ed_measurement_point',
-       'Measurement_of_tape_ent_point_MP_in_m',
-       'wet_point_measruement_on_tape',
-       'gw_level_from_mp',
-       'mp_in_m', 'gw_level',
-       '__version__', '_version_', 'meta/instanceID', '_xform_id_string',
-       '_uuid', '_attachments', '_status', '_geolocation', '_submission_time',
-       '_tags', '_notes', '_validation_status', '_submitted_by',
-       'location_details/bk_dw_no',
-       'Audio_Notes_Use_the_to_record_any_notes',
-       'Notes',
-       'well_no_sw_bardiya',
-       'well_no_dw_bardiya']
-# Saving the downloaded Kobo database
-df.to_csv(file_to_save)
-print(type(df))
 
-## For some reason I cannot seem to find the stored file from above, therefore, trying to read the file that was saved
-df_1 = pd.read_csv(file_to_save)
+# In[6]:
 
-# Reading was possible and was also able to save the file to a desired directory (Which again seems to be lost #lol )
-df_1.to_csv('/code/data/kobo_data.csv')
-# Printing to check if the cron job is running as expected
-print(df_1.shape)
 
-## Please Transform df_1 accordingly and update the database here
+df_filtered = gw_df
+df_filtered['well_num'] = (df_filtered['sw_bk_well_no'].combine_first(df_filtered['bk_dw_no']).combine_first(df_filtered['well_no_sw_bardiya']).combine_first(df_filtered['well_no_dw_bardiya']))
+df_filtered['today'] = pd.to_datetime(df_filtered['today'])
+df_filtered['latitude'] = df_filtered['geo_location'].apply(str).str.split(expand = True)[0]
+df_filtered['longitude'] = df_filtered['geo_location'].apply(str).str.split(expand = True)[1]
+df_filtered['precision'] = df_filtered['geo_location'].apply(str).str.split(expand = True)[3]
+df_filtered['altitude'] = df_filtered['geo_location'].apply(str).str.split(expand = True)[2]
 
-# Currently for testing purpose the file is being downloaded every minute
-# with connection.cursor() as cursor:
-#     cursor.execute('DELETE FROM gw_monitoring_kobo', [])
-#     cursor.execute("COPY gw_monitoring_kobo(date,district,latitude,longitude,altitude,precision,well_type,measurement_point_cm,measurement_of_wet_point_on_tape__in_m_,gw_level_from_mp,mp_in_m,gw_level,fid,well_num) FROM '/opt/gw_level.csv' DELIMITER ',' CSV HEADER",[])
-#     cursor.execute("""UPDATE gw_monitoring_kobo
-#         SET well_type='1'
-#         WHERE well_type='sw'
-#         """)
-#     cursor.execute("""UPDATE gw_monitoring_kobo
-#         SET well_type='2'
-#         WHERE well_type='dt'
-#         """)
 
-# class Command(BaseCommand):
-#     # help = 'Prints the titles of all Posts'
-#     print('Hello')
-#
-#     def handle(self, *args, **options):
-#         with connection.cursor() as cursor:
-#             cursor.execute('DELETE FROM gw_monitoring_kobo', [])
-#             cursor.execute("COPY gw_monitoring_kobo(date,district,latitude,longitude,altitude,precision,well_type,measurement_point_cm,measurement_of_wet_point_on_tape__in_m_,gw_level_from_mp,mp_in_m,gw_level,fid,well_num) FROM '/opt/gw_level.csv' DELIMITER ',' CSV HEADER",[])
-#             cursor.execute("""UPDATE gw_monitoring_kobo
-#                 SET well_type='1'
-#                 WHERE well_type='sw'
-#                 """)
-#             cursor.execute("""UPDATE gw_monitoring_kobo
-#                 SET well_type='2'
-#                 WHERE well_type='dt'
-#                 """)
+# In[7]:
 
-connection = psycopg2.connect(user=config('USER'),
+
+df_filtered['fid'] = pd.RangeIndex(0, len(df_filtered)).to_series()
+df_filtered = df_filtered[['today', 'district', 'latitude','longitude','altitude','precision','well_type','measurement_point_cm', 'measurement_of_wet_point_on_tape__in_m_',
+         'gw_level_from_mp','mp_in_m','gw_level', 'fid','well_num']]
+df_filtered = df_filtered.rename(columns={"today": "date"})
+df_filtered = df_filtered.sort_values(by=['date'])
+df_filtered.index = np.arange(1, len(df_filtered) + 1)
+
+
+# In[8]:
+
+
+df_filtered['well_type'].mask(df_filtered['well_type'] == 'sw', 1, inplace=True)
+df_filtered['well_type'].mask(df_filtered['well_type'] == 'dt', 2, inplace=True)
+
+
+# In[39]:
+
+engine = psycopg2.connect(user=config('USER'),
                                   password=config('PASSWORD'),
                                   host="db",
                                   port="5432",
                                   database="groundwater")
-cursor = connection.cursor()
-cursor.execute('DELETE FROM gw_monitoring_kobo', [])
-cursor.execute("COPY gw_monitoring_kobo(date,district,latitude,longitude,altitude,precision,well_type,measurement_point_cm,measurement_of_wet_point_on_tape__in_m_,gw_level_from_mp,mp_in_m,gw_level,fid,well_num) FROM '/opt/gw_level.csv' DELIMITER ',' CSV HEADER",[])
-cursor.execute("""UPDATE gw_monitoring_kobo
-    SET well_type='1'
-    WHERE well_type='sw'
-    """)
-cursor.execute("""UPDATE gw_monitoring_kobo
-    SET well_type='2'
-    WHERE well_type='dt'
-    """)
-print('works now')
-if connection:
-    cursor.close()
-    connection.close()
+# engine = pg.connect("dbname='groundwater' user='postgres' host='127.0.0.1' port='5432' password='krishna'")
+engine.autocommit = True
+df_pgadmin = pd.read_sql('select * from gw_monitoring_kobo', con=engine)
+df_pgadmin = df_pgadmin.sort_values(by=['date'])
+df_pgadmin.index = np.arange(1, len(df_pgadmin) + 1)
+
+
+# In[40]:
+
+
+df_filtered_postgres = df_filtered[df_filtered.index > len(df_pgadmin)]
+df_filtered_postgres['fid']=df_filtered_postgres.index
+
+
+# In[41]:
+
+
+if len(df_filtered_postgres)>0:
+    try:
+        print('{} rows need to be updated'.format(len(df_filtered_postgres)))
+        df_columns = list(df_filtered_postgres)
+        table = 'gw_monitoring_kobo'
+        # create (col1,col2,...)
+        columns = ",".join(df_columns)
+
+        # create VALUES('%s', '%s",...) one '%s' per column
+        values = "VALUES({})".format(",".join(["%s" for _ in df_columns]))
+
+        #create INSERT INTO table (columns) VALUES('%s',...)
+        insert_stmt = "INSERT INTO {} ({}) {}".format(table,columns,values)
+#         cur = engine.cursor() #= conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur = engine.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        psycopg2.extras.execute_batch(cur, insert_stmt, df_filtered_postgres.values)
+        cur.execute("ROLLBACK")
+
+        print('{} rows updated'.format(len(df_filtered_postgres)))
+    except (Exception, pg.Error) as e:
+        print(e)
+    finally:
+        if (engine):
+            cur.close()
+            engine.close()
+            print("Connection closed.")
+else:
+    print('{} rows need to be updated'.format(0))
+    print('{} rows updated'.format(0))
