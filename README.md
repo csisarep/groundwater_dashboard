@@ -25,6 +25,15 @@ For displaying different graphs, the dashboard can be easily extended. Adding Ja
 ## Installation
 Please configure .env file for your configuration. Rename .env_sample file to .env and make the changes for credentials and kobo url
 
+```
+USER=postgres
+PASSWORD=krishna
+kobo_url=https://kobo_url_here.com
+kobo_password=Kobo_password_here
+kobo_username=Kobo_username_here
+site_url
+```
+
 For installation one merely requires Docker and Docker Compose to be installed. The website can then be started by running:
 ```
 docker-compose up
