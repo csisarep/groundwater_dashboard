@@ -7,6 +7,12 @@ The code of this repository is a product of the CSISA-Resilience project in part
 
 The Cereal Systems Initiative in South Asia (CSISA; www.csisa.org) is supported by USIAD and the Bill and Melinda Gates Foundation and is led by the International Maize and Wheat Improvement Center (CIMMYT) and implemented jointly with the International Water Management Institute (IWMI), International Food Policy Research Institute (IFPRI) and the International Rice Research Institute (IRRI). In Nepal, new support from USAID has led to the implementation of the CSISA Covid-19 Response and Resilience Activity (CSISA-Resilience), which is also implemented with Texas A&M University, Cornell University, and International Development Enterprises (iDE). CSISA-Resilience involves two inter-linked objectives that address CSISA’s strengths in core areas needed to assist in COVID-19 response and recovery, as well as Nepal’s longer-term building of processes and structures that can enhance resilience to shocks, with emphasis empowering youth and overcoming challenges faced by women headed farm households. The views expressed on this website do not necessarily reflect the views of the donors.## We be listing the procedure for setup of project later on.
 
+## Work flow diagram
+
+<p align="center">
+<img src="flow-diagram.png" alt="Flow Diagram"/>
+</p>
+
 ## Open use and extenditibility
 
 Although this dashboard has been developed specifically for Nepal and contains Nepal specific data, it can be quickly adjusted for any other context and data collection environment. Doing so merely requires updating the ODK API for accessing the collected data, ensuring that the fields of the data collections are correct and adjusting the graphs of interest. The idea is for this to be a rapid and low-maintenance solution that compelemnts more heavy and  
@@ -17,9 +23,10 @@ For displaying different graphs, the dashboard can be easily extended. Adding Ja
 
 
 ## Installation
+Please configure .env file for your configuration. Rename .env_sample file to .env and make the changes for credentials and kobo url
 
 For installation one merely requires Docker and Docker Compose to be installed. The website can then be started by running:
-``` 
+```
 docker-compose up
 ```
 

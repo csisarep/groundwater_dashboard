@@ -17,15 +17,27 @@ from django.utils.html import escape
 
 
 class Dashboard(TemplateView):
+    """
+        Dashboard page load after user login to the Systems. this page has to be updated.
+        this page is for future upgrade
+    """
     template_name = "index.html"
 
 class Home(TemplateView):
+    '''
+        This page displays the home page for the dashboard.
+        this page is displayed when user enter domain-name as url on the browser
+    '''
     template_name = "frontend/home.html"
 
 class MetaData(TemplateView):
+    '''
+        this page displays the meta data information for the dashboard
+    '''
     template_name = "frontend/pages/meta_data.html"
 
 class DownloadTableData(TemplateView):
+
     template_name = "frontend/pages/data_tables.html"
 
     def get_context_data(self,*args, **kwargs):
@@ -37,20 +49,6 @@ class DigitalMonitoring(TemplateView):
     template_name = "frontend/pages/digital_monitoring.html"
     def get_context_data(self,*args, **kwargs):
         context = super(DigitalMonitoring, self).get_context_data(*args,**kwargs)
-        # update_odkData() #update ODK database from KOBO if older than 24h
-        # #update_offline_csv()
-        # with connection.cursor() as cursor:
-        #         cursor.execute('DELETE FROM gw_monitoring_kobo', [])
-        #         cursor.execute("COPY gw_monitoring_kobo(date,district,latitude,longitude,altitude,precision,well_type,measurement_point_cm,measurement_of_wet_point_on_tape__in_m_,gw_level_from_mp,mp_in_m,gw_level,fid,well_num) FROM '/opt/gw_level.csv' DELIMITER ',' CSV HEADER",[])
-        #         cursor.execute("""UPDATE gw_monitoring_kobo
-        #             SET well_type='1'
-        #             WHERE well_type='sw'
-        #             """)
-        #         cursor.execute("""UPDATE gw_monitoring_kobo
-        #             SET well_type='2'
-        #             WHERE well_type='dt'
-        #             """)
-        # context['users'] = df['gw_level'][1]
         #passing one locatio set for deep and one for shallow tubewells to be managed in JS
         context['gw_locations'] = GwLocationsData.objects.all().exclude(latitude__isnull=True)
         context['gw_locations1'] = GwLocationsData.objects.all().exclude(latitude__isnull=True)
@@ -95,7 +93,10 @@ class AjaxOfflineLoggerRequest(View):
         return HttpResponse(json.dumps(chart_data), content_type="application/json")
 
 class AjaxHistoricalDataRequest(View):
-
+    '''
+        this view handles the ajax request for the historical data of wells based upon
+        the user request from multiselect box from historical page
+    '''
     def get(self, request):
         well_location = json.loads(self.request.GET.get("wells"))
         chart_data = {}
@@ -107,7 +108,7 @@ class AjaxHistoricalDataRequest(View):
         # print(chart_data)
         return HttpResponse(json.dumps(chart_data), content_type="application/json")
 
-
+# defines the table header and seaching variable configuration
 columns_header = [f.name for f in GwMonitoringKobo._meta.get_fields()]
 SEARCH_COLUMNS =[]
 for col in columns_header:
@@ -116,7 +117,14 @@ for col in columns_header:
         SEARCH_COLUMNS.append(col+'__name')
     except:
         SEARCH_COLUMNS.append(col)
+
+
 class wellDatatable(BaseDatatableView):
+    '''
+        Recieves ajax request for the data in tables. It controls pagination, search for datatable
+        and model objects tabling with multiple feilds
+    '''
+
     # The model we're going to show
     model = GwMonitoringKobo
 
@@ -132,7 +140,8 @@ class wellDatatable(BaseDatatableView):
         return qs
 
     def paging(self, qs):
-        """ Paging
+        """
+            pagination for the datatables
         """
         limit = min(int(self._querydict.get('length', 10)), 1000)
         start = int(self._querydict.get('start', 0))
