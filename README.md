@@ -54,7 +54,14 @@ kobo_username=Kobo_username_here
 site_url
 ```
 
-For installation one merely requires Docker and Docker Compose to be installed. The website can then be started by running:
+For installation one merely requires Docker and Docker Compose to be installed. First Build the docker container with following commands:
+
+```
+docker-compose build
+````
+
+
+The website can then be simply started for testing and further development by running:
 ```
 docker-compose up
 ```
@@ -67,6 +74,8 @@ psql -U postgres -f /opt/groundwater.sql #restoring the database
 ```
 Potentially, the container name 'goundwater_db_1' has to be adjusted to match the local container name.
 
+You are all set for the local development and boom you can collaborate or use as per your requirements.
+
 
 ## Contact
 
@@ -74,31 +83,24 @@ For questions or queries please contact activity leader Anton Urfels (a.urfels@c
 
 
 
-## Smaller details for reference (delete later):
-Documentation for higher level issues and decision taken:
-https://docs.google.com/document/d/1iPiLmMDzfiNsVfwgOoOnJweTDDF2DTpf43fIuvbWxaw/edit?usp=sharing
-
-I addedd the schema to a Google Sheet:
-https://docs.google.com/spreadsheets/d/1MfJqkCz7o-e7jgZG_KTTIiDoeIAfE5WgPWRdj4R6swQ/edit?usp=sharing
-
-Will still be expanded, but can get started from here.
-
-
 # restore database in postgres
-# location of groundwater.sql must be inside /var/lib/postgresql
+#### location of groundwater.sql must be inside /var/lib/postgresql
 
 psql groundwater < groundwater.sql
 
-#this command restore backed up database to the existing database named "groundwater"
+### this command restore backed up database to the existing database named "groundwater" (TO be removed later on)
 
 
 docker cp ./database/well_type_update.sql groundwater_db_1:/opt/
 
 
 # docker commands
-
-docker exec -it groundwater_1_db /bin/bash
-groundwater_1_db is the container name
-you can use docker ps -a    to list all containers and names
+```
+docker exec -it groundwater_1_db /bin/bash #groundwater_1_db is the container name
+you can use docker ps -a   #to list all containers and names
 su postgres
-psql
+psql -d groundwater #Enters database named groundwater
+\dt #Listout all tables for database
+
+```
+you can further use command lines for database queries from here

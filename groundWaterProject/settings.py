@@ -27,7 +27,7 @@ MEDIA_DIR = os.path.join(BASE_DIR,'media')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '$@#&nut@#%9e1uz)i_cv=_g&-dlwe#_okyb^@8gknlp!a*1+4m'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','gw-nepal.com','www.gw-nepal.com']
 
@@ -42,9 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'waterApp',
-    
 
-    
+
+
 ]
 
 MIDDLEWARE = [
@@ -140,5 +140,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-
-
