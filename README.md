@@ -74,11 +74,13 @@ docker-compose up
 ```
 
 When the website is running for the first time, the database needs to first be restored by logging into the db container and executing a restore with the following sequence of commands in your terminal:
+
 ```
 docker exec -it groundwater_db_1 /bin/bash  #entering the db container shell
 su postgres #switching to postgress user
 psql -U postgres -f /opt/groundwater.sql #restoring the database
 ```
+
 Potentially, the container name 'goundwater_db_1' has to be adjusted to match the local container name.
 
 You are all set for the local development and boom you can collaborate or use as per your requirements.
@@ -94,12 +96,30 @@ Most other services (Webserver, database etc.) use existing default containers, 
 
 ### WebApp 
 
+This is the core of the dashboard. The WebApp uses Django as the key framework. See https://docs.djangoproject.com/en/4.0/ for a detailed documentation. Django is organized according the Model-View-Template principle. This means that the data lives in the 'model' component, the page stucture lives in the 'View' component, and the visualization live in the 'template' component.
+
+
+### Use cases
+
+#### Changing exising text on the dashboard 
+
+As mentioned above, the text and visualziation component are stored in the template component of the app. The template folder contains all the relevant files. Django uses its own templating engine for joining various smaller html files. It essence, the dashboard website starts from the ./template/frontend/base/base.html file. Core elements such as the dashboard webApp title and key global html settings can be changed here.
+
+For changing elements on specific pages, please look at the following folder: ./template/frontend/pages. It contains the html components for each page included in the dashbaord. To stick with out example, the first map on the 'digital monitoring' page lives in the ./template/frontend/pages/digital_monitoring.html file. The tile of the first map can be changed directly in this file (see screenshot below):
+***** Add screenshot from both intiial and changed state here******
 
 
 
+TODO (Krishna) to think through how to best explain folder and templating structure.
+TODO (Krishna) check through frotend, base folder in template folder and explain what each is for. 
 
 
+For example, if one want to change the header of the first map in the monitoring page: 
+1. 
 
+#### Add a new page to the dashboard
+
+Step by step guide:
 
 
 
