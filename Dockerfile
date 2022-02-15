@@ -1,6 +1,11 @@
 # syntax=docker/dockerfile:1
-FROM python:3
 
+# This file provides the instructions for building the webApp container.
+# Think of it as installing all key component on a fresh linux system.
+# As you can see the webApp is code is installed by copying the code folder.
+# And other key components and configurations are installed and adjusted afterwards. 
+
+FROM python:3
 WORKDIR /code
 COPY . /code/
 RUN apt-get update && apt-get -y install python3-pip && apt install cron -y
