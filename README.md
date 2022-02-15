@@ -106,13 +106,11 @@ This is the core of the dashboard. The WebApp uses Django as the key framework. 
 As mentioned above, the text and visualziation component are stored in the template component of the app. The template folder contains all the relevant files. Django uses its own templating engine for joining various smaller html files. It essence, the dashboard website starts from the ./template/frontend/base/base.html file. Core elements such as the dashboard webApp title and key global html settings can be changed here.
 
 For changing elements on specific pages, please look at the following folder: ./template/frontend/pages. It contains the html components for each page included in the dashbaord. To stick with out example, the first map on the 'digital monitoring' page lives in the ./template/frontend/pages/digital_monitoring.html file. The tile of the first map can be changed directly in this file (see screenshot below):
-***** Add screenshot from both intiial and changed state here******
-
-
+*****Add screenshot from both intiial and changed state here******
 
 TODO (Krishna) to think through how to best explain folder and templating structure.
 TODO (Krishna) check through frotend, base folder in template folder and explain what each is for. 
-
+TODO (Krishna) Comment 'sister files' of use case with same type of documentation, but without having to aadd in readme. 
 
 For example, if one want to change the header of the first map in the monitoring page: 
 1. 
