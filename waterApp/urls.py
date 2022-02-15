@@ -17,6 +17,10 @@ Including another URLconf
 from django.urls import path
 from waterApp import views
 
+"""
+    We are supposed to have all urls for water apps here in this file.
+    Each path is supposed to 
+"""
 urlpatterns = [
     path('dashboard/', views.Dashboard.as_view(), name='dashboard'),
     path('', views.Home.as_view(), name='home'),

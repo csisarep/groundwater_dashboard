@@ -4,7 +4,7 @@
 
 ## Background
 
-The code of this repository is a product of the CSISA-Resilience project in partnership with Nepal’s Groundwater Resources Development Board and aims to contribute to Nepal’s capacity to operate a digital groundwater monitoring system through a small pilot project in the USAID Feed the Future Zone of Nepal’s Tarai region. The ongoing expansion of groundwater resources development will undoubtedly provide great contribution to Nepal’s irrigation sector and food security. Along this way, a digital groundwater monitoring system will be critical to help the country guide the development and management of the resource by providing decision-makers and communities with adequate spatial evidence and information about the opportunities and risks for sustainable and equitable groundwater use.
+The code of this repository is a product of the CSISA-Resilience project in partnership with Nepal’s Groundwater Resources Development Board and aims to contribute to Nepal’s capacity to operate a digital groundwater monitoring system through a small pilot project in the USAID Feed the Future Zone of Nepal’s Terai region. The ongoing expansion of groundwater resources development will undoubtedly provide great contribution to Nepal’s irrigation sector and food security. Along this way, a digital groundwater monitoring system will be critical to help the country guide the development and management of the resource by providing decision-makers and communities with adequate spatial evidence and information about the opportunities and risks for sustainable and equitable groundwater use.
 
 The Cereal Systems Initiative in South Asia (CSISA; www.csisa.org) is supported by USIAD and the Bill and Melinda Gates Foundation and is led by the International Maize and Wheat Improvement Center (CIMMYT) and implemented jointly with the International Water Management Institute (IWMI), International Food Policy Research Institute (IFPRI) and the International Rice Research Institute (IRRI). In Nepal, new support from USAID has led to the implementation of the CSISA Covid-19 Response and Resilience Activity (CSISA-Resilience), which is also implemented with Texas A&M University, Cornell University, and International Development Enterprises (iDE). CSISA-Resilience involves two inter-linked objectives that address CSISA’s strengths in core areas needed to assist in COVID-19 response and recovery, as well as Nepal’s longer-term building of processes and structures that can enhance resilience to shocks, with emphasis empowering youth and overcoming challenges faced by women headed farm households. The views expressed on this website do not necessarily reflect the views of the donors.## We be listing the procedure for setup of project later on.
 
@@ -47,7 +47,7 @@ For displaying different graphs, the dashboard can be easily extended. Adding Ja
 
 We first provide a quick installation guide and then provide a more in-depth explanation of the project setup. If you just want to install the system you may follow the steps below. For adding features or modifying the project, you may refer to the more detailed explanations afterwards.
 
-In the docuemntation we describe key features assuming that the intended user has basic programming skills but may not be familiar with the used software and libraries of this project. 
+In the docuemntation we describe key features assuming that the intended user has basic programming skills but may not be familiar with the used software and libraries of this project.
 
 ### Installation Process
 Please configure .env file for your configuration. Rename .env_sample file to .env and make the changes for credentials and kobo url
@@ -87,21 +87,43 @@ You are all set for the local development and boom you can collaborate or use as
 
 
 
-### Docker setup 
+### Docker setup
 
 The key docker configurations can be found in docker-compose.yml and the respective Dockerfiles.
 Most importantly, check in the ./Dockerfile in the root folder of this app for the webApp installation files.
 Most other services (Webserver, database etc.) use existing default containers, provided by the developers that are then configured for this project.
 
+### Folder structure
 
-### WebApp 
+```
+    .
+    ├── data                   # datafiles 'csv' to be shared with web containers
+    ├── db_data                # datafiles 'csv' to be shared with db container
+    ├── groundWaterProject     # Original project file created by django
+    ├   ├── settings.py
+    ├   ├── urls.py
+    ├── static                 #  static content to be used in django project
+    ├── templates              # HTMLTemplates to be used by django project
+    ├── waterApp               # water app include combination of models, views, templates, template tags, static files, URLs, middleware, etc.
+    ├   ├── models.py
+    ├   ├── views.py
+    ├   ├── urls.py
+    ├   
+    ├── LICENSE
+    ├── docker-compose.yml
+    ├── Dockerfile
+    ├── requirements.txt
+    └── README.md
+```
+
+### WebApp
 
 This is the core of the dashboard. The WebApp uses Django as the key framework. See https://docs.djangoproject.com/en/4.0/ for a detailed documentation. Django is organized according the Model-View-Template principle. This means that the data lives in the 'model' component, the page stucture lives in the 'View' component, and the visualization live in the 'template' component.
 
 
 ### Use cases
 
-#### Changing exising text on the dashboard 
+#### Changing exising text on the dashboard
 
 As mentioned above, the text and visualziation component are stored in the template component of the app. The template folder contains all the relevant files. Django uses its own templating engine for joining various smaller html files. It essence, the dashboard website starts from the ./template/frontend/base/base.html file. Core elements such as the dashboard webApp title and key global html settings can be changed here.
 
@@ -112,8 +134,9 @@ TODO (Krishna) to think through how to best explain folder and templating struct
 TODO (Krishna) check through frotend, base folder in template folder and explain what each is for. 
 TODO (Krishna) Comment 'sister files' of use case with same type of documentation, but without having to aadd in readme. 
 
-For example, if one want to change the header of the first map in the monitoring page: 
-1. 
+
+For example, if one want to change the header of the first map in the monitoring page:
+1.
 
 #### Add a new page to the dashboard
 
