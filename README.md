@@ -47,7 +47,7 @@ For displaying different graphs, the dashboard can be easily extended. Adding Ja
 
 We first provide a quick installation guide and then provide a more in-depth explanation of the project setup. If you just want to install the system you may follow the steps below. For adding features or modifying the project, you may refer to the more detailed explanations afterwards.
 
-In the docuemntation we describe key features assuming that the intended user has basic programming skills but may not be familiar with the used software and libraries of this project. 
+In the docuemntation we describe key features assuming that the intended user has basic programming skills but may not be familiar with the used software and libraries of this project.
 
 ### Installation Process
 Please configure .env file for your configuration. Rename .env_sample file to .env and make the changes for credentials and kobo url
@@ -87,21 +87,44 @@ You are all set for the local development and boom you can collaborate or use as
 
 
 
-### Docker setup 
+### Docker setup
 
 The key docker configurations can be found in docker-compose.yml and the respective Dockerfiles.
 Most importantly, check in the ./Dockerfile in the root folder of this app for the webApp installation files.
 Most other services (Webserver, database etc.) use existing default containers, provided by the developers that are then configured for this project.
 
+### Folder structure
 
-### WebApp 
+```
+    .
+    ├── data                   # datafiles 'csv' to be shared with web containers
+    ├── db_data                # datafiles 'csv' to be shared with db container
+    ├── groundWaterProject     # Original project file created by django
+    ├   ├── settings.py
+    ├   ├── urls.py
+    ├── static                 #  static content to be used in django project
+    ├── templates              # HTMLTemplates to be used by django project
+    ├── waterApp               # water app include combination of models, views, templates, template tags, static files, URLs, middleware, etc.
+    ├   ├── models.py
+    ├   ├── views.py
+    ├   ├── urls.py
+    ├   
+    ├── LICENSE
+    ├── docker-compose.yml
+    ├── Dockerfile
+    ├── requirements.txt
+    └── README.md
+
+
+
+### WebApp
 
 This is the core of the dashboard. The WebApp uses Django as the key framework. See https://docs.djangoproject.com/en/4.0/ for a detailed documentation. Django is organized according the Model-View-Template principle. This means that the data lives in the 'model' component, the page stucture lives in the 'View' component, and the visualization live in the 'template' component.
 
 
 ### Use cases
 
-#### Changing exising text on the dashboard 
+#### Changing exising text on the dashboard
 
 As mentioned above, the text and visualziation component are stored in the template component of the app. The template folder contains all the relevant files. Django uses its own templating engine for joining various smaller html files. It essence, the dashboard website starts from the ./template/frontend/base/base.html file. Core elements such as the dashboard webApp title and key global html settings can be changed here.
 
@@ -111,11 +134,11 @@ For changing elements on specific pages, please look at the following folder: ./
 
 
 TODO (Krishna) to think through how to best explain folder and templating structure.
-TODO (Krishna) check through frotend, base folder in template folder and explain what each is for. 
+TODO (Krishna) check through frotend, base folder in template folder and explain what each is for.
 
 
-For example, if one want to change the header of the first map in the monitoring page: 
-1. 
+For example, if one want to change the header of the first map in the monitoring page:
+1.
 
 #### Add a new page to the dashboard
 
