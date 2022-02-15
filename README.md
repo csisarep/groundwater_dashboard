@@ -114,8 +114,7 @@ Most other services (Webserver, database etc.) use existing default containers, 
     ├── Dockerfile
     ├── requirements.txt
     └── README.md
-
-
+```
 
 ### WebApp
 
