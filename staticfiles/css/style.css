@@ -1148,11 +1148,11 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
   left: 65px;
 }
 .navbar-default .special_link a {
-  background: #1ab394;
+  background: #074da5;
   color: white;
 }
 .navbar-default .special_link a:hover {
-  background: #17987e !important;
+  background: #074da5 !important;
   color: white;
 }
 .navbar-default .special_link a span.label {
@@ -1160,11 +1160,11 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
   color: #1ab394;
 }
 .navbar-default .landing_link a {
-  background: #1cc09f;
+  background: #074da5;
   color: white;
 }
 .navbar-default .landing_link a:hover {
-  background: #1ab394 !important;
+  background: #074da5 !important;
   color: white;
 }
 .navbar-default .landing_link a span.label {
