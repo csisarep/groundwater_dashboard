@@ -250,6 +250,7 @@ $(document).ready(function() {
     var content = "<p>District:  " + feature.properties.district + "</p>";
     content += "<p>Well Number: " + feature.properties.well_number + "</p>";
     content += "<p>Water Level: " + feature.properties.gw_level + "</p>";
+    content += "<p>Date: " + feature.properties.date + "</p>";
     if (feature.properties) {
       layer.bindPopup(content);
     }
