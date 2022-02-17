@@ -893,7 +893,7 @@ h5 {
 }
 .navbar-default {
   background-color: transparent;
-  border-color: #074da5;
+  border-color: #2f4050;
 }
 .navbar-top-links li {
   display: inline-block;
@@ -997,7 +997,7 @@ h5 {
 }
 .nav-header {
   padding: 33px 25px;
-  background-color: #074da5;
+  background-color: #2f4050;
   background-image: url("patterns/header-profile.png");
 }
 .caret {
