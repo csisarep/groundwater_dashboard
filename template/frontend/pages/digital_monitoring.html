@@ -64,7 +64,7 @@
         </div>
         <div class="ibox">
           <div class="ibox-title">
-            <h1> Last month's groundwater measurements:</h1>
+            <h1> Current groundwater levels:</h1>
             <p>
               In this map you can see the latest manually measured groundwater measurements that are not older than 30 days. You can see all measurement in the line graph below or in the download page. Measurements are in m below ground level (mbgl). Well types: sw = shallow wells and dw = deep wells.
 
@@ -82,8 +82,9 @@
         </div>
         <div class="ibox">
           <div class="ibox-title">
-            <h2> Overview of manual groundwater level measurements:</h2>
-
+            <h2>Trends of groundwater levels to detect depletion:</h2>
+ 	    <p> Use this graph to identify groundwater depletion trends over time.
+	    </p>
           </div>
           <div class="ibox-content">
             <div class="form-group">
@@ -260,8 +261,8 @@ odk.features.push({
             'district':'{{gw.district}}',
             'type': '{{gw.type.name}}',
             'type_id': '{{gw.well_type}}',
-            'date':'{{gw.date.isoformat}}',
-            'gw_level':'{{gw.gw_level}}'
+            'date':'{{gw.date.isoformat}}'
+
           }
         });
 
