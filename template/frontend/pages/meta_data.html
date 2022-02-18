@@ -62,13 +62,13 @@
           </div>
           <div class="ibox-content">
             <p>
-              The goal of this project activity is to pilot an open data system for groundwater data in Banke district with the aim to develop a system that can be scaled to other districts of Nepal. The sub-objectives include:
+              The goal of this dashboard activity is to provide an open data system for groundwater data in Banke district with the aim to develop a system that can be scaled to other districts of Nepal. The sub-objectives include:
             </p>
             <div>
               <ol>
-                <li>Evaluate the efficacy of different approaches for automatizing data groundwater measurements and data collection (Manual, ODK-based, offline loggers, online loggers).</li>
-                <li>Develop a dashboard that displays the groundwater monitoring data catering to different use cases.</li>
-                <li>Provide access to groundwater level data and important auxiliary information for users of the dashboard.</li>
+                <li>Develop one-stop-shop for accessing actionable information on groundwater stakeholders and planners</li>
+                <li>Incrementatlly expand the dashboard to different use cases through a strong science-policy interface</li>
+                <li>Collate and provide various data and reports on groundwater in Nepal to help make the unvisible visible</li>
               </ol>
             </div>
 
@@ -79,55 +79,28 @@
 
     </div>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="ibox">
           <div class="ibox-title">
-            <h1>Dashboard development and data collection</h1>
+            <h2>Dashboard development and data collection</h2>
           </div>
           <div class="ibox-content">
             <p>
-              The dashboard is being developed on a continuous basis. This first version is aimed to provide rapid support and real-time visualization for the ongoing data collection efforts. In the background we are constantly developing the feature set of the dashboard based on experience and user feedback. We therefore kindly invite anybody to get in touch with us and provide any feedback or demands for additional features. The dashboard is divided into three different components:
+              The dashboard is being developed on a continuous basis. This first version is aimed to provide rapid support and real-time visualization for the ongoing data collection efforts. In the background we are constantly developing the feature set of the dashboard based on experience and user feedback. We therefore kindly invite anybody to share feedback, request additional features, or contribute their data or web development skills. 
+            </br>
+               The monitoring wells wer selected in 1980s and 1990s as part of UNDP and USAID funded groundwater development and sustainability programs including large hydrogeologic studies. The reports of these studies are available with GWRDB.  
+            </br>
+            For data collection, we replaced the manual data entry with Open Data Kit (ODK) supported data entry on a tablet or phone. After measuring the water level, the data collector immediately enters the data in a survey form on his tablet which is directly send to the cloud, processed, and visualized. Data collection takes place on a monthly basis.
+          </br> 
+            Different digital methods were also tested and evalauted and the report will be published on this website shortly.
             </p>
-            <div>
-              <ol>
-                <li>The real-time monitoring data</li>
-                <li>A spreadsheet with more information about each measurement and the possibility for downloading the data.</li>
-                <li>An overview of the historical data for Banke district.</li>
-              </ol>
-            </div>
+            <h2>Historical dataset</h2>
+            <p>
+                These data have been manually collected and curated since the year 2000. However, some years and data points are missing and typos have not been fixed yet. You can click both on the wells in the map or on the graph in the bottom to select and de-select wells of interest. Below the graphs you can select the year of interest.
+              </p>
 
           </div>
       </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="ibox">
-          <div class="ibox-title">
-            <h1>Digital monitoring</h1>
-          </div>
-          <div class="ibox-content">
-
-            <p>
-              This section displays in real-time the data that is being collected for this specific project during the year 2021. To evaluate different data collection approaches, this section categorizes data points into three different categories:
-            </p>
-            <p>
-            <ol>
-              <li>ODK-based data collection.<br>
-                <ul>
-                  <li>This method replaces the manual data entry with ODK-supported data entry on a tablet. After measuring the water level, the data collector immediately enters the data in a survey form on his tablet which is immediately send to the cloud and processed. Data collection takes place on a monthly basis.</li>
-                </ul>
-              </li>
-              <li>Offline data loggers.<ul>
-                  <li>This method uses 10 low-cost offline data loggers to record daily water levels. The data loggers need to be read out and uploaded to the data base manually, which takes place on a 2-weekly basis.</li>
-                </ul>
-              </li>
-              <li>Online data loggers (currently being integrated into the dashboard). <ul>
-                  <li>Online data loggers transmit information to the cloud in real-time by using the cellular network. Powered through a small solar panel, the system ready the water level and immediately transmits the information to the online survey from where it is further processed and visualized.</li>
-                </ul>
-              </li>
-            </ol>
-
-          </div>
       </div>
       </div>
 
@@ -138,46 +111,10 @@
               <h1>Download monitoring data</h1>
             </div>
             <div class="ibox-content">
-              <p>This section shows the uploaded data. It includes all the variables that are submitted to the server including location, well number, name of data collector, date, measurement details and the final groundwater level for the ODK based data, and groundwater level for the offline loggers. By clicking the "export" button the whole dataset can be downloaded. Note, that this dataset has not been screened for errors so use with caution.
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="ibox">
-            <div class="ibox-title">
-              <h1>Historical dataset</h1>
-            </div>
-            <div class="ibox-content">
-
-              <p>
-                These data have been manually collected and curated since the year 2000. However, some years and data points are missing and typos have not been fixed yet. You can click both on the wells in the map or on the graph in the bottom to select and de-select wells of interest. Below the graphs you can select the year of interest.
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-        <div class="col-md-6">
-          <div class="ibox">
-            <div class="ibox-title">
-              <h1>Monitoring well selection procedure</h1>
-            </div>
-            <div class="ibox-content">
-              <p>
-                The GWRDB oversees ~20 shallow and ~5 deep tubewells for monitoring purposes per district. This pilot did not establish additional wells but uses the existing ones. The offline wells were selected in order to capture the North-South and East-West gradient. However, some wells were not practical to install and had to be exchanged for more feasible alternatives.
+              <p>We provide easy options to download the collected data. The dataset includes all the variables that are submitted to the server including location, well number, name of data collector, date, measurement details and the final groundwater level for the ODK based data, and groundwater level for the offline loggers. Please note that this dataset has not been screened for errors so use with caution.
               </p>
             </div>
-
           </div>
-
         </div>
 
       </div>
