@@ -1,6 +1,6 @@
 # This is the key configuration file for the docker compose setup.
 # Each service represents a seperate docker container.
-# Docker compose then start all containers together and let's them communicate.
+# Docker compose then starts all containers together and let's them communicate.
 # Key services used are the Database, Webserver, Django App, HTTPS Certification, and cron job.
 # For each service refer to the respective dockerfile for more information on how that service is build.
 # In order to ensure that containers can use shared files, we are using volumes that are shared across containers.

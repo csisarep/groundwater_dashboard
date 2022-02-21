@@ -7,33 +7,80 @@
   <div class="container">
     <div class="row">
 
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="ibox">
+
           <div class="ibox-content">
-            <h1>Groundwater Dashboard Nepal</h1>
-            <h2>Digital and open monitoring system</h2>
+            <p style="color:#ee1b24;text-align:center">
+            <img src="{% static 'img/gwrdb_logo.png' %}"; style="float:left"; alt="" style="height:70px">
+            <img src="{% static 'img/np_logo.gif' %}"; style="float:right;-webkit-transform:rotateY(180deg);transform: rotateY(180);"; alt=""; height="70px">
+      <font size="4" >
+            <strong>
+            Government of Nepal </br> Ministry of Water Resources, Energy and Irrigation
+      </font> 
+      </strong>
+      </br>
+      <font size="4"; color="#074da5">
+      <strong>
+      Groundwater Resources Development Board
+      </strong>
+      </font> 
+      </p>
           </div>
 
-        </div>
-
-      </div>
-      <div class="col-md-6">
-        <div class="ibox">
           <div class="ibox-content">
-
-            <img src="{% static 'img/cimmyt.png' %}" alt="" style="height:100px">
+            <h1 style="text-align:center">Groundwater Dashboard Nepal</h1>
+            <h2 style="text-align:center">Digital and open monitoring system</h2>
           </div>
 
         </div>
       </div>
 
     </div>
+
     <div class="row">
       <div class="col-md-12">
         <div class="ibox ">
 
           <div class="ibox-content">
-            <h1>Introduction</h1>
+
+            <h1> How to use this website? </h1>
+            <p>
+              <ul>
+                <li>This is an initial version of the dashboard and is designed to provide rapid access to the data that the GWRDB is  collecting in an actionable format. Suggestions and feedback for additional features are welcome.</li>
+                <li> You are currently on the <a href="{% url 'home' %}">home page</a>. Here we provide a brief overview of this project activity and instruction on how to use this dashboard. </li>
+                <li> The <a href='{% url "meta-data" %}'>Meta-data</a> Meta-data page provides more detailed background information and other relevant meta-data</li>
+                <li> The <a href='{% url "digital-monitoring" %}'>Digtial groundwater monitoring</a> page provides and overview of recently collected data through different monitoring methods (see below for more information). You can toggle the map to display different monitoring methods and click on the wells to see the data collected for each specific location and methods. </li>
+                <li> The <a href='{% url "download-table-data" %}'>Download monitoring data</a> page provides access to the detailed data that has been collected and you can download it in CSV format. In the navigation bar you can also select the district and well type to show data for. </li>
+                <li>The <a href='{% url "historical-database" %}'>Histroical data</a> page contains data that has been collected by the GWRDB since the year 2000. Note that this data has not been cleaned, but it can be used to obtain a better feel for the groundwater level fluctuations that are typical in the region.</li>
+              </ul>
+
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+        <div class="row">
+      <div class="col-md-12">
+        <div class="ibox ">
+
+          <div class="ibox-content">
+
+            <h1> Contact </h1>
+            <p>
+              In case you should have any question or feedback kindly get in touch and contact Surendray Man Shakya (<a href = "mailto: gwrdb2031@gmail.com">gwrdb2031@gmail.com</a>) for queries to the GWRDB or Anton Urfels (<a href = "mailto: a.urfels@cgiar.org">a.urfels@cgiar.org</a>) for queries regarding the development of the digital monitoring system. The source code will be shortly made available on GitHub.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+     <div class="row">
+      <div class="col-md-12">
+        <div class="ibox ">
+
+          <div class="ibox-content">
+            <h1>Acknowledgements, funding, and partners</h1>
             <p>
               This website is a product of the CSISA-Resilience project in partnership with Nepal’s Groundwater Resources Development Board and
               aims to contribute to Nepal’s capacity to build a digital groundwater monitoring system through a small pilot project in the USAID
@@ -54,46 +101,10 @@
               of the donors.
 
             </p>
-
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="ibox ">
-
-          <div class="ibox-content">
-
-            <h1> Contact </h1>
-            <p>
-              In case you should have any question or feedback kindly get in touch and contact Anton Urfels, who leads this activity, at <a href = "mailto: a.urfels@cgiar.org">a.urfels@cgiar.org</a>.
-            </p>
-
-
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="ibox ">
-
-          <div class="ibox-content">
-
-            <h1> How to use this website? </h1>
-            <p>
-              <ul>
-                <li>This is the beta version of the dashboard and is designed to provide rapid access to the data that we are collecting and for soliciting rapid feedback about the data collection and visualization. We aim to upgrade this dashboard in the near future with a richer feature set.</li>
-                <li> You are currently on the <a href="{% url 'home' %}">home page</a>. Here we provide a brief overview of this project activity and instruction on how to use this dashboard. </li>
-                <li> The <a href='{% url "meta-data" %}'>Meta-data</a> Meta-data page provides more detailed background information and other relevant meta-data</li>
-                <li> The <a href='{% url "digital-monitoring" %}'>Digtial groundwater monitoring</a> page provides and overview of recently collected data through different monitoring methods (see below for more information). You can toggle the map to display different monitoring methods and click on the wells to see the data collected for each specific location and methods. </li>
-                <li> The <a href='{% url "download-table-data" %}'>Download monitoring data</a> page provides access to the detailed data that has been collected and you can download it in CSV format. In the navigation bar you can also select the district and well type to show data for. </li>
-                <li>The <a href='{% url "historical-database" %}'>Histroical data</a> page contains data that has been collected by the GWRDB since the year 2000. Note that this data has not been cleaned, but it can be used to obtain a better feel for the groundwater level fluctuations that are typical in the region.</li>
-              </ul>
-
-            </p>
-
+            
+              <p style="text-align:center">
+                <img src="{% static 'img/cimmyt.png' %}"; style="height:120px">
+              </p>
           </div>
         </div>
       </div>
