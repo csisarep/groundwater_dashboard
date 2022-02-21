@@ -180,3 +180,9 @@ class wellDatatable(BaseDatatableView):
                     '{0}__{1}'.format(column, filter_method): col['search.value']})
         qs = qs.filter(q)
         return qs
+
+class SamplePage(TemplateView):
+    '''
+        this page displays the sample page information for the dashboard
+    '''
+    template_name = "frontend/pages/sample_page.html"

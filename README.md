@@ -85,15 +85,9 @@ Potentially, the container name 'goundwater_db_1' has to be adjusted to match th
 
 You are all set for the local development and boom you can collaborate or use as per your requirements.
 
-
-
-### Docker setup
-
-The key docker configurations can be found in docker-compose.yml and the respective Dockerfiles.
-Most importantly, check in the ./Dockerfile in the root folder of this app for the webApp installation files.
-Most other services (Webserver, database etc.) use existing default containers, provided by the developers that are then configured for this project.
-
 ### Folder structure
+This will present user the basic folder structure of this project. It presents which file can be found at what location and explain a bit how user can
+modify the project for his/her requirements. We will explain this in detail during the use case scenario examples.
 
 ```
     .
@@ -101,7 +95,7 @@ Most other services (Webserver, database etc.) use existing default containers, 
     ├── db_data                # datafiles 'csv' to be shared with db container
     ├── groundWaterProject     # Original project file created by django
     ├   ├── settings.py
-    ├   ├── urls.py
+    ├   ├── urls.py            # Main url file where other url from different apps are imported
     ├── static                 #  static content to be used in django project
     ├── templates              # HTMLTemplates to be used by django project
     ├── waterApp               # water app include combination of models, views, templates, template tags, static files, URLs, middleware, etc.
@@ -110,41 +104,161 @@ Most other services (Webserver, database etc.) use existing default containers, 
     ├   ├── urls.py
     ├   
     ├── LICENSE
+    ├── .env
+    ├── .gitignore
     ├── docker-compose.yml
     ├── Dockerfile
     ├── requirements.txt
     └── README.md
 ```
 
+
+### Docker setup
+
+The key docker configurations can be found in docker-compose.yml and the respective Dockerfiles.
+Most importantly, check in the ./Dockerfile in the root folder of this app for the webApp installation files.
+Most other services (Webserver, database etc.) use existing default containers, provided by the developers that are then configured for this project.
+
+
 ### WebApp
 
 This is the core of the dashboard. The WebApp uses Django as the key framework. See https://docs.djangoproject.com/en/4.0/ for a detailed documentation. Django is organized according the Model-View-Template principle. This means that the data lives in the 'model' component, the page stucture lives in the 'View' component, and the visualization live in the 'template' component.
 
+### Django MVT (<a href='https://www.javatpoint.com/django-mvt'>refer here</a> )
+The MVT (Model View Template) is a software design pattern. It is a collection of three important components Model View and Template. The Model helps to handle database. It is a data access layer which handles the data.
 
-### Use cases
+The Template is a presentation layer which handles User Interface part completely. The View is used to execute the business logic and interact with a model to carry data and renders a template.
+<p align="center">
+<img src="MVT.png" alt="MVT architecture"/>
+</p>
+
+### Use cases:
 
 #### Changing exising text on the dashboard
 
 As mentioned above, the text and visualziation component are stored in the template component of the app. The template folder contains all the relevant files. Django uses its own templating engine for joining various smaller html files. It essence, the dashboard website starts from the ./template/frontend/base/base.html file. Core elements such as the dashboard webApp title and key global html settings can be changed here.
 
-For changing elements on specific pages, please look at the following folder: ./template/frontend/pages. It contains the html components for each page included in the dashbaord. To stick with out example, the first map on the 'digital monitoring' page lives in the ./template/frontend/pages/digital_monitoring.html file. The tile of the first map can be changed directly in this file (see screenshot below):
-***** Add screenshot from both intiial and changed state here******
+Here, users need to understand about template and static folder structure in order to make changes in the for texts and figures.
+
+##### Templates folder structures
+```
+├── template
+├   ├── base                                      # TODO for backed section of Project
+├   ├     ├──include
+├   ├     ├──base.html
+├   ├── frontend
+├   ├      ├──base
+├   ├      ├    ├──include
+├   ├      ├    ├     ├──navbar.html              # you can edit here for navbar
+├   ├      ├    ├──base.html                      # you can add/edit libraries, title of page etc
+├   ├      ├──pages
+├   ├      ├    ├──data_tables.html               # you can make changes for datatables for downloading monitoring data
+├   ├      ├    ├──digital_monitoring.html        # any changes required for didgital monitoring page goes here
+├   ├      ├    ├──historical_database.html       # Historical data chart can be modified here
+├   ├      ├    ├──meta_data.html                 # changes for metadata discription goes here
+├   ├      ├──home.html
+├   ├── index.html                                # TODO for backend section of Project
+
+```
+Any user if wishes to make changes to the webpage, he/she can do so by editing the html content as shown in the template structure
+#### Static folder structures
+```
+├── static
+├   ├── admin                                       # For django admin pages, we haven't implemented this for now.
+├   ├── css
+├   ├    ├──style.css                               # modify style rule for web page
+├   ├    ├── ......                                 # other css libraries
+├   ├── img                                         # all image for the web page goes here. User can add/remove image here and adjust the link from html,js files
+├   ├── js
+├   ├    ├── waterApp                               # modify JavaScript rule for web page
+├   ├    ├      ├── chart.js                        # User can add remove the chart type or modify the existing chart
+├   ├    ├      ├── chartData.js                    # data formating for chart type. Data obtained from API has to be restructured as per the requirements of chart.
+├   ├    ├      ├── filter.js                       # Json filter operation is done here. In our case we have filtered json data based upon the district
+├   ├    ├      ├── functions.js
+├   ├    ├      ├── layers.js                       # layers for the leaflet map are initiated here. user can add/remove the layers required for the map here as per his/her requirements.
+├   ├    ├      ├── monitoring.js                   # JavaScript rule for the data, chart & map is defined here.
+├   ├    ├── ......                                 # other JavaScript libraries
+
+```
+User should be able to make changes to css and javascript file from here. But we assume the user have some basic understanding of html, css and javascript. User can refer to following sites for basic understanding of concepts:
+ - https://www.w3schools.com/html/default.asp for HTML
+ - https://www.w3schools.com/css/default.asp for CSS
+ - https://www.w3schools.com/js/default.asp for javascript
+ - https://leafletjs.com/examples.html for leaflet examples and documentations
+  - https://docs.djangoproject.com/en/4.0/topics/templates/ for django template structure in addition to html, javascript and css
 
 
 
-TODO (Krishna) to think through how to best explain folder and templating structure.
-TODO (Krishna) check through frotend, base folder in template folder and explain what each is for.
 
+For changing elements on specific pages, please look at the following folder: ./template/frontend/pages. It contains the html components for each page included in the dashbaord. To stick with out example, the first map on the 'digital monitoring' page lives in the ./template/frontend/pages/digital_monitoring.html file.
 
-For example, if one want to change the header of the first map in the monitoring page:
-1.
+<p align="center">
+<img src="dashboard.png" alt="dashboard"/>
+Preview for dashbaord we have developed <br> https://gw-nepal.com/
+</p>
+
+User should be able to make changes to the web page now with these concepts. In case user still has issue, please go to above reference and have some basic understanding on the topic.
+
 
 #### Add a new page to the dashboard
 
 Step by step guide:
 
+  1. Create a html django template in 'template/frontend/pages' folder named sample_page.html then populate the content as per you requirements
+
+```
+{% extends 'frontend/base/base.html' %}
+{% load static %}
+
+{% block page_content %}
+
+<div class="wrapper wrapper-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="ibox">
+          <div class="ibox-title">
+            <h1>Sample page of this Dashboard</h1>
+          </div>
+          <div class="ibox-content">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
 
 
+  </div>
+</div>
+{% endblock %}
+
+```
+  2. Add class named 'SamplePage' inside 'waterApp/views.py' with following code:
+  ```
+  class SamplePage(TemplateView):
+      '''
+          this page displays the sample page information for the dashboard
+      '''
+      template_name = "frontend/pages/sample_page.html"
+  ```
+  3. Add urls inside 'waterApp/urls.py' with following code:
+  ```
+    path('sample-page', views.SamplePage.as_view(), name='sample-page')
+  ```
+  4. Add header for navbar inside "template/frontend/base/include/navbar.html" with following code:
+  ```
+  <li class="{% if 'sample-page' in request.path %}active {% endif %}" >
+      <a aria-expanded="false" role="button" href='{% url "sample-page" %}'> Sample Page </a>
+  </li>
+  ```
+  <p align="center">
+  <img src="sample_page.png" alt="dashboard"/>
+  Preview for sample page that we have added
+  </p>
 
 
 

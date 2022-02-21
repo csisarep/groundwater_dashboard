@@ -19,7 +19,7 @@ from waterApp import views
 
 """
     We are supposed to have all urls for water apps here in this file.
-    Each path is supposed to 
+    Each path is supposed to
 """
 urlpatterns = [
     path('dashboard/', views.Dashboard.as_view(), name='dashboard'),
@@ -32,6 +32,6 @@ urlpatterns = [
     path('historical-database/', views.HistoricalDatabase.as_view(), name='historical-database'),
     path('call-waterflow-chart-data/', views.AjaxGroundMeasurementRequest.as_view(), name='call-waterflow-chart-data'),
     path('call-waterflow-offline-logger-chart-data/', views.AjaxOfflineLoggerRequest.as_view(), name='call-waterflow-offline-logger-chart-data'),
-    path('call-waterflow-historical-chart-data/', views.AjaxHistoricalDataRequest.as_view(), name='call-waterflow-historical-chart-data')
-
+    path('call-waterflow-historical-chart-data/', views.AjaxHistoricalDataRequest.as_view(), name='call-waterflow-historical-chart-data'),
+    # path('sample-page', views.SamplePage.as_view(), name='sample-page')
 ]
