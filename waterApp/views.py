@@ -140,7 +140,12 @@ class wellDatatable(BaseDatatableView):
         # we need some base queryset to count total number of records.
         qs = GwMonitoringKobo.objects.all()
         return qs
-
+    def render_column(self, row, column):
+        if column == 'well_num':
+            return row.well_num.well_num
+        else:
+            value = self._render_column(row, column)
+            return value
     def paging(self, qs):
         """
             pagination for the datatables
