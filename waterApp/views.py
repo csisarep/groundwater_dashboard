@@ -11,6 +11,8 @@ from django.db.models import Count, Q, F, Sum
 from waterApp.models import GwLocations, GwMonitoring, GwLocationsData, GwMonitoringKobo, OfflineLoggerData, HistoricalData
 import json
 
+import pandas as pd
+
 # datatable
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from django.utils.html import escape
@@ -180,6 +182,17 @@ class wellDatatable(BaseDatatableView):
                     '{0}__{1}'.format(column, filter_method): col['search.value']})
         qs = qs.filter(q)
         return qs
+
+class DownloadMonitoringData(View):
+
+    def get(self, request):
+        qs = GwMonitoringKobo.objects.all()
+        df = df = pd.DataFrame.from_records(qs.values())
+        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename="monitoring.xlsx"'
+        df.to_excel(response)
+        return response
+
 
 class SamplePage(TemplateView):
     '''

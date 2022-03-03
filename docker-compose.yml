@@ -6,7 +6,7 @@
 # In order to ensure that containers can use shared files, we are using volumes that are shared across containers.
 # For more info check on https://docs.docker.com/compose/ for more information.
 # The main elements of the app are stored in the web service / container, where the Django app lives.
-# So refer to the ./Dockerfile for more information on the webApp app. 
+# So refer to the ./Dockerfile for more information on the webApp app.
 
 version: "3.3"
 

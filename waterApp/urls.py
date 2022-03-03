@@ -33,5 +33,6 @@ urlpatterns = [
     path('call-waterflow-chart-data/', views.AjaxGroundMeasurementRequest.as_view(), name='call-waterflow-chart-data'),
     path('call-waterflow-offline-logger-chart-data/', views.AjaxOfflineLoggerRequest.as_view(), name='call-waterflow-offline-logger-chart-data'),
     path('call-waterflow-historical-chart-data/', views.AjaxHistoricalDataRequest.as_view(), name='call-waterflow-historical-chart-data'),
+    path('download-monitoring-data', views.DownloadMonitoringData.as_view(), name='download-monitoring-data')
     # path('sample-page', views.SamplePage.as_view(), name='sample-page')
 ]

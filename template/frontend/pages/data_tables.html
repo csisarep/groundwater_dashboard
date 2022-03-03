@@ -22,8 +22,16 @@
                 <li>Height of Measurment Point (MP) refers to the heigh of the well outlet where the groundwater level is measured.</li>
               </ul>
             </p>
+            <div >
+              <p>For downloading all monitoring data:</p>
+              <a href="{% url 'download-monitoring-data' %}">
+                <button class="btn btn-w-m btn-primary" type="button">download all data <i class="fa fa-download"></i></button>
+              </a>
+            </div>
           </div>
           <div class="ibox-content">
+
+
             <table id="masterDataTable" class="table dt-responsive display nowrap w-100" style="width:100%">
               <thead>
                 <tr>

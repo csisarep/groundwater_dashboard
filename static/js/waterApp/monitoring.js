@@ -14,9 +14,10 @@ $(document).ready(function() {
   $('.select2_wells').select2({
     data: select2_options
   });
+    var ids = ['Rohini Khola'];
+    $('.select2_wells').val(ids); // Select the option with a value of '1'
+    $('.select2_wells').trigger('change');
 
-  $('.select2_wells').val('Rohini Khola'); // Select the option with a value of '1'
-  $('.select2_wells').trigger('change');
 
   $('.select2_wells').on('select2:select', function(e) {
     // var selected_wells =
@@ -120,7 +121,7 @@ $(document).ready(function() {
       onEachFeature: onEachFeature,
       pointToLayer: classifyMarker
     }).addTo(map);
-
+    console.log(odk.features);
     var featureDataClassify = filterGeojson(odk.features, checked_dst_box, checked_wt_box);
     // console.log(featureDataClassify);
     var filtered_locations_classify = {
@@ -296,4 +297,8 @@ map.on('zoomend', function() {
   layersSwitcher();
 })
   layersSwitcher();
+  $('.select2_wells').val(ids); // Select the option with a value of '1'
+  $('.select2_wells').trigger('change');
+
+
 });

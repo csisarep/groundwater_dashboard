@@ -39,8 +39,8 @@
 
          <!--
 
-          This divbox shows the first map for with an overview of well sites. 
-    
+          This divbox shows the first map for with an overview of well sites.
+
     --->
 
         <div class="ibox">
@@ -66,7 +66,7 @@
           <div class="ibox-title">
             <h1> Current groundwater levels:</h1>
             <p>
-		Use this map to identify locations with currently low and high groundwater levels. sw = shallow well, dw = deep well. 
+		Use this map to identify locations with currently low and high groundwater levels. sw = shallow well, dw = deep well.
 
             </p>
           </div>
@@ -91,7 +91,7 @@
               <div class="p-w-sm">
                 <input type="checkbox" id="checkbox" name="checkbox"> Select All
                 <br />
-                <select data-placeholder="Choose a Well..." class="select2_wells form-control" multiple="multiple" >
+                <select data-placeholder="Choose a Well..." class="select2_wells form-control" id="select2_wells_id" multiple="multiple" >
                 </select>
               </div>
             </div>
@@ -249,21 +249,39 @@
     // create geojson with points
     {% if tablet_monitoring %}
       {% for gw in tablet_monitoring %}
-odk.features.push({
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [{{gw.longitude}}, {{gw.latitude}}]
-          },
-          "properties": {
-            'well_number': '{{gw.well_num}}',
-            'district':'{{gw.district}}',
-            'type': '{{gw.type.name}}',
-            'type_id': '{{gw.well_type}}',
-            'date':'{{gw.date.isoformat}}',
-            'gw_level':'{{gw.gw_level}}'
-          }
-        });
+        {% if gw.well_num.longitude %}
+          odk.features.push({
+              "type": "Feature",
+              "geometry": {
+                "type": "Point",
+                "coordinates": [{{gw.well_num.longitude}}, {{gw.well_num.latitude}}]
+              },
+              "properties": {
+                'well_number': '{{gw.well_num}}',
+                'district':'{{gw.district}}',
+                'type': '{{gw.type.name}}',
+                'type_id': '{{gw.well_type}}',
+                'date':'{{gw.date.isoformat}}',
+                'gw_level':'{{gw.gw_level}}'
+              }
+            });
+          {% else %}
+            odk.features.push({
+                "type": "Feature",
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [{{gw.longitude}}, {{gw.latitude}}]
+                },
+                "properties": {
+                  'well_number': '{{gw.well_num}}',
+                  'district':'{{gw.district}}',
+                  'type': '{{gw.type.name}}',
+                  'type_id': '{{gw.well_type}}',
+                  'date':'{{gw.date.isoformat}}',
+                  'gw_level':'{{gw.gw_level}}'
+                }
+              });
+          {% endif %}
 
 
 

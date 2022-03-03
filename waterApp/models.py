@@ -1,6 +1,5 @@
 from django.db import models
 
-
 # Please do explain also the data and model workflow here or in the README.
 # Keeping track of how the data is connected and udpated is critical.
 
@@ -70,6 +69,19 @@ class GwLocations(models.Model):
     class Meta:
         managed = True
         db_table = 'graound_water_locations'
+class GwLocationsData(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    well_number = models.CharField(max_length=100, blank=True, null=True)
+    well_num = models.CharField(max_length=100, unique=True, default='well-00')
+    district = models.CharField(max_length=100, blank=True, null=True)
+    location = models.CharField(max_length=100, blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    type = models.ForeignKey(WellType, on_delete=models.CASCADE, default=1)
+
+
+    def __unicode__(self):
+        return self.well_num
 
 class GwMonitoringKobo(models.Model):
     date = models.DateField(default='2000-01-01')
@@ -85,21 +97,17 @@ class GwMonitoringKobo(models.Model):
     mp_in_m = models.FloatField(blank=True, null=True)
     gw_level = models.FloatField(blank=True, null=True)
     fid = models.IntegerField(primary_key=True, default=0)
-    well_num = models.CharField(max_length=150, blank=True, null=True)
+    well_num = models.ForeignKey(GwLocationsData, to_field="well_num", on_delete=models.CASCADE, default='well-00', db_column="well_num")
+
+
+    def __unicode__(self):
+        return self.well_num
 
     class Meta:
         managed = True
         db_table = 'gw_monitoring_kobo'
 
-class GwLocationsData(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    well_number = models.CharField(max_length=100, blank=True, null=True)
-    well_num = models.CharField(max_length=100, blank=True, null=True)
-    district = models.CharField(max_length=100, blank=True, null=True)
-    location = models.CharField(max_length=100, blank=True, null=True)
-    longitude = models.FloatField(blank=True, null=True)
-    latitude = models.FloatField(blank=True, null=True)
-    type = models.ForeignKey(WellType, on_delete=models.CASCADE, default=1)
+
 
 
 class OfflineLoggerData(models.Model):

@@ -4,7 +4,8 @@ django-datatables-view==1.19.1
 psycopg2
 psycopg2-binary
 requests==2.25.1
+numpy
 pandas
 json5==0.9.5
 python-decouple
-
+openpyxl
