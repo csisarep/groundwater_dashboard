@@ -29,7 +29,7 @@ SECRET_KEY = '$@#&nut@#%9e1uz)i_cv=_g&-dlwe#_okyb^@8gknlp!a*1+4m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','gw-nepal.com','www.gw-nepal.com']
+ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','gw-nepal.com','www.gw-nepal.com','*']
 
 
 # Application definition
