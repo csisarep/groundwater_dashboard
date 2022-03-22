@@ -142,8 +142,8 @@ $(document).ready(function() {
 
   var map = L.map('map', {
     center: [27.9993613, 81.71946941],
-    zoom: 9,
-    layers: [osm, wellsLayer]
+    zoom: 7,
+    layers: [grayscale, wellsLayer]
   });
   var baseLayers = {
     "Grayscale": grayscale,
@@ -219,7 +219,7 @@ $(document).ready(function() {
   //start creating latest ODK map. TODO Better ID naming
   var mapNew = L.map('mapNew', {
     center: [27.9993613, 81.71946941],
-    zoom: 9,
+    zoom: 8,
     // layers: [osm, wellsLayer]
   });
 

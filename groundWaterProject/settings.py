@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-from decouple import config
+# from decouple import config
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,11 +22,12 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'template')
 MEDIA_DIR = os.path.join(BASE_DIR,'media')
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$@#&nut@#%9e1uz)i_cv=_g&-dlwe#_okyb^@8gknlp!a*1+4m'
+SECRET_KEY ="$@#&nut@#%9e1uz)i_cv=_g&-dlwe#_okyb^@8gknlp!a*1+4m"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -86,10 +88,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'groundwater',
-        'USER': config('USER'),
-        'PASSWORD': config('PASSWORD'),
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
         'HOST': 'db',
-        'PORT': '5432',
+        'PORT': "5432",
     }
 }
 

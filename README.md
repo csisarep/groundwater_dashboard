@@ -276,6 +276,18 @@ For questions or queries please contact activity leader Anton Urfels (a.urfels@c
 
 psql groundwater < groundwater.sql
 
+or go to postgres docker container, via 
+```
+psql -U postgres
+```
+connect to groundwater database, and run the sql file to upload data to database
+
+```
+\c groundwater
+\i /var/lib/postgres/data/groundwater.sql
+```
+
+
 ### this command restore backed up database to the existing database named "groundwater" (TO be removed later on)
 
 

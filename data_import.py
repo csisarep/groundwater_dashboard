@@ -27,14 +27,17 @@ auth = HTTPBasicAuth(kobo_username, kobo_password)
 
 # files = {'filename': open('filename.txt','rb')}
 def download_data():
-    download = requests.get(url, auth=auth )
-    # col_names = ['Enumerator Name','Geo_location','Municipality','village_name','ward','well_type','well_no_stw','well_no_dtw','gw_level','Height_of_measurement','measurement_unit',"Notes"]
-    # df = pd.read_csv('updated_data.csv')
-    j = requests.get(url, auth=auth )
-    df_json = j.json()
-    gw_df = pd.DataFrame.from_dict(df_json)
-    print('Script has been started at {}: Data Downloaded'.format(datetime.now()))
-    return gw_df
+    try:
+        download = requests.get(url, auth=auth )
+        # col_names = ['Enumerator Name','Geo_location','Municipality','village_name','ward','well_type','well_no_stw','well_no_dtw','gw_level','Height_of_measurement','measurement_unit',"Notes"]
+        # df = pd.read_csv('updated_data.csv')
+        j = requests.get(url, auth=auth )
+        df_json = j.json()
+        gw_df = pd.DataFrame.from_dict(df_json)
+        print('Script has been started at {}: Data Downloaded'.format(datetime.now()))
+        return gw_df
+    except:
+        pass
 
 
 df = download_data()

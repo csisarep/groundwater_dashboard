@@ -8,21 +8,22 @@
 # The main elements of the app are stored in the web service / container, where the Django app lives.
 # So refer to the ./Dockerfile for more information on the webApp app.
 
-version: "3.3"
+version: "3.9"
 
 services:
   db:
-    build:
-      context: db_docker
-      dockerfile: Dockerfile
+    image: postgres
     ports:
       - 5432:5432
     volumes:
-      - ./db_data:/opt
+      - ./postgres:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=groundwater
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres    
+        
   web:
-    build: 
-      context: .
-      dockerfile: Dockerfile
+    build: .
     command: python manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
