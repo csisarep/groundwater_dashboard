@@ -122,6 +122,16 @@
     </div>
   </div>
 </div>
+<div>
+  {% for gw in tablet_monitoring %}
+  <p>
+        {{gw.gw_level}}
+  </p>
+  {% endfor %}
+  <p>
+
+  </p>
+</div>
 
 {% endblock %}
 
@@ -262,7 +272,8 @@
                 'type': '{{gw.type.name}}',
                 'type_id': '{{gw.well_type}}',
                 'date':'{{gw.date.isoformat}}',
-                'gw_level':'{{gw.gw_level}}'
+                'gw_level':'{{gw.gw_level}}',
+            
               }
             });
           {% else %}
@@ -283,13 +294,15 @@
               });
           {% endif %}
 
+          
 
 
 
       {% endfor %}
+     
     {% endif %}
 
-
+console.log(odk)
 
 </script>
 

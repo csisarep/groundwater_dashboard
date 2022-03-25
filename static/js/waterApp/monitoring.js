@@ -3,7 +3,6 @@ $(document).ready(function() {
   // normal DOM manipulation will be here
 
 
-
   $('.chosen-select').chosen({
     width: "100%"
   });
@@ -121,7 +120,7 @@ $(document).ready(function() {
       onEachFeature: onEachFeature,
       pointToLayer: classifyMarker
     }).addTo(map);
-    console.log(odk.features);
+    // console.log(odk.features);
     var featureDataClassify = filterGeojson(odk.features, checked_dst_box, checked_wt_box);
     // console.log(featureDataClassify);
     var filtered_locations_classify = {
@@ -174,12 +173,12 @@ $(document).ready(function() {
   //sort wells, then delete all older than 30 days, then delete all duplicates. For now 60 days as Kobo updates are not implemented yet.
 
   var date = new Date();
-  date.setDate(date.getDate() - 60);
+  date.setDate(date.getDate() - 30);
   var cutOffDate = date.toISOString().split('T')[0];
   odk.features = Object.entries(odk.features);
 
-
-  odk.features = odk.features.filter(recent => recent[1].properties.date > cutOffDate);
+// Uncomment the odk.features to get plot for a specific data range
+  // odk.features = odk.features.filter(recent => recent[1].properties.date > cutOffDate);
 
 
   //assume that entries are ordered chronologically. Only take first occurence of a well number and add number of duplicated
@@ -219,14 +218,15 @@ $(document).ready(function() {
   //start creating latest ODK map. TODO Better ID naming
   var mapNew = L.map('mapNew', {
     center: [27.9993613, 81.71946941],
-    zoom: 8,
-    // layers: [osm, wellsLayer]
+    zoom: 7,
+    layers: [googleStreets]
   });
 
+  // L.control.layers(baseLayers).addTo(mapNew);
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(mapNew);
+  // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  //   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  // }).addTo(mapNew);
 
 
   // Defining colors for categories of water levels

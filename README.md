@@ -276,8 +276,9 @@ For questions or queries please contact activity leader Anton Urfels (a.urfels@c
 
 psql groundwater < groundwater.sql
 
-or go to postgres docker container, via 
+or go to postgres docker container, and postgres shell
 ```
+docker exec -it <postgres_container> bash
 psql -U postgres
 ```
 connect to groundwater database, and run the sql file to upload data to database
